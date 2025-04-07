@@ -1,0 +1,2 @@
+2025-04-04 08:48:28,574 [DEBUG] [req_id:a2cd4010-b68f-4a76-9283-a38712ed9c59 user:None] connection.py:951 - caching sha2: succeeded by fast path.
+2025-04-04 08:48:28,829 [INFO] [req_id:a2cd4010-b68f-4a76-9283-a38712ed9c59 user:None] base.py:33 - POST /auth/login/email [200] 0.2992s

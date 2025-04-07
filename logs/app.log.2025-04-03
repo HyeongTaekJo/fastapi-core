@@ -1,0 +1,189 @@
+2025-04-03 14:21:53,200 [WARNING] [req_id:254117f6-83aa-499a-b455-78da28b55adb user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 401 - 비밀번호가 일치하지 않습니다.
+2025-04-03 14:29:08,069 [WARNING] [req_id:203e4404-9d69-4bf0-a1e0-6cd4f0f1e986 user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 401 - 비밀번호가 일치하지 않습니다.
+2025-04-03 14:32:12,258 [WARNING] [req_id:6b037ddb-7206-4317-b1f8-157116dd7fd1 user:1] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 404 - post not found
+2025-04-03 14:32:25,537 [WARNING] [req_id:b6c3148e-56a4-4ea4-aaca-a504e2e4cec1 user:1] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 404 - post not found
+2025-04-03 14:32:50,674 [WARNING] [req_id:28260b41-9315-4316-aae5-0a6325d39626 user:1] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 400 - 존재하지 않는 이미지입니다.
+2025-04-03 14:34:10,181 [WARNING] [req_id:7bce9cc8-09a9-488b-b21b-da36534a8daf user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 403 - Not authenticated
+2025-04-03 14:34:17,404 [WARNING] [req_id:0b7de42c-2208-4920-a9cb-d488e43862c9 user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 403 - Not authenticated
+2025-04-03 14:34:23,232 [WARNING] [req_id:7eef0992-ee55-4b1f-a4da-bcc59044c4c5 user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 403 - Not authenticated
+2025-04-03 14:37:59,429 [WARNING] [req_id:7f7f6822-3e35-4314-b305-4b8f487db714 user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 403 - Not authenticated
+2025-04-03 14:38:22,033 [WARNING] [req_id:203e148c-b4b7-4210-8b38-fc6fc8205e47 user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 403 - Not authenticated
+2025-04-03 14:38:56,589 [WARNING] [req_id:d8b00745-94d8-433a-b62d-5afbfc9ec550 user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 403 - Not authenticated
+2025-04-03 14:39:33,743 [WARNING] [req_id:299f2a17-209b-43a3-87ee-b96ed33817ba user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 403 - Not authenticated
+2025-04-03 14:41:31,103 [WARNING] [req_id:ffa67020-f08a-4654-9bf1-4f9a871db07a user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 403 - Not authenticated
+2025-04-03 14:46:29,830 [WARNING] [req_id:47b1da27-a218-4b63-a6b2-58e32ceeec57 user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 403 - Not authenticated
+2025-04-03 14:47:07,222 [WARNING] [req_id:39ea09ac-4445-4223-9b41-d44086ce848e user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 403 - Not authenticated
+2025-04-03 14:47:07,226 [INFO] [req_id:None user:None] base.base.py:32 - request_logger_middleware() - PATCH /posts/6 [403] 0.0121s
+2025-04-03 14:47:47,471 [WARNING] [req_id:2cc3d2c4-e805-4fe4-9406-8d830025e980 user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 403 - Not authenticated
+2025-04-03 14:47:47,478 [INFO] [req_id:None user:None] base.base.py:32 - request_logger_middleware() - PATCH /posts/6 [403] 0.013s
+2025-04-03 14:48:49,245 [DEBUG] [req_id:3fd2fc4b-7ee6-4d5e-a2bb-6e292aabb324 user:None] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:48:49,544 [INFO] [req_id:None user:None] base.base.py:32 - request_logger_middleware() - POST /auth/login/email [200] 0.3604s
+2025-04-03 14:48:52,112 [WARNING] [req_id:76c3d1e8-8c50-48d0-9dd2-255698c780e5 user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 403 - Not authenticated
+2025-04-03 14:48:52,114 [INFO] [req_id:None user:None] base.base.py:32 - request_logger_middleware() - PATCH /posts/6 [403] 0.0045s
+2025-04-03 14:49:00,887 [DEBUG] [req_id:f0fa9102-f4a4-4370-9f09-d2aca46d3cc1 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:49:04,185 [DEBUG] [req_id:f0fa9102-f4a4-4370-9f09-d2aca46d3cc1 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:49:04,278 [DEBUG] [req_id:f0fa9102-f4a4-4370-9f09-d2aca46d3cc1 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:49:04,361 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - PATCH /posts/6 [200] 3.4948s
+2025-04-03 14:49:25,995 [DEBUG] [req_id:4688cc19-bed5-4445-bd14-8cb0d3465f11 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:49:26,058 [DEBUG] [req_id:4688cc19-bed5-4445-bd14-8cb0d3465f11 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:49:26,095 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - GET /posts [200] 0.1266s
+2025-04-03 14:49:44,530 [DEBUG] [req_id:e8c85a33-6c3a-4a7e-8be5-e13c6a465dce user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:49:44,674 [DEBUG] [req_id:e8c85a33-6c3a-4a7e-8be5-e13c6a465dce user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:49:44,734 [DEBUG] [req_id:e8c85a33-6c3a-4a7e-8be5-e13c6a465dce user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:49:44,800 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - PATCH /posts/226 [200] 0.2865s
+2025-04-03 14:50:07,946 [WARNING] [req_id:2f6ad01e-4d01-47a7-839d-539145d1a64a user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 403 - Not authenticated
+2025-04-03 14:50:07,949 [INFO] [req_id:None user:None] base.base.py:32 - request_logger_middleware() - DELETE /posts/209 [403] 0.0034s
+2025-04-03 14:50:17,767 [DEBUG] [req_id:1fab373f-d6ea-4539-af4a-7f1563167b58 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:50:17,850 [DEBUG] [req_id:1fab373f-d6ea-4539-af4a-7f1563167b58 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:50:17,864 [WARNING] [req_id:1fab373f-d6ea-4539-af4a-7f1563167b58 user:1] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 404 - 존재하지 않는 post 입니다.
+2025-04-03 14:50:17,866 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - DELETE /posts/209 [404] 0.1236s
+2025-04-03 14:50:26,144 [DEBUG] [req_id:971cd704-19a3-4c12-9b0f-396196b99066 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:50:26,226 [DEBUG] [req_id:971cd704-19a3-4c12-9b0f-396196b99066 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:50:26,274 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - DELETE /posts/119 [200] 0.1426s
+2025-04-03 14:51:08,596 [DEBUG] [req_id:c8691c84-485e-499b-bf02-4c80251c87f4 user:None] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:51:08,731 [INFO] [req_id:None user:None] base.base.py:32 - request_logger_middleware() - POST /auth/login/email [200] 0.1614s
+2025-04-03 14:51:16,348 [DEBUG] [req_id:8d043220-0020-44c5-9326-f8a5af0b1488 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:51:16,527 [DEBUG] [req_id:8d043220-0020-44c5-9326-f8a5af0b1488 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:51:16,590 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - GET /posts [200] 0.3318s
+2025-04-03 14:52:34,125 [DEBUG] [req_id:d780368e-6f03-42d2-a423-e1375b181839 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:52:34,791 [DEBUG] [req_id:d780368e-6f03-42d2-a423-e1375b181839 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:52:34,828 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - GET /posts [200] 1.1647s
+2025-04-03 14:52:42,914 [DEBUG] [req_id:5d3c245c-ccec-446f-8bb8-fae908f2a298 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:52:43,011 [DEBUG] [req_id:5d3c245c-ccec-446f-8bb8-fae908f2a298 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:52:54,947 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - GET /posts [200] 0.194s
+2025-04-03 14:53:03,889 [DEBUG] [req_id:762d51f1-7f39-45ab-a354-86e9e3261674 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:53:03,996 [DEBUG] [req_id:762d51f1-7f39-45ab-a354-86e9e3261674 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:53:18,422 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - GET /posts [200] 14.6319s
+2025-04-03 14:53:23,817 [DEBUG] [req_id:9ca66da3-24f2-43ff-aaf0-3d54fd99e4a8 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:53:23,947 [DEBUG] [req_id:9ca66da3-24f2-43ff-aaf0-3d54fd99e4a8 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:53:48,046 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - GET /posts [200] 24.2568s
+2025-04-03 14:57:19,744 [DEBUG] [req_id:d6ea6a69-4959-4b9a-9fce-d7f605e32359 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:57:19,833 [DEBUG] [req_id:d6ea6a69-4959-4b9a-9fce-d7f605e32359 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:57:19,880 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - GET /posts [200] 208.4667s
+2025-04-03 14:57:29,633 [DEBUG] [req_id:dae96e45-5a13-4f06-9393-416a4747f970 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:57:29,711 [DEBUG] [req_id:dae96e45-5a13-4f06-9393-416a4747f970 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 14:57:29,752 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - GET /posts [200] 5.3196s
+2025-04-03 15:16:56,772 [DEBUG] [req_id:33cf48ff-c03b-4f92-880f-16874d110af8 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 15:16:56,845 [DEBUG] [req_id:33cf48ff-c03b-4f92-880f-16874d110af8 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 15:16:56,879 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - GET /posts [200] 0.2776s
+2025-04-03 15:21:22,380 [DEBUG] [req_id:bf6f7cac-d43f-48ea-8278-5b6479bbee61 user:None] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 15:21:22,609 [INFO] [req_id:None user:None] base.base.py:32 - request_logger_middleware() - POST /auth/login/email [200] 0.2753s
+2025-04-03 15:21:30,564 [DEBUG] [req_id:ae077577-fb1c-4963-a197-a40040109d27 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 15:21:30,674 [DEBUG] [req_id:ae077577-fb1c-4963-a197-a40040109d27 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 15:21:30,725 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - GET /posts [200] 0.1885s
+2025-04-03 15:23:09,825 [DEBUG] [req_id:c267a533-6ca7-4e50-9698-3339dbf98040 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 15:23:09,913 [DEBUG] [req_id:c267a533-6ca7-4e50-9698-3339dbf98040 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 15:23:09,961 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - GET /posts [200] 0.1618s
+2025-04-03 15:23:18,770 [DEBUG] [req_id:36e3ecd4-41f5-4dc5-acc5-d4bf084a3546 user:1] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 15:23:19,220 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - GET /posts [200] 2.1254s
+2025-04-03 15:23:23,112 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - GET /posts [200] 0.0998s
+2025-04-03 15:23:29,898 [INFO] [req_id:None user:1] base.base.py:32 - request_logger_middleware() - GET /posts [200] 0.0949s
+2025-04-03 15:26:52,219 [DEBUG] [req_id:eed4f1cc-0f60-47e2-af7c-83f6648566c0 user:None] connection.connection.py:951 - caching_sha2_password_auth() - caching sha2: succeeded by fast path.
+2025-04-03 15:26:52,417 [INFO] [req_id:None user:None] base.base.py:32 - request_logger_middleware() - POST /auth/register/email [200] 0.748s
+2025-04-03 15:26:58,047 [INFO] [req_id:None user:5] base.base.py:32 - request_logger_middleware() - POST /auth/token/access [200] 0.0286s
+2025-04-03 15:27:01,238 [INFO] [req_id:None user:5] base.base.py:32 - request_logger_middleware() - POST /auth/token/refresh [200] 0.0249s
+2025-04-03 15:33:32,301 [INFO] [req_id:None user:5] base.base.py:32 - request_logger_middleware() - GET /posts [200] 0.059s
+2025-04-03 15:33:39,955 [WARNING] [req_id:e75eb9ec-35c8-4dec-8786-ad9ffc4e85b9 user:None] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 403 - Not authenticated | GET /posts
+2025-04-03 15:33:39,959 [INFO] [req_id:None user:None] base.base.py:32 - request_logger_middleware() - GET /posts [403] 0.0153s
+2025-04-03 15:45:03,008 [WARNING] [req_id:60777853-dff0-4aa9-aed6-ca1b128d03f6 user:None] handlers.py:64 - Unhandled HTTPException: 403 - Not authenticated | GET /posts
+2025-04-03 15:45:03,012 [INFO] [req_id:None user:None] base.py:32 - GET /posts [403] 0.034s
+2025-04-03 15:45:16,856 [WARNING] [req_id:c59c218d-b7f3-482d-9095-cdbc471c876e user:None] handlers.py:64 - Unhandled HTTPException: 403 - Not authenticated | GET /posts
+2025-04-03 15:45:16,859 [INFO] [req_id:None user:None] base.py:32 - GET /posts [403] 0.0075s
+2025-04-03 15:48:24,470 [DEBUG] [req_id:a00c6980-64f3-4ed4-bf7e-f5bce55a4199 user:5] connection.py:951 - caching sha2: succeeded by fast path.
+2025-04-03 15:48:24,614 [INFO] [req_id:None user:5] base.py:32 - GET /posts [200] 0.19s
+2025-04-03 16:19:46,661 [DEBUG] [req_id:84e8e47d-fedb-439e-9dc5-2b505abc5cad user:5] connection.py:951 - caching sha2: succeeded by fast path.
+2025-04-03 16:19:46,814 [INFO] [req_id:None user:5] base.py:32 - GET /posts [200] 0.2735s
+2025-04-03 16:19:51,624 [WARNING] [req_id:c03b3be7-0e7c-427d-bf6f-390f22aa150c user:None] handlers.py:64 - Unhandled HTTPException: 403 - Not authenticated | GET /posts
+2025-04-03 16:19:51,626 [INFO] [req_id:None user:None] base.py:32 - GET /posts [403] 0.005s
+2025-04-03 16:19:57,215 [INFO] [req_id:None user:None] base.py:32 - POST /auth/login/email [200] 0.1397s
+2025-04-03 16:20:03,471 [INFO] [req_id:None user:1] base.py:32 - GET /posts [200] 0.1022s
+2025-04-03 16:20:27,520 [INFO] [req_id:None user:1] base.py:32 - GET /posts [200] 0.0841s
+2025-04-03 16:20:37,959 [WARNING] [req_id:6cbd0b3e-3f9d-4151-9dcd-11295fb39ffa user:None] handlers.py:64 - Unhandled HTTPException: 403 - Not authenticated | GET /posts
+2025-04-03 16:20:37,961 [INFO] [req_id:None user:None] base.py:32 - GET /posts [403] 0.007s
+2025-04-03 16:20:45,143 [WARNING] [req_id:44df9a00-c75e-4971-a9c9-a54e162ce7a4 user:1] handlers.py:64 - Unhandled HTTPException: 404 - post not found | GET /posts/213
+2025-04-03 16:20:45,147 [INFO] [req_id:None user:1] base.py:32 - GET /posts/213 [404] 0.2755s
+2025-04-03 16:22:48,131 [DEBUG] [req_id:10be53b9-f19f-4dbc-9328-c2e7b739deec user:1] multipart.py:628 - Calling on_part_begin with no data
+2025-04-03 16:22:48,132 [DEBUG] [req_id:10be53b9-f19f-4dbc-9328-c2e7b739deec user:1] multipart.py:625 - Calling on_header_field with data[54:73]
+2025-04-03 16:22:48,134 [DEBUG] [req_id:10be53b9-f19f-4dbc-9328-c2e7b739deec user:1] multipart.py:625 - Calling on_header_value with data[75:111]
+2025-04-03 16:22:48,135 [DEBUG] [req_id:10be53b9-f19f-4dbc-9328-c2e7b739deec user:1] multipart.py:628 - Calling on_header_end with no data
+2025-04-03 16:22:48,135 [DEBUG] [req_id:10be53b9-f19f-4dbc-9328-c2e7b739deec user:1] multipart.py:628 - Calling on_headers_finished with no data
+2025-04-03 16:22:48,137 [DEBUG] [req_id:10be53b9-f19f-4dbc-9328-c2e7b739deec user:1] multipart.py:628 - Calling on_part_end with no data
+2025-04-03 16:22:48,138 [DEBUG] [req_id:10be53b9-f19f-4dbc-9328-c2e7b739deec user:1] multipart.py:628 - Calling on_end with no data
+2025-04-03 16:22:48,146 [WARNING] [req_id:10be53b9-f19f-4dbc-9328-c2e7b739deec user:1] handlers.py:64 - Unhandled HTTPException: 400 - jpg/jpeg/png 파일만 업로드 가능합니다. | POST /common/image
+2025-04-03 16:22:48,149 [INFO] [req_id:None user:1] base.py:32 - POST /common/image [400] 0.0249s
+2025-04-03 16:23:08,997 [DEBUG] [req_id:c6e27565-0577-46fd-8539-b118bc8307f0 user:1] multipart.py:628 - Calling on_part_begin with no data
+2025-04-03 16:23:08,998 [DEBUG] [req_id:c6e27565-0577-46fd-8539-b118bc8307f0 user:1] multipart.py:625 - Calling on_header_field with data[54:73]
+2025-04-03 16:23:08,999 [DEBUG] [req_id:c6e27565-0577-46fd-8539-b118bc8307f0 user:1] multipart.py:625 - Calling on_header_value with data[75:174]
+2025-04-03 16:23:09,000 [DEBUG] [req_id:c6e27565-0577-46fd-8539-b118bc8307f0 user:1] multipart.py:628 - Calling on_header_end with no data
+2025-04-03 16:23:09,002 [DEBUG] [req_id:c6e27565-0577-46fd-8539-b118bc8307f0 user:1] multipart.py:625 - Calling on_header_field with data[176:188]
+2025-04-03 16:23:09,003 [DEBUG] [req_id:c6e27565-0577-46fd-8539-b118bc8307f0 user:1] multipart.py:625 - Calling on_header_value with data[190:200]
+2025-04-03 16:23:09,003 [DEBUG] [req_id:c6e27565-0577-46fd-8539-b118bc8307f0 user:1] multipart.py:628 - Calling on_header_end with no data
+2025-04-03 16:23:09,004 [DEBUG] [req_id:c6e27565-0577-46fd-8539-b118bc8307f0 user:1] multipart.py:628 - Calling on_headers_finished with no data
+2025-04-03 16:23:09,006 [DEBUG] [req_id:c6e27565-0577-46fd-8539-b118bc8307f0 user:1] multipart.py:625 - Calling on_part_data with data[204:65740]
+2025-04-03 16:23:09,013 [DEBUG] [req_id:c6e27565-0577-46fd-8539-b118bc8307f0 user:1] multipart.py:625 - Calling on_part_data with data[0:262144]
+2025-04-03 16:23:09,017 [DEBUG] [req_id:c6e27565-0577-46fd-8539-b118bc8307f0 user:1] multipart.py:625 - Calling on_part_data with data[0:78441]
+2025-04-03 16:23:09,019 [DEBUG] [req_id:c6e27565-0577-46fd-8539-b118bc8307f0 user:1] multipart.py:628 - Calling on_part_end with no data
+2025-04-03 16:23:09,020 [DEBUG] [req_id:c6e27565-0577-46fd-8539-b118bc8307f0 user:1] multipart.py:628 - Calling on_end with no data
+2025-04-03 16:23:09,041 [INFO] [req_id:None user:1] base.py:32 - POST /common/image [200] 0.0498s
+2025-04-03 16:23:41,366 [DEBUG] [req_id:554167de-2836-44d6-827c-81faea1e3ab6 user:1] multipart.py:628 - Calling on_part_begin with no data
+2025-04-03 16:23:41,367 [DEBUG] [req_id:554167de-2836-44d6-827c-81faea1e3ab6 user:1] multipart.py:625 - Calling on_header_field with data[54:73]
+2025-04-03 16:23:41,367 [DEBUG] [req_id:554167de-2836-44d6-827c-81faea1e3ab6 user:1] multipart.py:625 - Calling on_header_value with data[75:174]
+2025-04-03 16:23:41,368 [DEBUG] [req_id:554167de-2836-44d6-827c-81faea1e3ab6 user:1] multipart.py:628 - Calling on_header_end with no data
+2025-04-03 16:23:41,369 [DEBUG] [req_id:554167de-2836-44d6-827c-81faea1e3ab6 user:1] multipart.py:625 - Calling on_header_field with data[176:188]
+2025-04-03 16:23:41,369 [DEBUG] [req_id:554167de-2836-44d6-827c-81faea1e3ab6 user:1] multipart.py:625 - Calling on_header_value with data[190:200]
+2025-04-03 16:23:41,370 [DEBUG] [req_id:554167de-2836-44d6-827c-81faea1e3ab6 user:1] multipart.py:628 - Calling on_header_end with no data
+2025-04-03 16:23:41,371 [DEBUG] [req_id:554167de-2836-44d6-827c-81faea1e3ab6 user:1] multipart.py:628 - Calling on_headers_finished with no data
+2025-04-03 16:23:41,372 [DEBUG] [req_id:554167de-2836-44d6-827c-81faea1e3ab6 user:1] multipart.py:625 - Calling on_part_data with data[204:65740]
+2025-04-03 16:23:41,375 [DEBUG] [req_id:554167de-2836-44d6-827c-81faea1e3ab6 user:1] multipart.py:625 - Calling on_part_data with data[0:262144]
+2025-04-03 16:23:41,378 [DEBUG] [req_id:554167de-2836-44d6-827c-81faea1e3ab6 user:1] multipart.py:625 - Calling on_part_data with data[0:78441]
+2025-04-03 16:23:41,380 [DEBUG] [req_id:554167de-2836-44d6-827c-81faea1e3ab6 user:1] multipart.py:628 - Calling on_part_end with no data
+2025-04-03 16:23:41,381 [DEBUG] [req_id:554167de-2836-44d6-827c-81faea1e3ab6 user:1] multipart.py:628 - Calling on_end with no data
+2025-04-03 16:23:41,389 [INFO] [req_id:None user:1] base.py:32 - POST /common/image [200] 0.0257s
+2025-04-03 16:30:07,778 [DEBUG] [req_id:933dc10d-6338-4789-8947-6a24227efbbd user:1] multipart.py:628 - Calling on_part_begin with no data
+2025-04-03 16:30:07,783 [DEBUG] [req_id:933dc10d-6338-4789-8947-6a24227efbbd user:1] multipart.py:625 - Calling on_header_field with data[54:73]
+2025-04-03 16:30:07,783 [DEBUG] [req_id:933dc10d-6338-4789-8947-6a24227efbbd user:1] multipart.py:625 - Calling on_header_value with data[75:174]
+2025-04-03 16:30:07,785 [DEBUG] [req_id:933dc10d-6338-4789-8947-6a24227efbbd user:1] multipart.py:628 - Calling on_header_end with no data
+2025-04-03 16:30:07,786 [DEBUG] [req_id:933dc10d-6338-4789-8947-6a24227efbbd user:1] multipart.py:625 - Calling on_header_field with data[176:188]
+2025-04-03 16:30:07,787 [DEBUG] [req_id:933dc10d-6338-4789-8947-6a24227efbbd user:1] multipart.py:625 - Calling on_header_value with data[190:200]
+2025-04-03 16:30:07,788 [DEBUG] [req_id:933dc10d-6338-4789-8947-6a24227efbbd user:1] multipart.py:628 - Calling on_header_end with no data
+2025-04-03 16:30:07,788 [DEBUG] [req_id:933dc10d-6338-4789-8947-6a24227efbbd user:1] multipart.py:628 - Calling on_headers_finished with no data
+2025-04-03 16:30:07,789 [DEBUG] [req_id:933dc10d-6338-4789-8947-6a24227efbbd user:1] multipart.py:625 - Calling on_part_data with data[204:65740]
+2025-04-03 16:30:07,796 [DEBUG] [req_id:933dc10d-6338-4789-8947-6a24227efbbd user:1] multipart.py:625 - Calling on_part_data with data[0:262144]
+2025-04-03 16:30:07,800 [DEBUG] [req_id:933dc10d-6338-4789-8947-6a24227efbbd user:1] multipart.py:625 - Calling on_part_data with data[0:78441]
+2025-04-03 16:30:07,800 [DEBUG] [req_id:933dc10d-6338-4789-8947-6a24227efbbd user:1] multipart.py:628 - Calling on_part_end with no data
+2025-04-03 16:30:07,805 [DEBUG] [req_id:933dc10d-6338-4789-8947-6a24227efbbd user:1] multipart.py:628 - Calling on_end with no data
+2025-04-03 16:30:07,814 [INFO] [req_id:None user:1] base.py:32 - POST /common/image [200] 0.041s
+2025-04-03 16:30:17,174 [DEBUG] [req_id:16ae01c6-7895-4048-80ed-8a2d982d7d85 user:1] multipart.py:628 - Calling on_part_begin with no data
+2025-04-03 16:30:17,175 [DEBUG] [req_id:16ae01c6-7895-4048-80ed-8a2d982d7d85 user:1] multipart.py:625 - Calling on_header_field with data[54:73]
+2025-04-03 16:30:17,176 [DEBUG] [req_id:16ae01c6-7895-4048-80ed-8a2d982d7d85 user:1] multipart.py:625 - Calling on_header_value with data[75:174]
+2025-04-03 16:30:17,177 [DEBUG] [req_id:16ae01c6-7895-4048-80ed-8a2d982d7d85 user:1] multipart.py:628 - Calling on_header_end with no data
+2025-04-03 16:30:17,178 [DEBUG] [req_id:16ae01c6-7895-4048-80ed-8a2d982d7d85 user:1] multipart.py:625 - Calling on_header_field with data[176:188]
+2025-04-03 16:30:17,178 [DEBUG] [req_id:16ae01c6-7895-4048-80ed-8a2d982d7d85 user:1] multipart.py:625 - Calling on_header_value with data[190:200]
+2025-04-03 16:30:17,179 [DEBUG] [req_id:16ae01c6-7895-4048-80ed-8a2d982d7d85 user:1] multipart.py:628 - Calling on_header_end with no data
+2025-04-03 16:30:17,180 [DEBUG] [req_id:16ae01c6-7895-4048-80ed-8a2d982d7d85 user:1] multipart.py:628 - Calling on_headers_finished with no data
+2025-04-03 16:30:17,181 [DEBUG] [req_id:16ae01c6-7895-4048-80ed-8a2d982d7d85 user:1] multipart.py:625 - Calling on_part_data with data[204:261614]
+2025-04-03 16:30:17,185 [DEBUG] [req_id:16ae01c6-7895-4048-80ed-8a2d982d7d85 user:1] multipart.py:625 - Calling on_part_data with data[0:144711]
+2025-04-03 16:30:17,187 [DEBUG] [req_id:16ae01c6-7895-4048-80ed-8a2d982d7d85 user:1] multipart.py:628 - Calling on_part_end with no data
+2025-04-03 16:30:17,188 [DEBUG] [req_id:16ae01c6-7895-4048-80ed-8a2d982d7d85 user:1] multipart.py:628 - Calling on_end with no data
+2025-04-03 16:30:17,362 [INFO] [req_id:16ae01c6-7895-4048-80ed-8a2d982d7d85 user:1] base.py:32 - POST /common/image [200] 0.1938s
+2025-04-03 16:30:22,854 [DEBUG] [req_id:005bb1c8-92ce-4db1-a83f-6fa069400ac4 user:1] multipart.py:628 - Calling on_part_begin with no data
+2025-04-03 16:30:22,855 [DEBUG] [req_id:005bb1c8-92ce-4db1-a83f-6fa069400ac4 user:1] multipart.py:625 - Calling on_header_field with data[54:73]
+2025-04-03 16:30:22,856 [DEBUG] [req_id:005bb1c8-92ce-4db1-a83f-6fa069400ac4 user:1] multipart.py:625 - Calling on_header_value with data[75:174]
+2025-04-03 16:30:22,857 [DEBUG] [req_id:005bb1c8-92ce-4db1-a83f-6fa069400ac4 user:1] multipart.py:628 - Calling on_header_end with no data
+2025-04-03 16:30:22,858 [DEBUG] [req_id:005bb1c8-92ce-4db1-a83f-6fa069400ac4 user:1] multipart.py:625 - Calling on_header_field with data[176:188]
+2025-04-03 16:30:22,858 [DEBUG] [req_id:005bb1c8-92ce-4db1-a83f-6fa069400ac4 user:1] multipart.py:625 - Calling on_header_value with data[190:200]
+2025-04-03 16:30:22,859 [DEBUG] [req_id:005bb1c8-92ce-4db1-a83f-6fa069400ac4 user:1] multipart.py:628 - Calling on_header_end with no data
+2025-04-03 16:30:22,860 [DEBUG] [req_id:005bb1c8-92ce-4db1-a83f-6fa069400ac4 user:1] multipart.py:628 - Calling on_headers_finished with no data
+2025-04-03 16:30:22,862 [DEBUG] [req_id:005bb1c8-92ce-4db1-a83f-6fa069400ac4 user:1] multipart.py:625 - Calling on_part_data with data[204:65740]
+2025-04-03 16:30:22,865 [DEBUG] [req_id:005bb1c8-92ce-4db1-a83f-6fa069400ac4 user:1] multipart.py:625 - Calling on_part_data with data[0:262144]
+2025-04-03 16:30:22,869 [DEBUG] [req_id:005bb1c8-92ce-4db1-a83f-6fa069400ac4 user:1] multipart.py:625 - Calling on_part_data with data[0:78441]
+2025-04-03 16:30:22,870 [DEBUG] [req_id:005bb1c8-92ce-4db1-a83f-6fa069400ac4 user:1] multipart.py:628 - Calling on_part_end with no data
+2025-04-03 16:30:22,871 [DEBUG] [req_id:005bb1c8-92ce-4db1-a83f-6fa069400ac4 user:1] multipart.py:628 - Calling on_end with no data
+2025-04-03 16:30:22,879 [INFO] [req_id:005bb1c8-92ce-4db1-a83f-6fa069400ac4 user:1] base.py:32 - POST /common/image [200] 0.028s
+2025-04-03 16:30:30,593 [DEBUG] [req_id:bd5a9515-db66-4a63-9a8c-52b63c546d84 user:1] connection.py:951 - caching sha2: succeeded by fast path.
+2025-04-03 16:30:30,800 [INFO] [req_id:bd5a9515-db66-4a63-9a8c-52b63c546d84 user:1] base.py:32 - GET /posts [200] 0.2451s
+2025-04-03 16:30:37,756 [INFO] [req_id:a2099201-97dd-4ed6-be57-524de14d626c user:None] base.py:32 - POST /auth/login/email [200] 0.1021s
+2025-04-03 16:53:46,845 [DEBUG] [req_id:81b13c1e-cb9a-467e-8aa8-dcc6057345c1 user:None] connection.py:951 - caching sha2: succeeded by fast path.
+2025-04-03 16:53:47,117 [INFO] [req_id:81b13c1e-cb9a-467e-8aa8-dcc6057345c1 user:None] base.py:33 - POST /auth/login/email [200] 0.4059s
+2025-04-03 16:54:42,306 [WARNING] [req_id:a093f43f-c1f1-4829-9d3b-0bf6d4bcfcbc user:None] handlers.py:64 - Unhandled HTTPException: 403 - Not authenticated | GET /posts
+2025-04-03 16:55:37,022 [WARNING] [req_id:12c4d7de-2639-44f5-95dd-b3b32663b0d1 user:1] handlers.py:64 - Unhandled HTTPException: 400 - 존재하지 않는 이미지입니다. | POST /posts

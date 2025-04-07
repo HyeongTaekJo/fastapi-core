@@ -1,0 +1,17 @@
+services:
+  mysql: # 단순히 이름
+    image: mysql:8.0
+    container_name: my-mysql-container # 컨테이너 이름 지정
+    restart: always
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_DATABASE: mysql-server
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+
+volumes:
+  mysql_data: # 볼륨 명시적으로 지정
