@@ -3,7 +3,7 @@ import bcrypt
 # from jose import jwt, JWTError  
 import jwt  # python-jose 대신 pyjwt 사용
 from jwt import ExpiredSignatureError, InvalidTokenError
-from fastapi import HTTPException, Depends
+from fastapi import HTTPException, Depends,status
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from user.schemas.response import UserSchema
@@ -35,18 +35,42 @@ class AuthService:
         
         return token
     
-    def rotate_token(self, token: str, is_refresh_token: bool) -> str:
-        # Refresh Token 검증
-        decode = jwt.decode(token, settings.JWT_SECRET, algorithms=[settings.ALGORITHM])
+    async def rotate_token(self, token: str, is_refresh: bool) -> str:
+        # 1. 토큰 디코딩
+        try:
+            decode = jwt.decode(token, settings.JWT_SECRET, algorithms=[settings.ALGORITHM])
+        except jwt.ExpiredSignatureError:
+            raise HTTPException(status_code=401, detail="토큰이 만료되었습니다.")
+        except jwt.InvalidTokenError:
+            raise HTTPException(status_code=401, detail="잘못된 토큰입니다.")
 
-         # 토큰 타입이 'refresh'인지 확인
+        # 2. 타입 체크
         if decode.get("type") != "refresh":
-            raise HTTPException(status_code=401, detail="토큰 재발급은 refresh 토큰으로만 가능합니다.")
+            raise HTTPException(status_code=401, detail="Refresh 토큰만 허용됩니다.")
         
-         # decode 값을 UserTokenSchema로 변환
-        user = UserTokenSchema(id=decode["sub"], email=decode["email"])
+        # 3. 유저 정보 추출
+        user_id = decode.get("sub")
+        user_email = decode.get("email")
+
+        # 4. Redis에서 저장된 토큰 조회
+        saved_token = await self.authRepository.get_refresh_token(user_id)
+
+        if saved_token != token:
+            raise HTTPException(status_code=401, detail="유효하지 않은 Refresh Token 입니다.")
+
+        # 5. 새 토큰 발급
+        user = UserTokenSchema(id=user_id, email=user_email)
+        new_token = self.sign_token(user, is_refresh=True)
+
         
-        return self.sign_token(user, is_refresh_token) 
+        # 6. AccessToken만 재발급할 때는 Redis 저장 X
+        if is_refresh:
+            new_refresh_token = self.sign_token(user, is_refresh=True)
+            await self.authRepository.save_refresh_token(user_id, new_refresh_token)
+            return new_refresh_token
+        else:
+            new_access_token = self.sign_token(user, is_refresh=False)
+            return new_access_token
 
     # 완료
     def decode_basic_token(self, token: str) -> dict:
@@ -101,24 +125,29 @@ class AuthService:
         return UserSchema.model_validate(user)  # Pydantic Schema 반환
     
     # 완료
-    async def login_user(
-            self, 
-            user: UserSchema,
-            
-    ) :
-         """사용자 로그인 후 토큰 발급 + Redis 저장"""
-         access_token = self.sign_token(user, is_refresh=False)
-         refresh_token = self.sign_token(user, is_refresh=True)
-    
-         #  Redis 저장
-         await self.authRepository.save_refresh_token(user.id, refresh_token)
+    async def login_user(self, user: UserSchema) -> TokenSchema:
+        """사용자 로그인 후 토큰 발급 + Redis 저장"""
+        access_token = self.sign_token(user, is_refresh=False)
+        refresh_token = self.sign_token(user, is_refresh=True)
 
-         return access_token, refresh_token
+        # Redis 저장
+        await self.authRepository.save_refresh_token(user.id, refresh_token)
+
+        # TokenSchema 객체로 반환
+        return TokenSchema(access_token=access_token, refresh_token=refresh_token)
 
 
     # 완료
     async def register_user(self, user_data: RegisterUserSchema) -> TokenSchema:
         """회원가입 비즈니스 로직"""
+         # 이메일 중복 검사
+        existing_user = await self.userRepository.get_user_by_email(user_data.email)
+        if existing_user:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="이미 등록된 이메일입니다."
+            )
+
 
         # 환경 변수에서 BCRYPT_ROUNDS 값 가져오기
         rounds = settings.BCRYPT_ROUNDS  
@@ -139,7 +168,7 @@ class AuthService:
 
         # Pydantic DTO 변환
         user_schema = UserSchema.model_validate(new_user)
-        return self.login_user(user_schema)  # 로그인 처리
+        return await self.login_user(user_schema)  # 로그인 처리
     
 @staticmethod
 def decode_jwt_token(token: str) -> UserTokenSchema:

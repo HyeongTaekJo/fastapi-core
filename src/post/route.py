@@ -31,10 +31,8 @@ async def get_paginated_posts(
 async def get_post_by_id(
     id: int,
     _: None = Depends(access_token),
-    user: UserModel = Depends(get_current_user) # user 필요시
+    # user: UserModel = Depends(get_current_user) # user 필요시
 ):
-    print({"name": user.nickname, "email": user.email})  # 속성 방식
-    
     service = PostService()
     return await service.get_post_by_id(id)
 
@@ -42,10 +40,8 @@ async def get_post_by_id(
 async def create_post(
     request: CreatePostSchema,
     _: None = Depends(access_token),
+    user: UserModel = Depends(get_current_user) # user 필요시
 ):
-    user = {
-        "id": 1  # 나중에 request.state.user.id 로 교체 가능
-    }
 
     session = get_db_from_context()
 
@@ -54,7 +50,7 @@ async def create_post(
         post_image_service = PostImageService()
 
         # 1. post 생성
-        post = await post_service.create_post(user["id"], request)
+        post = await post_service.create_post(user.id, request)
 
         # 2. 이미지 반복 저장
         for index, image_filename in enumerate(request.images):

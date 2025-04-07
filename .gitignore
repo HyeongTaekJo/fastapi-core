@@ -10,8 +10,8 @@ build/
 .venv/
 venv/
 ENV/
-env/
-*.env
+# env/
+# *.env
 
 # VSCode 설정
 .vscode/
@@ -40,3 +40,6 @@ htmlcov/
 
 # Docker MySQL 볼륨 데이터 (절대 업로드 X)
 src/mysql-data/
+
+# Docker MySQL 볼륨 데이터 (절대 업로드 X)
+mysql-data/

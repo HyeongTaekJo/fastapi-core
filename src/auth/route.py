@@ -1,9 +1,11 @@
-from fastapi import APIRouter, Depends, Request, Response
+from fastapi import APIRouter, Depends, Request, Response, status
 from auth.service import AuthService
 from user.schemas.response import UserSchema
 from auth.tokens.basic_token import basic_token
 from auth.schemas.request import RegisterUserSchema
 from auth.tokens.refresh_token import refresh_token
+from auth.utils.cookies import set_refresh_token_cookie
+from fastapi.responses import JSONResponse
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -23,32 +25,31 @@ async def post_login_email(
     auth_service: AuthService = Depends(),
     
 ):
-    access_token, refresh_token = await auth_service.login_user(user)
+    tokens = await auth_service.login_user(user)
 
-    # 쿠키 저장
-    response.set_cookie(
-        key="refresh_token",
-        value=refresh_token,
-        httponly=True,
-        max_age=60 * 60 * 24 * 7,
-        samesite="lax",
-        secure=True
-    )
+    # refresh_token을 쿠키에 저장
+    set_refresh_token_cookie(response, tokens.refresh_token)
 
     # refresh 토큰은 보안상 쿠키 security에 보관하고 따로 보내주지 않는다.
     # 단, frontend 담당자가 refresh_token을 쿠키에서 꺼내서 사용하면 된다고 알려줘야 한다.
-    return {"access_token": access_token}
+    return {"access_token": tokens.access_token}
 
 @router.post("/register/email")
 async def register_user(
-        request: RegisterUserSchema,
-        auth_service: AuthService = Depends(AuthService)
-    ):
-    return await auth_service.register_user(request)
+    request: RegisterUserSchema,
+    response: Response,
+    auth_service: AuthService = Depends(AuthService)
+):
+    tokens = await auth_service.register_user(request)
+
+    # refresh_token을 쿠키에 저장
+    set_refresh_token_cookie(response, tokens.refresh_token)
+
+    return {"access_token": tokens.access_token}
 
 # access_token 재발급
 @router.post("/token/access")
-def new_access_token(
+async def new_access_token(
         request: Request,
         _: refresh_token = Depends(),  # Refresh Token 검증
         auth_service: AuthService = Depends(AuthService)
@@ -57,14 +58,15 @@ def new_access_token(
     raw_token = request.state.token
 
     # 새로운 Access Token 발급
-    new_token = auth_service.rotate_token(raw_token, is_refresh_token=False)
+    new_token = await auth_service.rotate_token(raw_token, is_refresh=False)
 
     return {"access_token": new_token}
 
 # refresh_token 재발급
 @router.post("/token/refresh")
-def new_refresh_token(
+async def new_refresh_token(
         request: Request,
+        response: Response,
         _: refresh_token = Depends(),  # Refresh Token 검증
         auth_service: AuthService = Depends(AuthService)
     ):
@@ -72,6 +74,13 @@ def new_refresh_token(
     raw_token = request.state.token
 
     # 새로운 refresh Token 발급
-    new_token = auth_service.rotate_token(raw_token, is_refresh_token=True)
+    new_token = await auth_service.rotate_token(raw_token, is_refresh=True)
 
-    return {"refresh_token": new_token}
+    # refresh_token을 쿠키에 저장
+    set_refresh_token_cookie(response, new_token)
+
+    # 가장 안전하고 명시적인 방식
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content={"detail": "Refresh token updated successfully"}
+    )
