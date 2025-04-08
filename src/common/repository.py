@@ -2,7 +2,7 @@ from sqlalchemy import insert
 from fastapi import HTTPException, status
 from typing import List
 from common.model.image_model import ImageModel
-from common.utils.db_context import get_db_from_context  # Context 기반 세션 주입
+from database.session_context import get_db_from_context  # Context 기반 세션 주입
 
 class CommonRepository:
     def __init__(self):

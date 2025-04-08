@@ -5,7 +5,7 @@ from post.schemas.request import PaginatePostSchema, CreatePostSchema
 from common.service import CommonService
 from post.const.default_post_find_options import get_default_post_query
 from typing import List
-from common.utils.db_context import get_db_from_context
+from database.session_context import get_db_from_context
 
 # 비동기 engine을 사용하므로 repository는 비동기로 실행 해야한다.
 class PostRepository:

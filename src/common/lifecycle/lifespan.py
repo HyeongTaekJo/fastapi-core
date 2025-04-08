@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from database.connection import async_engine
+from database.mysql_connection import async_engine
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):

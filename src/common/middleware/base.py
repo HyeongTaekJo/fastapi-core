@@ -6,10 +6,10 @@ from fastapi import Request
 from common.utils.log_context import request_id_ctx_var, user_id_ctx_var
 
 from auth.service import decode_jwt_token  # 직접 구현 필요
-from database.connection import async_session_maker
-from database.redis_connection import redis
-from common.utils.db_context import set_db_context
-from common.utils.redis_context import set_redis_context
+from database.mysql_connection import async_session_maker
+from cache.redis_connection import redis
+from database.session_context import set_db_context
+from cache.redis_context import set_redis_context
 
 logger = logging.getLogger(__name__)
 

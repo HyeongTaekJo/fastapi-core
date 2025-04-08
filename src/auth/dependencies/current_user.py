@@ -2,7 +2,7 @@ from fastapi import Request, HTTPException, Depends
 from user.repository import UserRepository
 from user.schemas.response import UserSchema
 from user.model.model import UserModel
-from common.utils.redis_context import get_redis_from_context
+from cache.redis_context import get_redis_from_context
 import json
 
 import logging
@@ -16,7 +16,7 @@ async def get_current_user(
 ) -> UserModel:
     
     redis = get_redis_from_context()  # 미들웨어에서 주입된 Redis 사용
-    user_id = getattr(request.state, "user_id", None)
+    user_id = getattr(request.state, "user_id", None) # 
     if not user_id:
         raise HTTPException(status_code=401, detail="Not authenticated")
 
@@ -36,7 +36,7 @@ async def get_current_user(
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    #  Redis에 캐싱 (dict 형태로)
-    user_dict = UserSchema.model_validate(user).dict()
+    # Redis에 캐싱 (dict 형태로)
+    user_dict = UserSchema.model_validate(user).model_dump()
     await redis.setex(redis_key, 3600, json.dumps(user_dict))
     return user

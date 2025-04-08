@@ -5,7 +5,7 @@ from post.service import PostService
 from post.image.image_service import PostImageService
 from post.image.schemas.request import CreatePostImageSchema
 from common.model.image_model import ImageModelType
-from common.utils.db_context import get_db_from_context  # Context에서 세션 꺼내기
+from database.session_context import get_db_from_context  # Context에서 세션 꺼내기
 from auth.dependencies.current_user import get_current_user
 from user.model.model import UserModel
 
@@ -31,7 +31,7 @@ async def get_paginated_posts(
 async def get_post_by_id(
     id: int,
     _: None = Depends(access_token),
-    # user: UserModel = Depends(get_current_user) # user 필요시
+    # user: UserModel = Depends(get_current_user) # user 필요시(accessToken이 선행되어야 한다.)
 ):
     service = PostService()
     return await service.get_post_by_id(id)
@@ -40,7 +40,7 @@ async def get_post_by_id(
 async def create_post(
     request: CreatePostSchema,
     _: None = Depends(access_token),
-    user: UserModel = Depends(get_current_user) # user 필요시
+    user: UserModel = Depends(get_current_user) # user 필요시(accessToken이 선행되어야 한다.)
 ):
 
     session = get_db_from_context()

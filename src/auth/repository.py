@@ -1,5 +1,5 @@
 from redis.asyncio import Redis
-from common.utils.redis_context import get_redis_from_context
+from cache.redis_context import get_redis_from_context
 from typing import Optional
 import time  
 

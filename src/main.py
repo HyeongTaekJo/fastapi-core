@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 from fastapi import FastAPI
-from common.const.lifespan import lifespan
+from common.lifecycle.lifespan import lifespan
 from fastapi.staticfiles import StaticFiles
 from common.const.settings import settings
 from common.const.path_consts import PUBLIC_FOLDER_PATH

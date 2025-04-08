@@ -1,7 +1,7 @@
 from typing import List
 from sqlalchemy import select, delete
 from user.model.model import UserModel
-from common.utils.db_context import get_db_from_context  # Context 기반으로 변경
+from database.session_context import get_db_from_context  # Context 기반으로 변경
 from typing import Any
 
 class UserRepository:

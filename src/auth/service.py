@@ -14,7 +14,7 @@ from auth.schemas.request import RegisterUserSchema
 from user.model.model import UserModel
 from auth.schemas.request import UserTokenSchema
 from auth.repository import AuthRepository
-from database.redis_connection import redis
+from cache.redis_connection import redis
 from auth.const.fields import UNIQUE_USER_FIELDS
 from common.exceptions.base import ConflictException
 
