@@ -33,6 +33,18 @@ async def app_exception_handler(request: Request, exc: AppException):
 
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     logger.warning(f"Validation failed: {exc.errors()}")
+
+    def sanitize_errors(errors):
+        sanitized = []
+        for e in errors:
+            e = e.copy()
+            ctx = e.get("ctx")
+            if ctx and "error" in ctx:
+                e["msg"] = str(ctx["error"])  # msg도 커스텀 메시지로 덮어쓰기
+                del e["ctx"]  # ctx는 아예 제거
+            sanitized.append(e)
+        return sanitized
+
     return JSONResponse(
         status_code=422,
         content={
@@ -40,7 +52,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
                 "code": "VALIDATION_ERROR",
                 "message": "Request validation failed",
                 "status_code": 422,
-                "details": exc.errors()
+                "details": sanitize_errors(exc.errors())
             }
         }
     )

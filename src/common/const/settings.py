@@ -1,6 +1,7 @@
 from pydantic_settings import BaseSettings
 from pydantic import Field
-from common.const.logging_consts import LogLevelEnum 
+from common.const.logging_consts import LogLevelEnum
+
 
 class Settings(BaseSettings):
     # JWT 및 암호화 설정
@@ -41,10 +42,35 @@ class Settings(BaseSettings):
     # CORS (Cross-Origin Resource Sharing)
     ALLOWED_ORIGINS: list[str] = []
 
+    # 환경 구분
+    ENV: str = Field(
+        default="development",
+        description="환경 설정 (development, production, test 등)"
+    )
+
     class Config:
         env_file = ".env"  # `.env` 파일에서 환경 변수를 로드
         env_file_encoding = "utf-8"
         extra = "forbid"  # 정의되지 않은 값 에러 발생
 
-# 전역적으로 설정을 불러올 수 있도록 인스턴스 생성
+    #  프로덕션 여부 판단
+    @property
+    def IS_PROD(self) -> bool:
+        return self.ENV.lower() == "production"
+
+    #  쿠키 보안 관련 자동 설정
+    @property
+    def COOKIE_SECURE(self) -> bool:
+        return self.IS_PROD  # 운영 환경이면 HTTPS 전용 쿠키
+
+    @property
+    def COOKIE_HTTPONLY(self) -> bool:
+        return True  # 보안상 항상 True
+
+    @property
+    def COOKIE_SAMESITE(self) -> str:
+        return "Strict" if self.IS_PROD else "Lax"  # 운영은 Strict, 개발은 Lax
+
+
+#  전역적으로 설정을 불러올 수 있도록 인스턴스 생성
 settings = Settings()

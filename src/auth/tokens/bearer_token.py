@@ -3,6 +3,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from auth.service import AuthService
 from user.repository import UserRepository
 from sqlalchemy.ext.asyncio import AsyncSession
+from auth.repository import AuthRepository
 
 security = HTTPBearer()  # Bearer Token 인증 스키마
 
@@ -10,6 +11,7 @@ async def bearer_token(
     request: Request,
     auth_header: HTTPAuthorizationCredentials = Depends(security),
     auth_service: AuthService = Depends(),
+    auth_repository: AuthRepository = Depends(),
     user_repository: UserRepository = Depends()
 ):
     """
@@ -22,10 +24,14 @@ async def bearer_token(
 
     raw_token = auth_header.credentials  # Bearer 토큰 값 추출
 
-    # 2. 토큰 검증 (유효성 검사 및 페이로드 추출)
+    # 2. 블랙리스트 체크 먼저
+    if await auth_repository.is_blacklisted(raw_token):
+        raise HTTPException(status_code=401, detail="로그아웃된 토큰입니다.")
+
+    # 3. 토큰 검증 (유효성 검사 및 페이로드 추출)
     payload = auth_service.verify_token(raw_token)
 
-    # 3. 사용자 정보 조회
+    # 4. 사용자 정보 조회
     email = payload.get("email")
 
     if not email:
@@ -37,7 +43,7 @@ async def bearer_token(
     db: AsyncSession = user_repository.session
     await db.rollback()
 
-    # 4. 요청 객체에 사용자 및 토큰 정보 추가
+    # 5. 요청 객체에 사용자 및 토큰 정보 추가
     request.state.user_id = payload["sub"]  # user_id만 저장
     request.state.token = raw_token
     request.state.token_type = payload.get("type", "unknown")  # access 또는 refresh

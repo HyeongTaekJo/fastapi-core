@@ -1,7 +1,9 @@
+version: "3.8"
+
 services:
-  mysql: # 단순히 이름
+  mysql:
     image: mysql:8.0
-    container_name: my-mysql-container # 컨테이너 이름 지정
+    container_name: my-mysql-container
     restart: always
     volumes:
       - ./mysql-data:/var/lib/mysql
@@ -12,6 +14,11 @@ services:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_USER: mysql
       MYSQL_PASSWORD: mysql
+    command: --wait_timeout=28800 --interactive_timeout=28800
 
-volumes:
-  mysql_data: # 볼륨 명시적으로 지정
+  redis:
+    image: redis:7.2
+    container_name: my-redis-container
+    restart: always
+    ports:
+      - "6379:6379" # 기본 포트

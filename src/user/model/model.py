@@ -9,8 +9,10 @@ from auth.schemas.request import RegisterUserSchema
 class UserModel(Base):
     __tablename__ = "user"
 
-    nickname = Column(String(20), unique=True, nullable=False)
-    email = Column(String(255), unique=True, nullable=False)
+    nickname = Column(String(20), unique=True, nullable=True)
+    email = Column(String(255), unique=True, nullable=True) # 로그인 타입 변경시 사용
+    login_id = Column(String(50), unique=True)  # 로그인 타입 변경시 사용
+    phone = Column(String(20), unique=True) # 로그인 타입 변경시 사용
     password = Column(String(255), nullable=False)  # 해싱된 비밀번호 저장
     role = Column(Enum(RolesEnum), default=RolesEnum.USER)  # 기본값 USER
 
@@ -22,8 +24,9 @@ class UserModel(Base):
     @classmethod
     def create(cls, request: RegisterUserSchema) -> "UserModel": # cls는 PostModel 클래스 자체를 의미
         return cls(
-            nickname=request.nickname,  
-            email=request.email,
+            nickname=request.nickname,
+            email=request.email if request.email else None,
+            login_id=request.login_id if request.login_id else None,
+            phone=request.phone if request.phone else None,
             password=request.password,
-            
         )

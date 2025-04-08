@@ -1,0 +1,17 @@
+2025-04-07 16:38:43,541 [DEBUG] [req_id:a7d516fa-8a69-42e8-b6c0-50ab7c46cb7c user:None] connection.py:951 - caching sha2: succeeded by fast path.
+2025-04-07 16:38:43,697 [INFO] [req_id:a7d516fa-8a69-42e8-b6c0-50ab7c46cb7c user:None] base.py:35 - POST /auth/login/email [200] 0.1842s
+2025-04-07 16:39:04,069 [DEBUG] [req_id:559bc614-2739-4b11-9c6a-e9a86a0956a2 user:None] connection.py:951 - caching sha2: succeeded by fast path.
+2025-04-07 16:39:04,220 [INFO] [req_id:559bc614-2739-4b11-9c6a-e9a86a0956a2 user:None] base.py:35 - POST /auth/login/email [200] 0.1768s
+2025-04-07 16:40:24,813 [INFO] [req_id:51b60558-b6df-4bc4-bde2-c3ddbaa987b0 user:1] base.py:35 - GET /posts [200] 0.0801s
+2025-04-07 16:40:30,308 [INFO] [req_id:ed2f3de5-cde8-4a11-92b3-f0d2d557a66e user:1] base.py:35 - GET /posts/100 [200] 0.03s
+2025-04-07 16:40:37,444 [WARNING] [req_id:0dda4983-6a5b-41f3-96c3-4f0776b9a255 user:1] handlers.py:64 - Unhandled HTTPException: 400 - 존재하지 않는 이미지입니다. | POST /posts
+2025-04-07 16:40:37,445 [INFO] [req_id:0dda4983-6a5b-41f3-96c3-4f0776b9a255 user:1] base.py:35 - POST /posts [400] 0.0497s
+2025-04-07 16:40:56,975 [WARNING] [req_id:965463e6-5fbc-4cf5-bb14-5ab4e863b920 user:None] handlers.py:64 - Unhandled HTTPException: 403 - Not authenticated | PATCH /posts/1
+2025-04-07 16:40:56,977 [INFO] [req_id:965463e6-5fbc-4cf5-bb14-5ab4e863b920 user:None] base.py:35 - PATCH /posts/1 [403] 0.003s
+2025-04-07 16:41:05,263 [WARNING] [req_id:af5dd55d-af5d-4c7a-bed4-11b830ec9d72 user:1] handlers.py:64 - Unhandled HTTPException: 404 - 존재하지 않는 post 입니다. | PATCH /posts/1
+2025-04-07 16:41:05,264 [INFO] [req_id:af5dd55d-af5d-4c7a-bed4-11b830ec9d72 user:1] base.py:35 - PATCH /posts/1 [404] 0.0153s
+2025-04-07 16:41:11,467 [INFO] [req_id:4e626f40-6e40-4be8-8e64-150768deab01 user:1] base.py:35 - PATCH /posts/5 [200] 0.0444s
+2025-04-07 16:41:19,809 [INFO] [req_id:0351ee98-5154-4f48-bf3c-b28eff3a70aa user:1] base.py:35 - DELETE /posts/5 [200] 0.0427s
+2025-04-07 16:43:18,038 [INFO] [req_id:178274f4-17ce-4581-aa5c-4089e71535f4 user:None] base.py:35 - POST /auth/login/email [200] 0.0894s
+2025-04-07 16:43:51,867 [INFO] [req_id:73ef205a-96df-48f3-be21-c1c1ce3ae468 user:3] base.py:35 - GET /posts/100 [200] 0.0208s
+2025-04-07 16:44:05,179 [INFO] [req_id:41e864f9-e9fb-4272-b7e8-41f8c661b246 user:3] base.py:35 - GET /posts/100 [200] 0.0169s

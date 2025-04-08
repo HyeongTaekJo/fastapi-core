@@ -1,6 +1,8 @@
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, Request
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from auth.service import AuthService
+from user.schemas.response import UserSchema
+from auth.const.fields import LOGIN_TYPE_FIELD_MAP
 
 security = HTTPBasic()
 # ★ HTTPBasic이 자동으로 검증해주는 것들 ★
@@ -9,19 +11,32 @@ security = HTTPBasic()
 # Base64(username:password)가 올바르게 디코딩되는지?
 # username과 password 값이 있는지?
 
+
 async def basic_token(
+    request: Request,
     credentials: HTTPBasicCredentials = Depends(security), 
-    auth_service: AuthService = Depends(AuthService)
-):
+    auth_service: AuthService = Depends()
+)-> UserSchema:
     """ Basic Auth를 사용한 인증 """
      # credentials가 None인지 확인
     if not credentials:
         raise HTTPException(status_code=401, detail="Basic 인증 정보가 제공되지 않았습니다.")
-    
-    user = await auth_service.authenticate_with_email_password(
-        email=credentials.username, # credentials의 username은 필드 이름일 뿐이고, 실제 값은 이메일일 수도 있고 아이디일 수도 있다.
-        password=credentials.password
+
+    identifier = credentials.username
+    password = credentials.password
+
+    # 요청 경로 기반 필드 판단
+    path = request.url.path.lower()
+    field = next(
+        (field for route, field in LOGIN_TYPE_FIELD_MAP.items() if route in path),
+        None
     )
+
+    if not field:
+        raise HTTPException(status_code=400, detail="지원하지 않는 로그인 경로입니다.")
+
+    # 인증 처리
+    user = await auth_service.authenticate_with_field(field, identifier, password)
 
     if not user:
         raise HTTPException(status_code=401, detail="이메일 또는 비밀번호가 올바르지 않습니다.")

@@ -1,13 +1,17 @@
 from pydantic import BaseModel, EmailStr
 from typing import List
 from user.const.roles import RolesEnum
+from typing import Optional
 
 class UserSchema(BaseModel):
+   
     id: int
     nickname: str
-    email: EmailStr
-    # password: str
+    email: Optional[EmailStr] = None
+    login_id: Optional[str] = None
+    phone: Optional[str] = None
     role: RolesEnum
+    # password: str
 
 
     # pydantic에서 SQLAlchemy를 바로 읽을 수 있도록 하는 것

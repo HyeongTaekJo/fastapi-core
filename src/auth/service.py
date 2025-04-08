@@ -15,13 +15,14 @@ from user.model.model import UserModel
 from auth.schemas.request import UserTokenSchema
 from auth.repository import AuthRepository
 from database.redis_connection import redis
+from auth.const.fields import UNIQUE_USER_FIELDS
+from common.exceptions.base import ConflictException
 
 class AuthService:
     def __init__(self):
-        self.userRepository = UserRepository()
-        self.authRepository = AuthRepository()
+        self.user_repository = UserRepository()
+        self.auth_repository = AuthRepository()
 
-    # 완료
     def extract_token(self, auth_header: str, is_bearer: bool) -> str:
         """Authorization 헤더에서 토큰을 추출"""
         if not auth_header:
@@ -53,7 +54,7 @@ class AuthService:
         user_email = decode.get("email")
 
         # 4. Redis에서 저장된 토큰 조회
-        saved_token = await self.authRepository.get_refresh_token(user_id)
+        saved_token = await self.auth_repository.get_refresh_token(user_id)
 
         if saved_token != token:
             raise HTTPException(status_code=401, detail="유효하지 않은 Refresh Token 입니다.")
@@ -66,13 +67,12 @@ class AuthService:
         # 6. AccessToken만 재발급할 때는 Redis 저장 X
         if is_refresh:
             new_refresh_token = self.sign_token(user, is_refresh=True)
-            await self.authRepository.save_refresh_token(user_id, new_refresh_token)
+            await self.auth_repository.save_refresh_token(user_id, new_refresh_token)
             return new_refresh_token
         else:
             new_access_token = self.sign_token(user, is_refresh=False)
             return new_access_token
 
-    # 완료
     def decode_basic_token(self, token: str) -> dict:
         """Base64로 인코딩된 `email:password`를 디코딩"""
         try:
@@ -84,7 +84,6 @@ class AuthService:
         except Exception:
             raise HTTPException(status_code=401, detail="잘못된 Basic Token 입니다.")
 
-    # 완료
     def verify_token(self, token: str) -> dict:
         """JWT 검증"""
         try:
@@ -95,7 +94,6 @@ class AuthService:
         except jwt.InvalidTokenError:
             raise HTTPException(status_code=401, detail="잘못된 토큰입니다.")
 
-    # 완료
     def sign_token(self, user: UserTokenSchema, is_refresh: bool) -> str:
         """JWT 발급"""
         payload = {
@@ -108,46 +106,39 @@ class AuthService:
         # is_refresh = True (리프레시 토큰) → 3시간 (10800초)
         # is_refresh = False (액세스 토큰) → 1시간 (3600초)
 
-    # 완료
-    async def authenticate_with_email_password(self, email: str, password: str) -> UserSchema:
-        """이메일과 비밀번호로 사용자 인증"""
-        user = await self.userRepository.get_user_by_email(email)
+    async def authenticate_with_field(
+        self, field: str, identifier: str, password: str
+    ) -> UserSchema:
+        """필드 기반 사용자 인증"""
+        user = await self.user_repository.get_user_by_field(field, identifier)
 
         if not user:
-            raise HTTPException(status_code=401, detail="존재하지 않는 User 입니다.")
+            raise HTTPException(status_code=401, detail="존재하지 않는 사용자입니다.")
 
-        if not bcrypt.checkpw(
-            password.encode("utf-8"), # byte 타입으로 변환
-            user.password.encode("utf-8"),  # 해시된 비밀번호도 bytes로 변환
-        ):
+        if not bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")):
             raise HTTPException(status_code=401, detail="비밀번호가 일치하지 않습니다.")
 
-        return UserSchema.model_validate(user)  # Pydantic Schema 반환
+        return UserSchema.model_validate(user)
     
-    # 완료
     async def login_user(self, user: UserSchema) -> TokenSchema:
         """사용자 로그인 후 토큰 발급 + Redis 저장"""
         access_token = self.sign_token(user, is_refresh=False)
         refresh_token = self.sign_token(user, is_refresh=True)
 
         # Redis 저장
-        await self.authRepository.save_refresh_token(user.id, refresh_token)
+        await self.auth_repository.save_refresh_token(user.id, refresh_token)
 
         # TokenSchema 객체로 반환
         return TokenSchema(access_token=access_token, refresh_token=refresh_token)
 
 
-    # 완료
     async def register_user(self, user_data: RegisterUserSchema) -> TokenSchema:
         """회원가입 비즈니스 로직"""
-         # 이메일 중복 검사
-        existing_user = await self.userRepository.get_user_by_email(user_data.email)
-        if existing_user:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="이미 등록된 이메일입니다."
-            )
-
+        
+        for field in UNIQUE_USER_FIELDS:
+            value = getattr(user_data, field, None)
+            if value and await self.user_repository.get_user_by_field(field, value):
+                raise ConflictException(f"이미 등록된 {field}입니다.")
 
         # 환경 변수에서 BCRYPT_ROUNDS 값 가져오기
         rounds = settings.BCRYPT_ROUNDS  
@@ -164,12 +155,23 @@ class AuthService:
         new_user_model.password = hashed_password  # 해싱된 비밀번호 적용
 
         # 레포지토리에 저장
-        new_user = await self.userRepository.create_user(new_user_model)
+        new_user = await self.user_repository.create_user(new_user_model)
 
         # Pydantic DTO 변환
         user_schema = UserSchema.model_validate(new_user)
         return await self.login_user(user_schema)  # 로그인 처리
     
+    async def logout(self, access_token: str):
+        payload = self.verify_token(access_token)
+        user_id = payload["sub"]
+        exp = payload["exp"]
+
+        # 1. access token 블랙리스트 등록
+        await self.auth_repository.blacklist_token(access_token, exp)
+
+        # 2. redis에 저장된 refresh token 제거
+        await self.auth_repository.delete_refresh_token(user_id)
+
 @staticmethod
 def decode_jwt_token(token: str) -> UserTokenSchema:
     """JWT 토큰을 검증하고, 사용자 정보(id, email)를 추출"""

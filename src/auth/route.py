@@ -6,10 +6,11 @@ from auth.schemas.request import RegisterUserSchema
 from auth.tokens.refresh_token import refresh_token
 from auth.utils.cookies import set_refresh_token_cookie
 from fastapi.responses import JSONResponse
+from auth.tokens.access_token import access_token
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-
+# 로그인
 @router.post("/login/email")
 async def post_login_email(
     # 특정 API에만 적용
@@ -34,11 +35,30 @@ async def post_login_email(
     # 단, frontend 담당자가 refresh_token을 쿠키에서 꺼내서 사용하면 된다고 알려줘야 한다.
     return {"access_token": tokens.access_token}
 
+# 로그아웃
+@router.post("/logout")
+async def logout(
+    request: Request,
+    _: None = Depends(access_token),
+    auth_service: AuthService = Depends(),
+):
+    access_token = request.state.token  # access_token은 미리 검증된 상태
+    await auth_service.logout(access_token)
+
+    response = JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content={"detail": "로그아웃이 완료되었습니다."}
+    )
+    response.delete_cookie("refresh_token")
+    return response
+
+
+# 회원가입(email 방식)
 @router.post("/register/email")
 async def register_user(
     request: RegisterUserSchema,
     response: Response,
-    auth_service: AuthService = Depends(AuthService)
+    auth_service: AuthService = Depends()
 ):
     tokens = await auth_service.register_user(request)
 
@@ -84,3 +104,48 @@ async def new_refresh_token(
         status_code=status.HTTP_200_OK,
         content={"detail": "Refresh token updated successfully"}
     )
+
+# 로그인(id 방식)
+@router.post("/login/login_id")
+async def login_login_id(
+    response: Response,
+    user: UserSchema = Depends(basic_token),  # login_id 기반 BasicAuth
+    auth_service: AuthService = Depends(),
+):
+    tokens = await auth_service.login_user(user)
+    set_refresh_token_cookie(response, tokens.refresh_token)
+    return {"access_token": tokens.access_token}
+
+# 로그인(핸드폰 방식)
+@router.post("/login/phone")
+async def login_phone(
+    response: Response,
+    user: UserSchema = Depends(basic_token),  # phone 기반 BasicAuth
+    auth_service: AuthService = Depends(),
+):
+    tokens = await auth_service.login_user(user)
+    set_refresh_token_cookie(response, tokens.refresh_token)
+    return {"access_token": tokens.access_token}
+
+
+# 회원가입(id 방식)
+@router.post("/register/login_id")
+async def register_user(
+    request: RegisterUserSchema,
+    response: Response,
+    auth_service: AuthService = Depends()
+):
+    tokens = await auth_service.register_user(request)
+    set_refresh_token_cookie(response, tokens.refresh_token)
+    return {"access_token": tokens.access_token}
+
+# 회원가입(핸드폰 방식)
+@router.post("/register/phone")
+async def register_user(
+    request: RegisterUserSchema,
+    response: Response,
+    auth_service: AuthService = Depends()
+):
+    tokens = await auth_service.register_user(request)
+    set_refresh_token_cookie(response, tokens.refresh_token)
+    return {"access_token": tokens.access_token}
