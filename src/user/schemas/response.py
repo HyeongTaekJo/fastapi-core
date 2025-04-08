@@ -6,7 +6,7 @@ from typing import Optional
 class UserSchema(BaseModel):
    
     id: int
-    nickname: str
+    nickname: Optional[str] = None
     email: Optional[EmailStr] = None
     login_id: Optional[str] = None
     phone: Optional[str] = None

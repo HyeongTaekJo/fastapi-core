@@ -3,10 +3,10 @@ from typing import Optional
 
 # 회원가입 요청 스키마
 class RegisterUserSchema(BaseModel):
-    email: Optional[EmailStr] = Field(default=None)
+    email: Optional[EmailStr] = None
     login_id: Optional[str] = Field(default=None, min_length=4, max_length=30)
     phone: Optional[str] = Field(default=None, min_length=10, max_length=20)
-    nickname: str
+    nickname: Optional[str] = None
     password: str
 
     @model_validator(mode="after")
@@ -26,11 +26,34 @@ class RegisterUserSchema(BaseModel):
 
 #  로그인 요청 스키마
 class LoginUserSchema(BaseModel):
-    email: EmailStr
-    password: str
-
-# 토큰 검증
-class UserTokenSchema(BaseModel):
     id: int
-    email: str
+    email: Optional[EmailStr] = None
+    login_id: Optional[str] = None
+    phone: Optional[str] = None
+
+    @model_validator(mode="after")
+    def exactly_one_identifier(cls, values):
+        identifiers = [values.email, values.login_id, values.phone]
+        provided = [i for i in identifiers if i is not None]
+
+        if len(provided) != 1:
+            raise ValueError("email, login_id, phone 중 정확히 하나만 입력해야 합니다.")
+        
+        return values
+
+# 공통 필드
+class BaseLoginSchema(BaseModel):
+    id: int
+
+# 이메일 로그인용
+class EmailLoginSchema(BaseLoginSchema):
+    email: EmailStr
+
+# 아이디 로그인용
+class LoginIdLoginSchema(BaseLoginSchema):
+    login_id: str
+
+# 핸드폰 로그인용
+class PhoneLoginSchema(BaseLoginSchema):
+    phone: str
     

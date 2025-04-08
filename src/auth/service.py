@@ -3,7 +3,7 @@ import bcrypt
 # from jose import jwt, JWTError  
 import jwt  # python-jose 대신 pyjwt 사용
 from jwt import ExpiredSignatureError, InvalidTokenError
-from fastapi import HTTPException, Depends,status
+from fastapi import HTTPException, Depends, status
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from user.schemas.response import UserSchema
@@ -12,11 +12,13 @@ from auth.schemas.response import TokenSchema
 from user.repository import UserRepository
 from auth.schemas.request import RegisterUserSchema
 from user.model.model import UserModel
-from auth.schemas.request import UserTokenSchema
 from auth.repository import AuthRepository
 from cache.redis_connection import redis
 from auth.const.fields import UNIQUE_USER_FIELDS
 from common.exceptions.base import ConflictException
+from common.exceptions.base import UnauthorizedException
+from common.exceptions.base import NotFoundException  # 추가됨
+from auth.schemas.request import LoginUserSchema
 
 class AuthService:
     def __init__(self):
@@ -26,13 +28,13 @@ class AuthService:
     def extract_token(self, auth_header: str, is_bearer: bool) -> str:
         """Authorization 헤더에서 토큰을 추출"""
         if not auth_header:
-            raise HTTPException(status_code=401, detail="Authorization header에 토큰이 없습니다.")
+            raise UnauthorizedException("Authorization header에 토큰이 없습니다.")
         
         token_type, token = auth_header.split(" ", 1)
         expected_type = "Bearer" if is_bearer else "Basic"
         
         if token_type != expected_type:
-            raise HTTPException(status_code=401, detail="잘못된 토큰입니다.")
+            raise UnauthorizedException("잘못된 토큰입니다.")
         
         return token
     
@@ -41,29 +43,32 @@ class AuthService:
         try:
             decode = jwt.decode(token, settings.JWT_SECRET, algorithms=[settings.ALGORITHM])
         except jwt.ExpiredSignatureError:
-            raise HTTPException(status_code=401, detail="토큰이 만료되었습니다.")
+            raise UnauthorizedException("토큰이 만료되었습니다.")
         except jwt.InvalidTokenError:
-            raise HTTPException(status_code=401, detail="잘못된 토큰입니다.")
+            raise UnauthorizedException("잘못된 토큰입니다.")
 
         # 2. 타입 체크
         if decode.get("type") != "refresh":
-            raise HTTPException(status_code=401, detail="Refresh 토큰만 허용됩니다.")
-        
+            raise UnauthorizedException("Refresh 토큰만 허용됩니다.")
+
         # 3. 유저 정보 추출
         user_id = decode.get("sub")
-        user_email = decode.get("email")
+
+        # identifier (email, login_id, phone 중 하나)
+        identifier_keys = ["email", "login_id", "phone"]
+        identifier_data = {k: decode.get(k) for k in identifier_keys if decode.get(k) is not None}
+
+        if not identifier_data or len(identifier_data) != 1:
+            raise UnauthorizedException("유효하지 않은 사용자 식별자입니다.")
 
         # 4. Redis에서 저장된 토큰 조회
         saved_token = await self.auth_repository.get_refresh_token(user_id)
-
         if saved_token != token:
-            raise HTTPException(status_code=401, detail="유효하지 않은 Refresh Token 입니다.")
+            raise UnauthorizedException("유효하지 않은 Refresh Token 입니다.")
 
-        # 5. 새 토큰 발급
-        user = UserTokenSchema(id=user_id, email=user_email)
-        new_token = self.sign_token(user, is_refresh=True)
+        # 5. 새로운 토큰 발급을 위한 사용자 객체 구성
+        user = LoginUserSchema(id=user_id, **identifier_data)
 
-        
         # 6. AccessToken만 재발급할 때는 Redis 저장 X
         if is_refresh:
             new_refresh_token = self.sign_token(user, is_refresh=True)
@@ -82,7 +87,7 @@ class AuthService:
 
             return {"email": email, "password": password}  # 딕셔너리 반환
         except Exception:
-            raise HTTPException(status_code=401, detail="잘못된 Basic Token 입니다.")
+            raise UnauthorizedException("잘못된 Basic Token 입니다.")
 
     def verify_token(self, token: str) -> dict:
         """JWT 검증"""
@@ -90,17 +95,30 @@ class AuthService:
             payload = jwt.decode(token, settings.JWT_SECRET, algorithms=[settings.ALGORITHM])
             return payload
         except jwt.ExpiredSignatureError:
-            raise HTTPException(status_code=401, detail="토큰이 만료되었습니다.")
+            raise UnauthorizedException("토큰이 만료되었습니다.")
         except jwt.InvalidTokenError:
-            raise HTTPException(status_code=401, detail="잘못된 토큰입니다.")
+            raise UnauthorizedException("잘못된 토큰입니다.")
 
-    def sign_token(self, user: UserTokenSchema, is_refresh: bool) -> str:
+    def sign_token(self, user: LoginUserSchema, is_refresh: bool) -> str:
         """JWT 발급"""
+        identifier_key = None
+        identifier_value = None
+
+        for key in ["email", "login_id", "phone"]:
+            value = getattr(user, key, None)
+            if value is not None:
+                identifier_key = key
+                identifier_value = value
+                break
+
+        if identifier_key is None:
+            raise ValueError("유저 식별자가 없습니다.")
+
         payload = {
             "sub": str(user.id),
-            "email": user.email,
+            identifier_key: identifier_value,
             "type": "refresh" if is_refresh else "access",
-            "exp": datetime.now() + timedelta(seconds=10800 if is_refresh else 3600)  # 3시간, 1시간
+            "exp": datetime.now() + timedelta(seconds=10800 if is_refresh else 3600)
         }
         return jwt.encode(payload, settings.JWT_SECRET, algorithm=settings.ALGORITHM)
         # is_refresh = True (리프레시 토큰) → 3시간 (10800초)
@@ -113,10 +131,10 @@ class AuthService:
         user = await self.user_repository.get_user_by_field(field, identifier)
 
         if not user:
-            raise HTTPException(status_code=401, detail="존재하지 않는 사용자입니다.")
+            raise NotFoundException("User")
 
         if not bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")):
-            raise HTTPException(status_code=401, detail="비밀번호가 일치하지 않습니다.")
+            raise UnauthorizedException("비밀번호가 일치하지 않습니다.")
 
         return UserSchema.model_validate(user)
     
@@ -173,12 +191,18 @@ class AuthService:
         await self.auth_repository.delete_refresh_token(user_id)
 
 @staticmethod
-def decode_jwt_token(token: str) -> UserTokenSchema:
+def decode_jwt_token(token: str) -> LoginUserSchema:
     """JWT 토큰을 검증하고, 사용자 정보(id, email)를 추출"""
     try:
         payload = jwt.decode(token, settings.JWT_SECRET, algorithms=[settings.ALGORITHM])
-        return UserTokenSchema(id=payload["sub"], email=payload["email"])
+        
+        return LoginUserSchema(
+            id=int(payload["sub"]),
+            email=payload.get("email"),
+            login_id=payload.get("login_id"),
+            phone=payload.get("phone")
+        )
     except jwt.ExpiredSignatureError:
-        raise HTTPException(status_code=401, detail="토큰이 만료되었습니다.")
+        raise UnauthorizedException("토큰이 만료되었습니다.")
     except jwt.InvalidTokenError:
-        raise HTTPException(status_code=401, detail="잘못된 토큰입니다.")
+        raise UnauthorizedException("유효하지 않은 토큰입니다.")

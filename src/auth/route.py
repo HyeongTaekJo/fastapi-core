@@ -7,6 +7,9 @@ from auth.tokens.refresh_token import refresh_token
 from auth.utils.cookies import set_refresh_token_cookie
 from fastapi.responses import JSONResponse
 from auth.tokens.access_token import access_token
+from auth.schemas.request import EmailLoginSchema
+from auth.schemas.request import LoginIdLoginSchema
+from auth.schemas.request import PhoneLoginSchema
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -22,11 +25,14 @@ async def post_login_email(
     
     response: Response,
     # 로그인 API - Basic Token 인증
-    user: UserSchema = Depends(basic_token),
+    user: UserSchema  = Depends(basic_token),
     auth_service: AuthService = Depends(),
     
 ):
-    tokens = await auth_service.login_user(user)
+     # EmailLoginSchema로 명시적 변환
+    login_user = EmailLoginSchema.model_validate(user.model_dump())
+
+    tokens = await auth_service.login_user(login_user)
 
     # refresh_token을 쿠키에 저장
     set_refresh_token_cookie(response, tokens.refresh_token)
@@ -97,22 +103,26 @@ async def new_refresh_token(
     new_token = await auth_service.rotate_token(raw_token, is_refresh=True)
 
     # refresh_token을 쿠키에 저장
-    set_refresh_token_cookie(response, new_token)
-
-    # 가장 안전하고 명시적인 방식
-    return JSONResponse(
-        status_code=status.HTTP_200_OK,
+    res = JSONResponse(
+        status_code=200,
         content={"detail": "Refresh token updated successfully"}
     )
+
+    set_refresh_token_cookie(res, new_token)  
+    
+    return res
 
 # 로그인(id 방식)
 @router.post("/login/login_id")
 async def login_login_id(
     response: Response,
-    user: UserSchema = Depends(basic_token),  # login_id 기반 BasicAuth
+    user: UserSchema  = Depends(basic_token),  # login_id 기반 BasicAuth
     auth_service: AuthService = Depends(),
 ):
-    tokens = await auth_service.login_user(user)
+    # LoginIdLoginSchema로 명시적 변환
+    login_user = LoginIdLoginSchema.model_validate(user.model_dump())
+
+    tokens = await auth_service.login_user(login_user)
     set_refresh_token_cookie(response, tokens.refresh_token)
     return {"access_token": tokens.access_token}
 
@@ -120,10 +130,13 @@ async def login_login_id(
 @router.post("/login/phone")
 async def login_phone(
     response: Response,
-    user: UserSchema = Depends(basic_token),  # phone 기반 BasicAuth
+    user: UserSchema  = Depends(basic_token),  # phone 기반 BasicAuth
     auth_service: AuthService = Depends(),
 ):
-    tokens = await auth_service.login_user(user)
+    # PhoneLoginSchema로 명시적 변환
+    login_user = PhoneLoginSchema.model_validate(user.model_dump())
+
+    tokens = await auth_service.login_user(login_user)
     set_refresh_token_cookie(response, tokens.refresh_token)
     return {"access_token": tokens.access_token}
 

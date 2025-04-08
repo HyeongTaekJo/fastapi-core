@@ -32,10 +32,15 @@ async def bearer_token(
     payload = auth_service.verify_token(raw_token)
 
     # 4. 사용자 정보 조회
-    email = payload.get("email")
+    # 유연한 방식 (선택사항)
+    identifier = (
+        payload.get("email") or 
+        payload.get("login_id") or 
+        payload.get("phone")
+    )
 
-    if not email:
-        raise HTTPException(status_code=401, detail="토큰에 이메일 정보가 없습니다.")
+    if not identifier:
+        raise HTTPException(status_code=401, detail="토큰에 사용자 식별 정보가 없습니다.")
     
     # 인증 끝났으므로 트랜잭션 종료
     # commit or rollback 중 선택 (쓰기 없음 → rollback도 괜찮음)
