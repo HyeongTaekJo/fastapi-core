@@ -7,7 +7,7 @@ from common.model.base_model import Base
 
 
 if TYPE_CHECKING:
-    from post.model.model import PostModel
+    from post.model import PostModel
 
 # ImageModelType Enum
 class ImageModelType(str, Enum):

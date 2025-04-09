@@ -16,9 +16,9 @@ config = context.config
 
 # 적용한 Base를 가져온다.
 from common.model.base_model import Base
-from post.model.model import PostModel
-from user.model.model import UserModel
-from common.model.image_model import ImageModel
+from post.model import PostModel
+from user.model import UserModel
+from common.image.model import ImageModel
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

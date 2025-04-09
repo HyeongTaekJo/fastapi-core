@@ -1,7 +1,7 @@
 from typing import List, Optional
 from pydantic import BaseModel
 from user.schemas.response import UserSchema
-from common.schemas.image_response import ImageSchema
+from common.image.schemas.response import ImageSchema
 
 class PostSchema(BaseModel):
     id: int

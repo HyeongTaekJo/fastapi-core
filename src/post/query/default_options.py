@@ -1,6 +1,6 @@
 from sqlalchemy.orm import selectinload, joinedload
 from sqlalchemy import select
-from post.model.model import PostModel
+from post.model import PostModel
 
 # 예를들어서 user, post의 모델이 서로 관계과 연동되어 있을 경우,
 # 반드시 selectinload으로 불러와야 한다.

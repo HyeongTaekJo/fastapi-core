@@ -1,7 +1,7 @@
 from fastapi import Request, HTTPException, Depends
 from user.repository import UserRepository
 from user.schemas.response import UserSchema
-from user.model.model import UserModel
+from user.model import UserModel
 from cache.redis_context import get_redis_from_context
 import json
 

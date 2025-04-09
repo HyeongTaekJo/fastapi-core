@@ -1,7 +1,7 @@
 from fastapi import APIRouter,Request, Depends, HTTPException, status
 from typing import List
 from user.repository import UserRepository
-from user.model.model import UserModel
+from user.model import UserModel
 from user.schemas.response import UserSchema, UserListSchema
 
 router = APIRouter(prefix="/users", tags=["users"])

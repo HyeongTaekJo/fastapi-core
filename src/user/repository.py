@@ -1,6 +1,6 @@
 from typing import List
 from sqlalchemy import select, delete
-from user.model.model import UserModel
+from user.model import UserModel
 from database.session_context import get_db_from_context  # Context 기반으로 변경
 from typing import Any
 

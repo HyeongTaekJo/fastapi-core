@@ -2,12 +2,12 @@ from fastapi import APIRouter, Depends
 from post.schemas.request import CreatePostSchema, UpdatePostSchema, PaginatePostSchema
 from auth.tokens.access_token import access_token
 from post.service import PostService
-from post.image.image_service import PostImageService
+from post.image.service import PostImageService
 from post.image.schemas.request import CreatePostImageSchema
-from common.model.image_model import ImageModelType
+from common.image.model import ImageModelType
 from database.session_context import get_db_from_context  # Context에서 세션 꺼내기
 from auth.dependencies.current_user import get_current_user
-from user.model.model import UserModel
+from user.model import UserModel
 
 # router 생성
 router = APIRouter(prefix="/posts", tags=["posts"])
@@ -43,21 +43,19 @@ async def get_post_by_id(
 async def create_post(
     request: CreatePostSchema,
     _: None = Depends(access_token),
-    user: UserModel = Depends(get_current_user) # user 필요시(accessToken이 선행되어야 한다.)
+    user: UserModel = Depends(get_current_user),
 ):
-
     session = get_db_from_context()
 
     async with session.begin():
         post_service = PostService()
-        post_image_service = PostImageService()
+        
+        post_image_service = PostImageService()  
 
-        # 1. post 생성
         post = await post_service.create_post(user.id, request)
 
-        # 2. 이미지 저장
-        if request.images is not None:
-            await post_image_service.save_post_images(post.id, request.images)
+        if request.images:
+            await post_image_service.save_images(post.id, request.images)
 
     return await post_service.get_post_by_id(post.id)
 
@@ -77,8 +75,8 @@ async def update_post(
 
         await post_service.update_post_content(user.id, id, request)
 
-        if request.images is not None:
-            await post_image_service.update_post_images(id, request.images)
+        if request.images:
+            await post_image_service.update_images(id, request.images)
 
     return await post_service.get_post_by_id(id)
 

@@ -1,9 +1,9 @@
 from fastapi import HTTPException, status
-from post.model.model import PostModel
+from post.model import PostModel
 from post.schemas.request import CreatePostSchema, UpdatePostSchema, PaginatePostSchema
 from post.schemas.response import PostSchema, PaginatedPostSchema
 from post.repository import PostRepository
-from post.image.image_service import PostImageService
+from post.image.service import PostImageService
 import os
 import logging
 from common.const.path_consts import POST_IMAGE_PATH  # 이미지 저장 경로도 import 필요

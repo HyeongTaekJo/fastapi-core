@@ -11,7 +11,7 @@ from common.const.settings import settings  # 환경 변수 설정
 from auth.schemas.response import TokenSchema
 from user.repository import UserRepository
 from auth.schemas.request import RegisterUserSchema
-from user.model.model import UserModel
+from user.model import UserModel
 from auth.repository import AuthRepository
 from cache.redis_connection import redis
 from auth.const.fields import UNIQUE_USER_FIELDS

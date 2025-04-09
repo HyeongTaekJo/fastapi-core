@@ -1,8 +1,8 @@
 from sqlalchemy import select, delete, insert
 from fastapi import HTTPException, status
-from post.model.model import PostModel
+from post.model import PostModel
 from post.schemas.request import PaginatePostSchema, CreatePostSchema
-from common.service import CommonService
+from common.pagination.service import CommonService
 from post.query.default_options import get_default_post_query
 from typing import List
 from database.session_context import get_db_from_context

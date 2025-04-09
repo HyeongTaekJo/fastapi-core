@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Optional, List
-from common.schemas.pagination_request import BasePaginationSchema
+from common.pagination.schemas.pagination_request import BasePaginationSchema
 
 class CreatePostSchema(BaseModel):
     title: str

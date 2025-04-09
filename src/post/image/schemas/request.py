@@ -1,4 +1,4 @@
-from common.model.image_model import ImageModelType
+from common.image.model import ImageModelType
 from pydantic import BaseModel, Field
 
 class CreatePostImageSchema(BaseModel):

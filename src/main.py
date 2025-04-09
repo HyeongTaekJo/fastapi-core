@@ -34,7 +34,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from post.route import router as post_router
 from user.route import router as user_router
 from auth.route import router as auth_router
-from common.router import router as common_router
+from common.image.router import router as common_image_router
 
 app = FastAPI(lifespan=lifespan)
 
@@ -67,7 +67,7 @@ app.mount("/public", StaticFiles(directory=PUBLIC_FOLDER_PATH), name="public")
 app.include_router(post_router)
 app.include_router(user_router)
 app.include_router(auth_router)
-app.include_router(common_router)
+app.include_router(common_image_router)
 
 # 헬스체크
 @app.get("/")

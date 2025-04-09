@@ -2,8 +2,8 @@ from typing import Type
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, desc, asc, func
 from urllib.parse import urlencode
-from common.schemas.pagination_request import BasePaginationSchema
-from common.schemas.pagination_response import PagePaginationResult, CursorPaginationResult
+from common.pagination.schemas.pagination_request import BasePaginationSchema
+from common.pagination.schemas.pagination_response import PagePaginationResult, CursorPaginationResult
 from common.const.filter_mapper import FILTER_MAPPER
 import os
 import uuid
@@ -100,29 +100,3 @@ class CommonService:
                         query = query.where(func(column, value))
         return query
     
-    @staticmethod
-    async def save_temp_image(file: UploadFile) -> str:
-        ext = Path(file.filename).suffix.lower()
-
-        if ext not in ALLOWED_IMAGE_EXTENSIONS:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="jpg/jpeg/png 파일만 업로드 가능합니다."
-            )
-
-        # 디렉토리 없으면 생성
-        os.makedirs(TEMP_FOLDER_PATH, exist_ok=True)
-
-        # 고유 파일명 생성
-        filename = f"{uuid.uuid4()}{ext}"
-        file_path = os.path.join(TEMP_FOLDER_PATH, filename)
-
-        # 비동기로 파일 저장
-        async with aiofiles.open(file_path, "wb") as out_file:
-            content = await file.read()
-            await out_file.write(content)
-
-        # Redis에 TTL 등록 (1시간)
-        await redis.set(f"temp_img:{filename}", 1, ex=3600)
-
-        return filename

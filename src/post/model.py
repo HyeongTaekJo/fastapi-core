@@ -3,9 +3,9 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from common.model.base_model import Base
 from post.schemas.request import CreatePostSchema, UpdatePostSchema
-from common.model.image_model import ImageModel
+from common.image.model import ImageModel
 from typing import List, Optional
-from user.model.model import UserModel
+from user.model import UserModel
 
 
 class PostModel(Base):
