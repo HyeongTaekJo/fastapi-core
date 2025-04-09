@@ -5,7 +5,8 @@ from common.pagination.schemas.pagination_request import BasePaginationSchema
 class CreatePostSchema(BaseModel):
     title: str
     content: str
-    images: Optional[List[str]] = Field(default_factory=list, description="temp 폴더에 저장된 이미지 파일명 리스트")
+    # images: Optional[List[str]] = Field(default_factory=list, description="temp 폴더에 저장된 이미지 파일명 리스트")
+    temp_files: Optional[List[str]] = None  # ✅ 파일명만 받음
 
 class UpdatePostSchema(BaseModel):
     title: Optional[str] = None

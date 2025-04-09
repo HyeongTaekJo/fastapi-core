@@ -2,17 +2,12 @@ from __future__ import annotations
 from sqlalchemy import String, Integer, ForeignKey, Enum as SqlEnum
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from typing import List, Optional, TYPE_CHECKING
-from enum import Enum
 from common.model.base_model import Base
+from common.image.enums.image_type_enum import ImageModelType
 
 
 if TYPE_CHECKING:
     from post.model import PostModel
-
-# ImageModelType Enum
-class ImageModelType(str, Enum):
-    POST_IMAGE = "POST_IMAGE"
-    TEST = "TEST"
 
 # ImageModel
 class ImageModel(Base):

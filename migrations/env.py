@@ -19,6 +19,7 @@ from common.model.base_model import Base
 from post.model import PostModel
 from user.model import UserModel
 from common.image.model import ImageModel
+from common.file.file_model import FileModel
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
