@@ -14,6 +14,7 @@ from pathlib import Path
 from common.const.file_consts import ALLOWED_IMAGE_EXTENSIONS
 from common.const.path_consts import TEMP_FOLDER_PATH
 import aiofiles
+from cache.redis_connection import redis
 
 
 from common.const.settings import settings  # settings 직접 import
@@ -120,5 +121,8 @@ class CommonService:
         async with aiofiles.open(file_path, "wb") as out_file:
             content = await file.read()
             await out_file.write(content)
+
+        # Redis에 TTL 등록 (1시간)
+        await redis.set(f"temp_img:{filename}", 1, ex=3600)
 
         return filename

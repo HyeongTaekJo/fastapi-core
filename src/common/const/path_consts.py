@@ -11,6 +11,7 @@ PROJECT_ROOT_PATH = Path(__file__).resolve().parent.parent.parent.parent
 PUBLIC_FOLDER_NAME = "public"
 POSTS_FOLDER_NAME = "posts"
 TEMP_FOLDER_NAME = "temp"
+BACKUP_FOLDER_NAME = "backup"
 
 # ✅ 3. 실제 공개 폴더의 절대 경로: {프로젝트}/public
 PUBLIC_FOLDER_PATH = os.path.join(PROJECT_ROOT_PATH, PUBLIC_FOLDER_NAME)
@@ -23,3 +24,6 @@ POST_PUBLIC_IMAGE_PATH = os.path.join(PUBLIC_FOLDER_NAME, POSTS_FOLDER_NAME)
 
 # ✅ 6. 임시 업로드 폴더: {프로젝트}/public/temp
 TEMP_FOLDER_PATH = os.path.join(PUBLIC_FOLDER_PATH, TEMP_FOLDER_NAME)
+
+# ✅ 7. 이미지 백업 폴더: {프로젝트}/public/backup
+TEMP_BACKUP_PATH = os.path.join(PUBLIC_FOLDER_PATH, BACKUP_FOLDER_NAME)

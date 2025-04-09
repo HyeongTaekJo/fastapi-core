@@ -10,6 +10,7 @@ class CreatePostSchema(BaseModel):
 class UpdatePostSchema(BaseModel):
     title: Optional[str] = None
     content: Optional[str] = None
+    images: Optional[List[str]] = None
 
 class PaginatePostSchema(BasePaginationSchema):
     # 아래의 것들을 Query 파라미터로 보내지 않아도 상관없다.

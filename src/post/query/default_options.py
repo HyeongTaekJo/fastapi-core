@@ -12,5 +12,5 @@ from post.model.model import PostModel
 def get_default_post_query():
     return select(PostModel).options(
         selectinload(PostModel.user),
-        # 필요시 추가: selectinload(PostModel.images),
+        selectinload(PostModel.images),
     )

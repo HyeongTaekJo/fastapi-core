@@ -6,6 +6,7 @@ from common.service import CommonService
 from post.query.default_options import get_default_post_query
 from typing import List
 from database.session_context import get_db_from_context
+from post.schemas.request import UpdatePostSchema
 
 # 비동기 engine을 사용하므로 repository는 비동기로 실행 해야한다.
 class PostRepository:
@@ -51,24 +52,14 @@ class PostRepository:
         await self.session.refresh(post)  # 데이터베이스에서 다시 읽어옴 -> todo_id까지 포함된 것을 가져옴
         return post
 
-    async def update_post(self, id: int, request: PostModel) -> PostModel:
-        # 기존 Post 찾기
-        existing_post = await self.get_post_by_id(id)
+    async def update_post(self, post: PostModel, data: UpdatePostSchema):
+        if data.title is not None:
+            post.title = data.title
+        if data.content is not None:
+            post.content = data.content
+        await self.session.flush()
 
-        if not existing_post:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                                detail="존재하지 않는 post 입니다.")
 
-        if request.title is not None:
-            existing_post.title = request.title
-        if request.content is not None:
-            existing_post.content = request.content
-
-        # 변경 사항 커밋
-        await self.session.commit()
-        await self.session.refresh(existing_post)  # 최신 상태 반영
-
-        return existing_post
 
     async def delete_post(self, id: int) -> None:
         # 기존 post 찾기
@@ -79,7 +70,7 @@ class PostRepository:
                                 detail="존재하지 않는 post 입니다.")
 
         await self.session.execute(delete(PostModel).where(PostModel.id == id))
-        await self.session.commit()
+        # await self.session.commit() # ❌ commit()은 생략! (라우터에서 begin() 블록이 처리)
 
     async def generate_posts(self):
         """ 특정 유저의 더미 포스트 100개 생성 """

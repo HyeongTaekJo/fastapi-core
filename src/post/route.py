@@ -19,6 +19,7 @@ async def generate_dummy_posts(
     service = PostService()
     return await service.generate_dummy_posts()
 
+
 @router.get("")
 async def get_paginated_posts(
     request: PaginatePostSchema = Depends(),
@@ -26,6 +27,7 @@ async def get_paginated_posts(
 ):
     service = PostService()
     return await service.get_paginated_posts(request)
+
 
 @router.get("/{id}")
 async def get_post_by_id(
@@ -35,6 +37,7 @@ async def get_post_by_id(
 ):
     service = PostService()
     return await service.get_post_by_id(id)
+
 
 @router.post("")
 async def create_post(
@@ -52,32 +55,43 @@ async def create_post(
         # 1. post 생성
         post = await post_service.create_post(user.id, request)
 
-        # 2. 이미지 반복 저장
-        for index, image_filename in enumerate(request.images):
-            image_schema = CreatePostImageSchema(
-                post_id=post.id,
-                path=image_filename,
-                order=index,
-                type=ImageModelType.POST_IMAGE
-            )
-            await post_image_service.create_post_image(image_schema)
+        # 2. 이미지 저장
+        if request.images is not None:
+            await post_image_service.save_post_images(post.id, request.images)
 
     return await post_service.get_post_by_id(post.id)
+
 
 @router.patch("/{id}")
 async def update_post(
     id: int,
     request: UpdatePostSchema,
     _: None = Depends(access_token),
+    user: UserModel = Depends(get_current_user),
 ):
-    service = PostService()
-    return await service.update_post(id, request)
+    session = get_db_from_context()
+
+    async with session.begin():
+        post_service = PostService()
+        post_image_service = PostImageService()
+
+        await post_service.update_post_content(user.id, id, request)
+
+        if request.images is not None:
+            await post_image_service.update_post_images(id, request.images)
+
+    return await post_service.get_post_by_id(id)
+
 
 @router.delete("/{id}")
 async def delete_post(
     id: int,
     _: None = Depends(access_token),
 ):
-    service = PostService()
-    await service.delete_post(id)
+    session = get_db_from_context()
+
+    async with session.begin():
+        post_service = PostService()
+        await post_service.delete_post(id)
     return {"message": "삭제되었습니다"}
+
