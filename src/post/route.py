@@ -50,17 +50,12 @@ async def create_post(
 
     async with session.begin():
         post_service = PostService()
-        # post_image_service = PostImageService()  
         post_file_service = PostFileService()
 
         # 1. 게시글 생성
         post = await post_service.create_post(user.id, request)
 
-        # # 2. 이미지 연결 (미리 temp 업로드된 이미지들)
-        # if request.images:
-        #     await post_image_service.save_images(post.id, request.images)
-
-        # ✅ 2. temp 파일 실제 저장 및 DB 연결 (이미지 포함 가능)
+        # 2. temp 파일 실제 저장 및 DB 연결 (이미지 포함 가능)
         if request.temp_files:
             await post_file_service.save_files(post.id, request.temp_files)
 
@@ -78,17 +73,12 @@ async def update_post(
 
     async with session.begin():
         post_service = PostService()
-        # post_image_service = PostImageService()
         post_file_service = PostFileService()
 
         # 게시글 내용 수정
         await post_service.update_post_content(user.id, id, request)
 
-        # # 이미지 수정
-        # if request.images:
-        #     await post_image_service.update_images(id, request.images)
-
-        # ✅ 2. 파일 업데이트 (기존 연결 삭제 후 새로 연결)
+        # 2. 파일 업데이트 (기존 연결 삭제 후 새로 연결)
         if request.temp_files:
             await post_file_service.save_files(id, request.temp_files)
 

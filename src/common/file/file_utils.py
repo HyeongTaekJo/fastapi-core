@@ -3,7 +3,7 @@ from shutil import move
 from os.path import join, exists, dirname
 from pathlib import Path
 import logging
-from common.file.file_enum import FileModelType
+from common.file.enums.file_model_type_enum import FileModelType
 
 logger = logging.getLogger(__name__)
 

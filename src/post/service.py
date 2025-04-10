@@ -7,7 +7,9 @@ from post.image.service import PostImageService
 import os
 import logging
 from common.const.path_consts import POST_IMAGE_PATH  # 이미지 저장 경로도 import 필요
+from common.const.path_consts import FILE_UPLOAD_PATH
 from post.file.file_service import PostFileService
+from common.file.file_service import FileService
 
 logger = logging.getLogger(__name__)
 
@@ -15,6 +17,7 @@ class PostService:
     def __init__(self):
         self.post_repo = PostRepository()  # repo도 동일 세션을 context에서 사용 트랜잭션을 위해서
         self.post_image_service = PostImageService()
+        self.file_service = FileService(FILE_UPLOAD_PATH)
 
     async def generate_dummy_posts(self):
         await self.post_repo.generate_posts()
@@ -67,7 +70,7 @@ class PostService:
             raise HTTPException(status_code=404, detail="게시글이 존재하지 않습니다.")
 
         # ✅ 파일 경로만 미리 수집
-        deleted_file_paths = await PostFileService().collect_file_paths(post_id)
+        deleted_file_paths = await self.file_service.collect_file_paths("post", post_id)
 
         # ✅ Post 삭제 → File은 CASCADE로 함께 삭제
         await self.post_repo.delete_post(post_id)
@@ -78,29 +81,6 @@ class PostService:
                 try:
                     os.remove(path)
                 except Exception as e:
-
-
                     logger.warning(f"⚠️ 파일 삭제 실패: {path} - {e}")
-        # # 1. 게시글 조회
-        # post = await self.post_repo.get_post_by_id(post_id)
-        # if not post:
-        #     raise HTTPException(status_code=404, detail="게시글이 존재하지 않습니다.")
-
-        # # 2. 이미지 경로 수집
-        # deleted_image_paths = []
-        # for image in post.images:
-        #     path = os.path.join(POST_IMAGE_PATH, image.path)
-        #     deleted_image_paths.append(path)
-
-        # # 3. DB 삭제
-        # await self.post_repo.delete_post(post_id)
-
-        # # 4. 디스크 이미지 삭제 (DB 성공 이후)
-        # for path in deleted_image_paths:
-        #     if os.path.exists(path):
-        #         try:
-        #             os.remove(path)
-        #         except Exception as e:
-        #             logger.warning(f"⚠️ 이미지 파일 삭제 실패: {path} - {e}")
-
+       
         

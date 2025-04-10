@@ -155,3 +155,7 @@ class FileService:
 
     async def get_files_by_owner(self, owner_type: str, owner_id: int):
         return await self.repo.get_files_by_owner(owner_type, owner_id)
+    
+    async def collect_file_paths(self, owner_type: str, owner_id: int) -> list[str]:
+        files = await self.get_files_by_owner(owner_type, owner_id)
+        return [os.path.join(self.target_folder_path, f.path) for f in files]

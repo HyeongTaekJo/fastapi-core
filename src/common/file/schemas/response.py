@@ -1,6 +1,6 @@
 from pydantic import BaseModel, field_validator, field_serializer
 from typing import Optional
-from common.file.file_enum import FileModelType
+from common.file.enums.file_model_type_enum import FileModelType
 from datetime import datetime
 from common.const.path_consts import FILE_PUBLIC_PATH  #  "/static/files" 와 같은 경로
 

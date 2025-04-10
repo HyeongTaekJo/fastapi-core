@@ -3,7 +3,7 @@ from sqlalchemy import String, Integer, ForeignKey, Enum as SqlEnum, DateTime, f
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from common.model.base_model import Base
 from typing import Optional
-from common.file.file_enum import FileModelType
+from common.file.enums.file_model_type_enum import FileModelType
 from typing import Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:

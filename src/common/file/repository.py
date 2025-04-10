@@ -43,6 +43,12 @@ class FileRepository:
         await self.session.execute(
             delete(FileModel).where(FileModel.id.in_(ids))
         )
+
+    # 전체 파일 경로만 가져오는 메서드
+    async def get_all_file_paths(self) -> list[str]:
+        stmt = select(FileModel.path)
+        result = await self.session.execute(stmt)
+        return [row[0] for row in result.all()]
     
 
 #     ✅ 마무리 체크리스트
