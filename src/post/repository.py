@@ -47,10 +47,12 @@ class PostRepository:
             commentCount=0  #  기본값 설정
         )
 
-        self.session.add(post)  # session object에 추가
-        await self.session.flush()  # ID 가져오기 위해 refresh 대신 flush 사용 가능
-        await self.session.refresh(post)  # 데이터베이스에서 다시 읽어옴 -> todo_id까지 포함된 것을 가져옴
-        return post
+        self.session.add(post)
+        await self.session.flush()
+
+        # 관계 포함된 post를 다시 SELECT해서 리턴
+        # 트랜잭션시, refresh 지양할 것(오류남)
+        return await self.get_post_by_id(post.id)
 
     async def update_post(self, post: PostModel, data: UpdatePostSchema):
         if data.title is not None:

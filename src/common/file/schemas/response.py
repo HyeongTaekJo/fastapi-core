@@ -1,7 +1,8 @@
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, field_validator, field_serializer
 from typing import Optional
 from common.file.file_enum import FileModelType
 from datetime import datetime
+from common.const.path_consts import FILE_PUBLIC_PATH  #  "/static/files" 와 같은 경로
 
 class FileSchema(BaseModel):
     id: int
@@ -11,14 +12,20 @@ class FileSchema(BaseModel):
     type: FileModelType
     description: Optional[str] = None
     is_main: bool
+    order: int 
     created_at: Optional[str] = None
 
-    # Pydantic 2.x에서는 field_validator로 사용
+    # 날짜 문자열로 변환
     @field_validator('created_at', mode='before')
     def convert_datetime_to_string(cls, v):
         if isinstance(v, datetime):
-            return v.isoformat()  # datetime을 ISO 8601 형식으로 변환
+            return v.isoformat()
         return v
+
+    # path 직렬화: 파일 접근 가능한 URL로 변환
+    @field_serializer("path")
+    def serialize_path(self, path: str, _info) -> str:
+        return f"/{FILE_PUBLIC_PATH}/{path}".replace("\\", "/")
 
     class Config:
         from_attributes = True

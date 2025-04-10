@@ -13,4 +13,5 @@ def get_default_post_query():
     return select(PostModel).options(
         selectinload(PostModel.user),
         selectinload(PostModel.images),
+        selectinload(PostModel.files)
     )

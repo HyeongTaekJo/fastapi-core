@@ -1,2 +1,0 @@
-2025-04-02 17:14:01,260 [WARNING] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 401 - 비밀번호가 일치하지 않습니다.
-2025-04-02 17:17:52,798 [WARNING] handlers.handlers.py:64 - http_exception_handler() - Unhandled HTTPException: 401 - 잘못된 토큰입니다.

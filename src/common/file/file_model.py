@@ -19,7 +19,7 @@ class FileModel(Base):
 
     description: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     is_main: Mapped[bool] = mapped_column(default=False, nullable=False)
-    # uploaded_at: Mapped[Optional[str]] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    order: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
 
     # 🔽 범용 연결 (post/user/product 등 다양한 모델에 연결 가능)
     owner_type: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
