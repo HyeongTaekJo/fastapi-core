@@ -9,15 +9,14 @@ class PostFileService:
     def __init__(self):
         self.file_service = FileService(target_folder_path=FILE_UPLOAD_PATH)
 
-    async def save_files(self, post_id: int, temp_filenames: list[str]):
-        await self.file_service.save_files("post", post_id, temp_filenames)
+    async def create_files(self, post_id: int, temp_filenames: list[str]):
+        await self.file_service.save_files("post", post_id, temp_filenames, replace=False)
+
+    async def update_files(self, post_id: int, temp_filenames: list[str]):
+        await self.file_service.save_files("post", post_id, temp_filenames, replace=True)
 
     async def delete_files(self, post_id: int):
-        try:
-            await self.file_service.delete_by_owner("post", post_id)
-        except Exception as e:
-            await self.file_service.rollback()
-            raise e
+        await self.file_service.delete_by_owner("post", post_id)
 
     async def get_files(self, post_id: int):
         return await self.file_service.get_files_by_owner("post", post_id)

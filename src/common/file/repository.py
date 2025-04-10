@@ -3,11 +3,18 @@ from common.file.file_model import FileModel
 from database.session_context import get_db_from_context
 from sqlalchemy import select, delete
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 class FileRepository:
     def __init__(self):
         self.session = get_db_from_context()
 
     async def create_file_record(self, **kwargs) -> FileModel:
+
+        logger.debug(f"✅ create_file_record() with kwargs={...}")
+
         file = FileModel(**kwargs)
         self.session.add(file)
         await self.session.flush()
@@ -28,6 +35,13 @@ class FileRepository:
                 FileModel.owner_type == owner_type,
                 FileModel.owner_id == owner_id
             )
+        )
+
+    async def delete_files_by_ids(self, ids: set[int]):
+        if not ids:
+            return
+        await self.session.execute(
+            delete(FileModel).where(FileModel.id.in_(ids))
         )
     
 

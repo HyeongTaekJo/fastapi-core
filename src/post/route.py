@@ -62,7 +62,7 @@ async def create_post(
 
         # ✅ 2. temp 파일 실제 저장 및 DB 연결 (이미지 포함 가능)
         if request.temp_files:
-            await post_file_service.save_files(post.id, request.temp_files)
+            await post_file_service.create_files(post.id, request.temp_files)
 
     return await post_service.get_post_by_id(post.id)
 
@@ -90,8 +90,7 @@ async def update_post(
 
         # ✅ 2. 파일 업데이트 (기존 연결 삭제 후 새로 연결)
         if request.temp_files:
-            await post_file_service.delete_files(id)  # 기존 연결 삭제
-            await post_file_service.save_files(id, request.temp_files)
+            await post_file_service.update_files(id, request.temp_files)
 
     return await post_service.get_post_by_id(id)
 
