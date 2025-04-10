@@ -19,8 +19,11 @@ class FileService:
         self.repo = FileRepository()
         self.target_folder_path = target_folder_path
 
-    async def save_files(self, owner_type: str, owner_id: int, temp_filenames: list[str], replace: bool = False):
-        if replace:
+    async def save_files(self, owner_type: str, owner_id: int, temp_filenames: list[str]):
+        existing_files = await self.repo.get_files_by_owner(owner_type, owner_id)
+        is_replace = bool(existing_files)
+
+        if is_replace:
             await self.prepare_for_save_or_update(owner_type, owner_id)
 
         try:
@@ -40,7 +43,7 @@ class FileService:
 
                 self.record_moved_file(temp_path, target_path)
 
-            if replace:
+            if is_replace:
                 await self.finalize_delete_old_records()
 
         except Exception as e:
@@ -121,7 +124,6 @@ class FileService:
         self._old_file_ids = {f.id for f in existing_files}
 
     async def finalize_delete_old_records(self):
-        # await self.repo.delete_files_by_owner(owner_type, owner_id)
         await self.repo.delete_files_by_ids(self._old_file_ids)
         delete_backups(self._backups)
 
