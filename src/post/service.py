@@ -61,45 +61,7 @@ class PostService:
             await self.post_file_service.save_files(post.id, request.temp_files)
 
         return post.id
-
-    async def update_post_with_schema(
-        self,
-        user_id: int,
-        post_id: int,
-        request: UpdatePostSchema
-    ) -> int:
-        post = await self.post_repo.get_post_by_id(post_id)
-        if not post:
-            raise HTTPException(status_code=404, detail="존재하지 않는 게시글입니다.")
-        if post.author_id != user_id:
-            raise HTTPException(status_code=403, detail="수정 권한이 없습니다.")
-
-        await self.post_repo.update_post(post, request)
-
-        if request.temp_files:
-            await self.post_file_service.save_files(post.id, request.temp_files)
-
-        return post.id
     
-    async def delete_post(self, post_id: int):
-        post = await self.post_repo.get_post_by_id(post_id)
-        if not post:
-            raise HTTPException(status_code=404, detail="게시글이 존재하지 않습니다.")
-
-        # ✅ 파일 경로만 미리 수집
-        deleted_file_paths = await self.file_service.collect_file_paths("post", post_id)
-
-        # ✅ Post 삭제 → File은 CASCADE로 함께 삭제
-        await self.post_repo.delete_post(post_id)
-
-        # ✅ 트랜잭션 성공 이후 디스크에서 파일 제거
-        for path in deleted_file_paths:
-            if os.path.exists(path):
-                try:
-                    os.remove(path)
-                except Exception as e:
-                    logger.warning(f"⚠️ 파일 삭제 실패: {path} - {e}")
-
     async def create_post_with_form(
         self,
         user_id: int,
@@ -126,3 +88,43 @@ class PostService:
 
         return post.id
         
+
+    async def update_post_with_schema(
+        self,
+        user_id: int,
+        post_id: int,
+        request: UpdatePostSchema
+    ) -> int:
+        post = await self.post_repo.get_post_by_id(post_id)
+        if not post:
+            raise HTTPException(status_code=404, detail="존재하지 않는 게시글입니다.")
+        if post.author_id != user_id:
+            raise HTTPException(status_code=403, detail="수정 권한이 없습니다.")
+
+        await self.post_repo.update_post(post, request)
+
+        if request.files:
+            await self.post_file_service.update_files(post.id, request.files)
+
+        return post.id
+    
+    async def delete_post(self, post_id: int):
+        post = await self.post_repo.get_post_by_id(post_id)
+        if not post:
+            raise HTTPException(status_code=404, detail="게시글이 존재하지 않습니다.")
+
+        # ✅ 파일 경로만 미리 수집
+        deleted_file_paths = await self.file_service.collect_file_paths("post", post_id)
+
+        # ✅ Post 삭제 → File은 CASCADE로 함께 삭제
+        await self.post_repo.delete_post(post_id)
+
+        # ✅ 트랜잭션 성공 이후 디스크에서 파일 제거
+        for path in deleted_file_paths:
+            if os.path.exists(path):
+                try:
+                    os.remove(path)
+                except Exception as e:
+                    logger.warning(f"⚠️ 파일 삭제 실패: {path} - {e}")
+
+

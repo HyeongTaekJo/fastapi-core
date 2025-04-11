@@ -3,6 +3,7 @@ from shutil import move
 from os.path import join, exists, dirname
 from pathlib import Path
 import logging
+import re
 from common.file.enums.file_model_type_enum import FileModelType
 
 logger = logging.getLogger(__name__)
@@ -57,15 +58,27 @@ def backup_files(paths: list[str], src_root: str, backup_root: str) -> list[tupl
 def restore_backups(backups: list[tuple[str, str]]):
     for original, backup in backups:
         if exists(backup):
-            move(backup, original)
-            logger.warning(f"⛔ 복원: {backup} → {original}")
+            try:
+                if exists(original):
+                    os.remove(original)  # ✅ move 전에 삭제
+                    logger.debug(f"🧹 기존 파일 삭제됨: {original}")
+                move(backup, original)
+                logger.warning(f"⛔ 복원: {backup} → {original}")
+            except Exception as e:
+                logger.warning(f"❌ 복원 실패: {backup} → {original} - {e}")
 
 # ✅ 5. 백업 삭제
-def delete_backups(backups: list[tuple[str, str]]):
-    for _, backup in backups:
-        if exists(backup):
+def delete_backups(backups: list[tuple[str, str]], delete_ids: set[int]):
+    for original, backup in backups:
+        file_id = _extract_file_id_from_path(original)
+        if file_id in delete_ids and exists(backup):
             os.remove(backup)
             logger.info(f"🗑️ 삭제됨: {backup}")
+
+def _extract_file_id_from_path(path: str) -> int:
+    import re
+    match = re.search(r"/(\d+)\.", path.replace("\\", "/"))
+    return int(match.group(1)) if match else -1
 
 # ✅ 6. temp → 최종 디렉토리 이동
 def move_temp_file_to_target(temp_path: str, target_path: str):

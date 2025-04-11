@@ -2,14 +2,15 @@
 from common.file.file_model import FileModel
 from database.session_context import get_db_from_context
 from sqlalchemy import select, delete
+from sqlalchemy.ext.asyncio import AsyncSession
 
 import logging
 
 logger = logging.getLogger(__name__)
 
 class FileRepository:
-    def __init__(self):
-        self.session = get_db_from_context()
+    def __init__(self, session: AsyncSession = None):
+        self.session = session or get_db_from_context()  # ✅ 인자가 없으면 Context에서 자동으로 가져옴
 
     async def create_file_record(self, **kwargs) -> FileModel:
 
@@ -49,6 +50,20 @@ class FileRepository:
         stmt = select(FileModel.path)
         result = await self.session.execute(stmt)
         return [row[0] for row in result.all()]
+    
+    async def update_file_order(self, file_id: int, order: int):
+        stmt = select(FileModel).where(FileModel.id == file_id)
+        result = await self.session.execute(stmt)
+        file = result.scalar_one_or_none()
+        if file:
+            file.order = order
+            await self.session.flush()
+
+    async def get_file_by_id(self, file_id: int) -> FileModel:
+        stmt = select(FileModel).where(FileModel.id == file_id)
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none()
+
     
 
 #     ✅ 마무리 체크리스트

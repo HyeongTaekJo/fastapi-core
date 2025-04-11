@@ -4,7 +4,7 @@ from common.lifecycle.cleanup import cleanup_temp_files, cleanup_backups, cleanu
 scheduler = AsyncIOScheduler()
 
 def start_scheduler():
-    scheduler.add_job(cleanup_temp_files, "interval", minutes=30)
-    scheduler.add_job(cleanup_backups, "interval", hours=1)
-    scheduler.add_job(cleanup_orphan_files, "cron", hour="3")  # 매일 새벽 3시
+    scheduler.add_job(cleanup_temp_files, "interval", minutes=5)
+    scheduler.add_job(cleanup_backups, "interval", hours=1)#hours=1
+    scheduler.add_job(cleanup_orphan_files, "cron",hour="3", minute="0")  #hour="3"# 매일 새벽 3시
     scheduler.start()
