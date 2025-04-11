@@ -9,6 +9,7 @@ from database.session_context import get_db_from_context  # Context에서 세션
 from auth.dependencies.current_user import get_current_user
 from user.model import UserModel
 from post.file.file_service import PostFileService
+from post.form_schemas.create_schema import CreatePostForm
 
 # router 생성
 router = APIRouter(prefix="/posts", tags=["posts"])
@@ -47,19 +48,32 @@ async def create_post(
     user: UserModel = Depends(get_current_user),
 ):
     session = get_db_from_context()
+    post_service = PostService()
 
     async with session.begin():
-        post_service = PostService()
-        post_file_service = PostFileService()
+        post_id = await post_service.create_post_with_schema(user.id, request)
 
-        # 1. 게시글 생성
-        post = await post_service.create_post(user.id, request)
+    return await post_service.get_post_by_id(post_id)  # 트랜잭션 밖에서 안전하게 조회
 
-        # 2. temp 파일 실제 저장 및 DB 연결 (이미지 포함 가능)
-        if request.temp_files:
-            await post_file_service.save_files(post.id, request.temp_files)
 
-    return await post_service.get_post_by_id(post.id)
+@router.post("/form")
+async def create_post_form(
+    form: CreatePostForm = Depends(),
+    _: None = Depends(access_token),
+    user: UserModel = Depends(get_current_user),
+):
+    session = get_db_from_context()
+    post_service = PostService()
+
+    async with session.begin():
+        post_id = await post_service.create_post_with_form(
+            user_id=user.id,
+            title=form.title,
+            content=form.content,
+            files=form.files,
+        )
+
+    return await post_service.get_post_by_id(post_id)  # 트랜잭션 밖 조회
 
 
 @router.patch("/{id}")
@@ -70,19 +84,12 @@ async def update_post(
     user: UserModel = Depends(get_current_user),
 ):
     session = get_db_from_context()
+    post_service = PostService()
 
     async with session.begin():
-        post_service = PostService()
-        post_file_service = PostFileService()
+        post_id = await post_service.update_post_with_schema(user.id, id, request)
 
-        # 게시글 내용 수정
-        await post_service.update_post_content(user.id, id, request)
-
-        # 2. 파일 업데이트 (기존 연결 삭제 후 새로 연결)
-        if request.temp_files:
-            await post_file_service.save_files(id, request.temp_files)
-
-    return await post_service.get_post_by_id(id)
+    return await post_service.get_post_by_id(post_id)  # 최신 상태 반환
 
 
 @router.delete("/{id}")

@@ -1,0 +1,32 @@
+2025-04-10 17:01:03,283 [WARNING] [req_id:7834c092-81a1-4aa0-b20d-93506bf74471 user:1] base.py:46 - [REQUEST_LOGGER] 처리 실패: A transaction is already begun on this Session.
+2025-04-10 17:01:03,485 [INFO] [req_id:None user:None] lifespan.py:29 - 📴 Shutting down...
+2025-04-10 17:01:03,487 [INFO] [req_id:None user:None] graceful_shutdown.py:7 - 🧹 Performing graceful shutdown tasks
+2025-04-10 17:01:03,487 [INFO] [req_id:None user:None] graceful_shutdown.py:11 - 🛑 APScheduler stopped
+2025-04-10 17:01:03,488 [INFO] [req_id:None user:None] graceful_shutdown.py:33 - 🧼 Graceful shutdown completed
+2025-04-10 17:01:03,488 [INFO] [req_id:None user:None] lifespan.py:33 - ✅ Cleanup done. Bye 👋
+2025-04-10 17:01:03,489 [INFO] [req_id:None user:None] base.py:245 - Scheduler has been shut down
+2025-04-10 17:01:07,300 [INFO] [req_id:None user:None] lifespan.py:15 - 🚀 Starting up...
+2025-04-10 17:01:07,328 [DEBUG] [req_id:None user:None] connection.py:951 - caching sha2: succeeded by fast path.
+2025-04-10 17:01:07,355 [INFO] [req_id:None user:None] startup_check.py:16 - ✅ Database connected successfully
+2025-04-10 17:01:07,362 [INFO] [req_id:None user:None] startup_check.py:27 - ✅ Redis connected successfully
+2025-04-10 17:01:07,365 [INFO] [req_id:None user:None] base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-04-10 17:01:07,368 [INFO] [req_id:None user:None] base.py:1090 - Added job "cleanup_temp_images" to job store "default"
+2025-04-10 17:01:07,368 [INFO] [req_id:None user:None] base.py:214 - Scheduler started
+2025-04-10 17:01:07,369 [INFO] [req_id:None user:None] lifespan.py:22 - 🔗 All services connected.
+2025-04-10 17:01:07,371 [DEBUG] [req_id:None user:None] base.py:1151 - Looking for jobs to run
+2025-04-10 17:01:07,372 [DEBUG] [req_id:None user:None] base.py:1258 - Next wakeup is due at 2025-04-10 17:31:07.365475+09:00 (in 1799.993323 seconds)
+2025-04-10 17:01:19,848 [INFO] [req_id:92b39404-2785-4e79-b0eb-dc80dd86d9a5 user:1] file_utils.py:53 - 🔄 백업: C:\Users\User\source\fastapi-core\public\files\post\0de6e52a-2602-4fa0-a784-f7ae47c77558.jpg → C:\Users\User\source\fastapi-core\public\backup\post\0de6e52a-2602-4fa0-a784-f7ae47c77558.jpg
+2025-04-10 17:01:19,849 [DEBUG] [req_id:92b39404-2785-4e79-b0eb-dc80dd86d9a5 user:1] file_service.py:65 - 🚀 move_from_temp_and_link 시작: 869e0266-0800-4a1c-9c0f-c3edd40564a3.jpg
+2025-04-10 17:01:19,850 [DEBUG] [req_id:92b39404-2785-4e79-b0eb-dc80dd86d9a5 user:1] file_service.py:66 - 📦 생성할 파일 정보: target_path=C:\Users\User\source\fastapi-core\public\files\post\869e0266-0800-4a1c-9c0f-c3edd40564a3.jpg
+2025-04-10 17:01:19,854 [INFO] [req_id:92b39404-2785-4e79-b0eb-dc80dd86d9a5 user:1] file_utils.py:74 - ✅ 이동 완료: C:\Users\User\source\fastapi-core\public\temp\869e0266-0800-4a1c-9c0f-c3edd40564a3.jpg → C:\Users\User\source\fastapi-core\public\files\post\869e0266-0800-4a1c-9c0f-c3edd40564a3.jpg
+2025-04-10 17:01:19,855 [DEBUG] [req_id:92b39404-2785-4e79-b0eb-dc80dd86d9a5 user:1] file_service.py:81 - 🧩 DB 저장 필드 확인: owner_type=post, owner_id=226, mapping_field=post_id
+2025-04-10 17:01:19,856 [DEBUG] [req_id:92b39404-2785-4e79-b0eb-dc80dd86d9a5 user:1] repository.py:16 - ✅ create_file_record() with kwargs=Ellipsis
+2025-04-10 17:01:19,874 [WARNING] [req_id:92b39404-2785-4e79-b0eb-dc80dd86d9a5 user:1] file_service.py:96 - ✅ insert 완료: id=111, path=post\869e0266-0800-4a1c-9c0f-c3edd40564a3.jpg
+2025-04-10 17:01:19,874 [DEBUG] [req_id:92b39404-2785-4e79-b0eb-dc80dd86d9a5 user:1] file_service.py:65 - 🚀 move_from_temp_and_link 시작: 5a53b552-3aad-437f-becc-3dd3e77954d0.xlsx
+2025-04-10 17:01:19,875 [DEBUG] [req_id:92b39404-2785-4e79-b0eb-dc80dd86d9a5 user:1] file_service.py:66 - 📦 생성할 파일 정보: target_path=C:\Users\User\source\fastapi-core\public\files\post\5a53b552-3aad-437f-becc-3dd3e77954d0.xlsx
+2025-04-10 17:01:19,878 [INFO] [req_id:92b39404-2785-4e79-b0eb-dc80dd86d9a5 user:1] file_utils.py:74 - ✅ 이동 완료: C:\Users\User\source\fastapi-core\public\temp\5a53b552-3aad-437f-becc-3dd3e77954d0.xlsx → C:\Users\User\source\fastapi-core\public\files\post\5a53b552-3aad-437f-becc-3dd3e77954d0.xlsx
+2025-04-10 17:01:19,879 [DEBUG] [req_id:92b39404-2785-4e79-b0eb-dc80dd86d9a5 user:1] file_service.py:81 - 🧩 DB 저장 필드 확인: owner_type=post, owner_id=226, mapping_field=post_id
+2025-04-10 17:01:19,879 [DEBUG] [req_id:92b39404-2785-4e79-b0eb-dc80dd86d9a5 user:1] repository.py:16 - ✅ create_file_record() with kwargs=Ellipsis
+2025-04-10 17:01:19,891 [WARNING] [req_id:92b39404-2785-4e79-b0eb-dc80dd86d9a5 user:1] file_service.py:96 - ✅ insert 완료: id=112, path=post\5a53b552-3aad-437f-becc-3dd3e77954d0.xlsx
+2025-04-10 17:01:19,898 [INFO] [req_id:92b39404-2785-4e79-b0eb-dc80dd86d9a5 user:1] file_utils.py:68 - 🗑️ 삭제됨: C:\Users\User\source\fastapi-core\public\backup\post\0de6e52a-2602-4fa0-a784-f7ae47c77558.jpg
+2025-04-10 17:01:19,935 [INFO] [req_id:92b39404-2785-4e79-b0eb-dc80dd86d9a5 user:1] base.py:43 - PATCH /posts/226 [200] 0.2445s
