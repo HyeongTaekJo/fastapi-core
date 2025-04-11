@@ -1,8 +1,8 @@
-
 from common.file.file_model import FileModel
 from database.session_context import get_db_from_context
 from sqlalchemy import select, delete
 from sqlalchemy.ext.asyncio import AsyncSession
+from typing import Optional
 
 import logging
 
@@ -44,6 +44,11 @@ class FileRepository:
         await self.session.execute(
             delete(FileModel).where(FileModel.id.in_(ids))
         )
+
+    async def get_file_by_uuid(self, uuid: str) -> Optional[FileModel]:
+        stmt = select(FileModel).where(FileModel.original_name.like(f"%{uuid}%"))
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none()
 
     # 전체 파일 경로만 가져오는 메서드
     async def get_all_file_paths(self) -> list[str]:

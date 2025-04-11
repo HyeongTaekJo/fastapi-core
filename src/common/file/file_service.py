@@ -86,17 +86,31 @@ class FileService:
             logger.debug(f"🧹 삭제 대상 file ids: {to_delete_ids}")
 
             if to_delete_ids:
-                await self.repo.delete_files_by_ids(to_delete_ids)
-                delete_backups(self._backups, to_delete_ids)
-
-                # ✅ 삭제되지 않은 나머지 파일은 복원
-                logger.debug("♻️ 삭제되지 않은 백업 파일 복원 중...")
+                # 삭제할 파일들의 백업을 제외하고 복원
                 non_deleted_backups = [
                     (original, backup)
                     for original, backup in self._backups
                     if _extract_file_id_from_path(original) not in to_delete_ids
                 ]
+                
+                # 삭제되지 않은 파일들만 복원
                 restore_backups(non_deleted_backups)
+                
+                # 삭제 대상 파일들의 백업은 삭제
+                await delete_backups(self._backups, to_delete_ids)
+                
+                # DB에서 파일 삭제
+                await self.repo.delete_files_by_ids(to_delete_ids)
+                
+                # 삭제된 파일들의 실제 파일도 삭제
+                for original, _ in self._backups:
+                    if _extract_file_id_from_path(original) in to_delete_ids:
+                        try:
+                            if os.path.exists(original):
+                                os.remove(original)
+                                logger.info(f"🗑️ 파일 삭제 완료: {original}")
+                        except Exception as e:
+                            logger.warning(f"⚠️ 파일 삭제 실패: {original} - {e}")
 
             else:
                 logger.debug("🟢 삭제 대상 없음 → 백업된 기존 파일 복원 중...")

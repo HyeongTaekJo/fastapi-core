@@ -67,18 +67,33 @@ def restore_backups(backups: list[tuple[str, str]]):
             except Exception as e:
                 logger.warning(f"❌ 복원 실패: {backup} → {original} - {e}")
 
-# ✅ 5. 백업 삭제
-def delete_backups(backups: list[tuple[str, str]], delete_ids: set[int]):
-    for original, backup in backups:
-        file_id = _extract_file_id_from_path(original)
-        if file_id in delete_ids and exists(backup):
-            os.remove(backup)
-            logger.info(f"🗑️ 삭제됨: {backup}")
-
-def _extract_file_id_from_path(path: str) -> int:
+async def _extract_file_id_from_path(path: str) -> int:
+    # 파일 경로에서 UUID 부분을 추출
     import re
-    match = re.search(r"/(\d+)\.", path.replace("\\", "/"))
-    return int(match.group(1)) if match else -1
+    match = re.search(r"([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})", path.replace("\\", "/"))
+    if match:
+        # UUID를 기반으로 DB에서 파일 ID를 조회
+        from common.file.repository import FileRepository
+        from database.session_context import get_db_from_context
+        repo = FileRepository(get_db_from_context())
+        file = await repo.get_file_by_uuid(match.group(1))
+        return file.id if file else -1
+    return -1
+
+# ✅ 5. 백업 삭제
+async def delete_backups(backups: list[tuple[str, str]], delete_ids: set[int]):
+    for original, backup in backups:
+        file_id = await _extract_file_id_from_path(original)
+        if file_id in delete_ids:
+            try:
+                if exists(backup):
+                    os.remove(backup)
+                    logger.info(f"🗑️ 백업 삭제됨: {backup}")
+                if exists(original):
+                    os.remove(original)
+                    logger.info(f"🗑️ 원본 파일 삭제됨: {original}")
+            except Exception as e:
+                logger.warning(f"⚠️ 파일 삭제 실패: {original} - {e}")
 
 # ✅ 6. temp → 최종 디렉토리 이동
 def move_temp_file_to_target(temp_path: str, target_path: str):
