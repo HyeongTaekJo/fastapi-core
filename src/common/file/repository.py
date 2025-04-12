@@ -44,6 +44,7 @@ class FileRepository:
         await self.session.execute(
             delete(FileModel).where(FileModel.id.in_(ids))
         )
+        await self.session.flush()
 
     async def get_file_by_uuid(self, uuid: str) -> Optional[FileModel]:
         stmt = select(FileModel).where(FileModel.original_name.like(f"%{uuid}%"))

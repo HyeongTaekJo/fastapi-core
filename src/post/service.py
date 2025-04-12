@@ -103,7 +103,8 @@ class PostService:
 
         await self.post_repo.update_post(post, request)
 
-        if request.files:
+        # files가 None이 아닐 때 항상 update_files 호출 (빈 배열도 처리)
+        if request.files is not None:
             await self.post_file_service.update_files(post.id, request.files)
 
         return post.id

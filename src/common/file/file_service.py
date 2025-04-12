@@ -35,13 +35,32 @@ class FileService:
             )
 
     async def update_files(self, owner_type: str, owner_id: int, file_payload: list[object]):
-        await self.prepare_for_save_or_update(owner_type, owner_id)
-
-        existing_ids = {f.id for f in self._old_files}  # 🔒 실제 연결된 파일 ID만 추출
+        # 기존 파일 정보 가져오기
+        existing_files = await self.repo.get_files_by_owner(owner_type, owner_id)
+        existing_ids = {f.id for f in existing_files}
         logger.debug(f"📂 기존 연결된 파일 ID들: {existing_ids}")
-        received_ids = set()
 
         try:
+            # 빈 배열이면 모든 파일 삭제
+            if not file_payload:
+                logger.debug("🔄 빈 파일 배열 - 모든 파일 삭제")
+                # 실제 파일 삭제
+                for file in existing_files:
+                    file_path = os.path.join(self.target_folder_path, file.path)
+                    try:
+                        if os.path.exists(file_path):
+                            os.remove(file_path)
+                            logger.info(f"🗑️ 파일 삭제 완료: {file_path}")
+                    except Exception as e:
+                        logger.warning(f"⚠️ 파일 삭제 실패: {file_path} - {e}")
+                
+                # DB에서 파일 삭제
+                await self.repo.delete_files_by_ids(existing_ids)
+                await self.repo.session.flush()  # 변경사항을 DB에 즉시 적용
+                return
+
+            # 파일 업데이트 처리
+            received_ids = set()
             for item in file_payload:
                 order = item.order
 
@@ -59,8 +78,6 @@ class FileService:
                         )
                     else:
                         logger.warning(f"⚠️ 무시됨: item.id={item.id}는 연결된 파일이 아닙니다.")
-                        logger.warning(f"❌ 교체 실패 → item.id={item.id} 는 기존에 없는 파일로 판단됨")
-
 
                 # ✅ 기존 파일 → 순서만 변경
                 elif item.id:
@@ -70,7 +87,6 @@ class FileService:
                         await self.repo.update_file_order(item.id, order)
                     else:
                         logger.warning(f"⚠️ 무시됨: item.id={item.id}는 연결된 파일이 아닙니다.")
-                        logger.warning(f"❌ 순서 변경 실패 → item.id={item.id} 는 기존에 없는 파일로 판단됨")
 
                 # ✅ 새 파일 추가
                 elif item.temp_name:
@@ -82,44 +98,29 @@ class FileService:
                         order=order
                     )
 
-            to_delete_ids = self._old_file_ids - received_ids
+            # 삭제할 파일 ID 계산
+            to_delete_ids = existing_ids - received_ids
             logger.debug(f"🧹 삭제 대상 file ids: {to_delete_ids}")
 
             if to_delete_ids:
-                # 삭제할 파일들의 백업을 제외하고 복원
-                non_deleted_backups = [
-                    (original, backup)
-                    for original, backup in self._backups
-                    if _extract_file_id_from_path(original) not in to_delete_ids
-                ]
-                
-                # 삭제되지 않은 파일들만 복원
-                restore_backups(non_deleted_backups)
-                
-                # 삭제 대상 파일들의 백업은 삭제
-                await delete_backups(self._backups, to_delete_ids)
-                
+                # 삭제할 파일들의 실제 파일 삭제
+                for file in existing_files:
+                    if file.id in to_delete_ids:
+                        file_path = os.path.join(self.target_folder_path, file.path)
+                        try:
+                            if os.path.exists(file_path):
+                                os.remove(file_path)
+                                logger.info(f"🗑️ 파일 삭제 완료: {file_path}")
+                        except Exception as e:
+                            logger.warning(f"⚠️ 파일 삭제 실패: {file_path} - {e}")
+
                 # DB에서 파일 삭제
                 await self.repo.delete_files_by_ids(to_delete_ids)
-                
-                # 삭제된 파일들의 실제 파일도 삭제
-                for original, _ in self._backups:
-                    if _extract_file_id_from_path(original) in to_delete_ids:
-                        try:
-                            if os.path.exists(original):
-                                os.remove(original)
-                                logger.info(f"🗑️ 파일 삭제 완료: {original}")
-                        except Exception as e:
-                            logger.warning(f"⚠️ 파일 삭제 실패: {original} - {e}")
-
-            else:
-                logger.debug("🟢 삭제 대상 없음 → 백업된 기존 파일 복원 중...")
-                restore_backups(self._backups)
+                await self.repo.session.flush()  # 변경사항을 DB에 즉시 적용
 
         except Exception as e:
-            await self.rollback()
+            logger.error(f"❌ 파일 업데이트 중 오류 발생: {str(e)}")
             raise e
-
 
     async def update_existing_file_with_new_temp(self, file_id: int, temp_name: str, owner_type: str, owner_id: int, order: int):
         file = await self.repo.get_file_by_id(file_id)
@@ -157,7 +158,6 @@ class FileService:
         file.type = get_file_type_by_ext(temp_name)
 
         await self.repo.session.flush()
-
 
     async def move_from_temp_and_link(
         self,
@@ -226,7 +226,6 @@ class FileService:
         if not hasattr(self, "_moved_files"):
             self._moved_files = []
         self._moved_files.append((src, dest))
-
 
     async def collect_file_paths(self, owner_type: str, owner_id: int) -> list[str]:
         files = await self.get_files_by_owner(owner_type, owner_id)
