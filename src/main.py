@@ -5,13 +5,13 @@ from common.lifecycle.lifespan import lifespan
 from fastapi.staticfiles import StaticFiles
 from common.const.settings import settings
 from common.const.path_consts import PUBLIC_FOLDER_PATH
-from common.middleware.base import (
+from common.middleware.logging import (
     log_context_middleware,
-    request_logger_middleware,
-    db_session_middleware,
-    auth_middleware,
-    redis_middleware
+    request_logger_middleware
 )
+from common.middleware.database import db_session_middleware
+from common.middleware.auth import auth_middleware
+from common.middleware.redis import redis_middleware
 
 # 로깅 설정 적용 (.env 기반 + TimedRotatingFileHandler)
 from common.utils.logger_config import setup_logging
@@ -53,6 +53,7 @@ app.middleware("http")(log_context_middleware)     # 로그 ID 설정
 app.middleware("http")(db_session_middleware)      # DB 세션 설정
 app.middleware("http")(redis_middleware)           # Redis 인스턴스 설정
 app.middleware("http")(auth_middleware)            # 토큰 검증
+
 
 # 예외 핸들러 등록
 app.add_exception_handler(AppException, app_exception_handler)

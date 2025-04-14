@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from post.schemas.request import CreatePostSchema, UpdatePostSchema, PaginatePostSchema
+from post.schemas.request import CreatePostSchema, UpdatePostSchema, PaginatePostSchema, CreatePostForm
 from auth.tokens.access_token import access_token
 from post.service import PostService
 from post.image.service import PostImageService
@@ -9,7 +9,6 @@ from database.session_context import get_db_from_context  # Context에서 세션
 from auth.dependencies.current_user import get_current_user
 from user.model import UserModel
 from post.file.file_service import PostFileService
-from post.form_schemas.create_schema import CreatePostForm
 
 # router 생성
 router = APIRouter(prefix="/posts", tags=["posts"])

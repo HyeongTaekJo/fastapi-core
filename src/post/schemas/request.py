@@ -1,6 +1,18 @@
 from pydantic import BaseModel, Field
-from typing import Optional, List
+from typing import Optional, List, Union
 from common.pagination.schemas.pagination_request import BasePaginationSchema
+from fastapi import Form, File, UploadFile
+
+class CreatePostForm:
+    def __init__(
+        self,
+        title: str = Form(...),
+        content: str = Form(...),
+        files: List[UploadFile] = File(default=[]),  # 여러 파일을 받을 수 있도록 수정
+    ):
+        self.title = title
+        self.content = content
+        self.files = files if files else []  # 파일이 없으면 빈 리스트로 초기화
 
 class CreatePostSchema(BaseModel):
     title: str
@@ -10,14 +22,13 @@ class CreatePostSchema(BaseModel):
 
 class FileUpdateItem(BaseModel):
     id: Optional[int] = None
-    temp_name: Optional[str] = None
+    temp_file: Optional[str] = None
     order: int
 
 class UpdatePostSchema(BaseModel):
     title: Optional[str] = None
     content: Optional[str] = None
     files: List[FileUpdateItem] = Field(default_factory=list)
-
 
 class PaginatePostSchema(BasePaginationSchema):
     # 아래의 것들을 Query 파라미터로 보내지 않아도 상관없다.

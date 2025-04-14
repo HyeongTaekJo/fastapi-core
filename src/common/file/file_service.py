@@ -65,13 +65,13 @@ class FileService:
                 order = item.order
 
                 # ✅ 기존 파일인데 새 파일로 교체
-                if item.id and item.temp_name:
+                if item.id and item.temp_file:
                     if item.id in existing_ids:
                         logger.debug(f"✅ 교체 처리 중: {item.id}")
                         received_ids.add(item.id)
                         await self.update_existing_file_with_new_temp(
                             file_id=item.id,
-                            temp_name=item.temp_name,
+                            temp_file=item.temp_file,
                             owner_type=owner_type,
                             owner_id=owner_id,
                             order=order
@@ -89,9 +89,9 @@ class FileService:
                         logger.warning(f"⚠️ 무시됨: item.id={item.id}는 연결된 파일이 아닙니다.")
 
                 # ✅ 새 파일 추가
-                elif item.temp_name:
+                elif item.temp_file:
                     await self.move_from_temp_and_link(
-                        temp_filename=item.temp_name,
+                        temp_filename=item.temp_file,
                         owner_type=owner_type,
                         owner_id=owner_id,
                         is_main=(order == 0),
@@ -122,7 +122,7 @@ class FileService:
             logger.error(f"❌ 파일 업데이트 중 오류 발생: {str(e)}")
             raise e
 
-    async def update_existing_file_with_new_temp(self, file_id: int, temp_name: str, owner_type: str, owner_id: int, order: int):
+    async def update_existing_file_with_new_temp(self, file_id: int, temp_file: str, owner_type: str, owner_id: int, order: int):
         file = await self.repo.get_file_by_id(file_id)
         if not file:
             raise HTTPException(status_code=404, detail="파일이 존재하지 않습니다.")
@@ -131,8 +131,8 @@ class FileService:
         old_full_path = os.path.join(self.target_folder_path, file.path)
 
         # 신규 경로 설정
-        temp_path = os.path.join(TEMP_FOLDER_PATH, temp_name)
-        target_rel_path = os.path.join(owner_type, temp_name)
+        temp_path = os.path.join(TEMP_FOLDER_PATH, temp_file)
+        target_rel_path = os.path.join(owner_type, temp_file)
         target_path = os.path.join(self.target_folder_path, target_rel_path)
 
         if not os.path.exists(temp_path):
@@ -152,10 +152,10 @@ class FileService:
 
         # DB 업데이트
         file.path = target_rel_path
-        file.original_name = temp_name
+        file.original_name = temp_file
         file.size = os.path.getsize(target_path)
         file.order = order
-        file.type = get_file_type_by_ext(temp_name)
+        file.type = get_file_type_by_ext(temp_file)
 
         await self.repo.session.flush()
 
