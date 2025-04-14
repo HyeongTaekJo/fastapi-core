@@ -6,12 +6,12 @@ from fastapi.staticfiles import StaticFiles
 from common.const.settings import settings
 from common.const.path_consts import PUBLIC_FOLDER_PATH
 from common.middleware.logging import (
-    log_context_middleware,
-    request_logger_middleware
+    RequestLoggerMiddleware,
+    LogContextMiddleware
 )
-from common.middleware.database import db_session_middleware
-from common.middleware.auth import auth_middleware
-from common.middleware.redis import redis_middleware
+from common.middleware.database import DBSessionMiddleware
+from common.middleware.auth import AuthMiddleware
+from common.middleware.redis import RedisMiddleware
 
 # 로깅 설정 적용 (.env 기반 + TimedRotatingFileHandler)
 from common.utils.logger_config import setup_logging
@@ -47,12 +47,12 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type", "Accept"],
 )
 
-# 사용자 정의 미들웨어
-app.middleware("http")(request_logger_middleware)  # 가장 바깥
-app.middleware("http")(log_context_middleware)     # 로그 ID 설정
-app.middleware("http")(db_session_middleware)      # DB 세션 설정
-app.middleware("http")(redis_middleware)           # Redis 인스턴스 설정
-app.middleware("http")(auth_middleware)            # 토큰 검증
+# 미들웨어 등록
+app.add_middleware(RequestLoggerMiddleware)  # 가장 바깥
+app.add_middleware(LogContextMiddleware)     # 로그 ID 설정
+app.add_middleware(DBSessionMiddleware)      # DB 세션 설정
+app.add_middleware(RedisMiddleware)          # Redis 인스턴스 설정
+app.add_middleware(AuthMiddleware)           # 토큰 검증
 
 
 # 예외 핸들러 등록
