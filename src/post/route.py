@@ -12,7 +12,6 @@ from post.file.file_service import PostFileService
 from user.dependencies.role_guard import role_guard
 from user.const.roles import RolesEnum
 from post.dependencies.owner_or_admin import is_post_owner_or_admin
-from common.dependencies.public import public
 
 # router 생성
 router = APIRouter(prefix="/posts", tags=["posts"])
@@ -37,11 +36,10 @@ async def get_paginated_posts(
 @router.get("/{id}")
 async def get_post_by_id(
     id: int,
-    _ = Depends(public),
-    # _1: None = Depends(access_token),              # ✅ 이름 다르게
+    _1: None = Depends(access_token),                # 토큰이 있어야지 접근 가능
     _2: None = Depends(role_guard(RolesEnum.ADMIN)), # user 데이터가 ADMIN인 경우에만 접근 가능(없으면 그냥 다 접근 가능)
-    _3: None = Depends(is_post_owner_or_admin),  # 👈 명시적이고 주입 구조 유지
-    user: UserModel = Depends(get_current_user) # user 필요시(accessToken이 선행되어야 한다.)
+    _3: None = Depends(is_post_owner_or_admin),      # 작성자 또는 ADMIN만 접근 가능(모델별로 따로 작성 필요)
+    user: UserModel = Depends(get_current_user)      # user 필요시(accessToken이 선행되어야 한다.)
 ):
     
     service = PostService()

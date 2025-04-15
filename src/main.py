@@ -49,7 +49,6 @@ app.add_middleware(
 )
 
 # 미들웨어 등록
-# app.add_middleware(AccessTokenEnforcerMiddleware)   # ✅ 인증 강제 (Access Token인지 확인)
 app.add_middleware(RequestLoggerMiddleware)  # 가장 바깥
 app.add_middleware(LogContextMiddleware)     # 로그 ID 설정
 app.add_middleware(DBSessionMiddleware)      # DB 세션 설정
