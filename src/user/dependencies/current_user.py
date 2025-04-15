@@ -16,7 +16,11 @@ async def get_current_user(
 ) -> UserModel:
     
     redis = get_redis_from_context()  # 미들웨어에서 주입된 Redis 사용
-    user_id = getattr(request.state, "user_id", None) # 
+    user = getattr(request.state, "user", None)
+    if not user:
+        raise HTTPException(status_code=401, detail="로그인이 필요합니다.")
+
+    user_id = user.id  # ✅ UserSchema 객체에서 id 추출
     if not user_id:
         raise HTTPException(status_code=401, detail="Not authenticated")
 

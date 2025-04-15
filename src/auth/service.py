@@ -19,6 +19,7 @@ from common.exceptions.base import ConflictException
 from common.exceptions.base import UnauthorizedException
 from common.exceptions.base import NotFoundException  # 추가됨
 from auth.schemas.request import LoginUserSchema
+from cache.redis_context import get_redis_from_context
 
 class AuthService:
     def __init__(self):
@@ -189,6 +190,11 @@ class AuthService:
 
         # 2. redis에 저장된 refresh token 제거
         await self.auth_repository.delete_refresh_token(user_id)
+
+        # 3. ✅ Redis에 캐시된 user 정보 삭제
+        redis = get_redis_from_context()
+        redis_key = f"user:{user_id}"
+        await redis.delete(redis_key)
 
 @staticmethod
 def decode_jwt_token(token: str) -> LoginUserSchema:

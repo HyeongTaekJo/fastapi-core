@@ -12,6 +12,7 @@ from common.middleware.logging import (
 from common.middleware.database import DBSessionMiddleware
 from common.middleware.auth import AuthMiddleware
 from common.middleware.redis import RedisMiddleware
+from common.middleware.accessToken import AccessTokenEnforcerMiddleware
 
 # 로깅 설정 적용 (.env 기반 + TimedRotatingFileHandler)
 from common.utils.logger_config import setup_logging
@@ -48,6 +49,7 @@ app.add_middleware(
 )
 
 # 미들웨어 등록
+# app.add_middleware(AccessTokenEnforcerMiddleware)   # ✅ 인증 강제 (Access Token인지 확인)
 app.add_middleware(RequestLoggerMiddleware)  # 가장 바깥
 app.add_middleware(LogContextMiddleware)     # 로그 ID 설정
 app.add_middleware(DBSessionMiddleware)      # DB 세션 설정

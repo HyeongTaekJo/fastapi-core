@@ -2,7 +2,9 @@ from fastapi import Depends, HTTPException, Request
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from auth.service import AuthService
 from user.schemas.response import UserSchema
+from cache.redis_context import get_redis_from_context
 from auth.const.fields import LOGIN_TYPE_FIELD_MAP
+import json
 
 security = HTTPBasic()
 # ★ HTTPBasic이 자동으로 검증해주는 것들 ★
@@ -17,6 +19,9 @@ async def basic_token(
     credentials: HTTPBasicCredentials = Depends(security), 
     auth_service: AuthService = Depends()
 )-> UserSchema:
+    
+    redis = get_redis_from_context()  # 미들웨어에서 주입된 Redis 사용
+
     """ Basic Auth를 사용한 인증 """
      # credentials가 None인지 확인
     if not credentials:
@@ -41,6 +46,11 @@ async def basic_token(
     if not user:
         raise HTTPException(status_code=401, detail="이메일 또는 비밀번호가 올바르지 않습니다.")
 
+    # Redis에 캐싱 (dict 형태로)
+    redis_key = f"user:{user.id}"
+    user_dict = UserSchema.model_validate(user).model_dump()
+    await redis.setex(redis_key, 3600, json.dumps(user_dict))
+    
     return user
 
 

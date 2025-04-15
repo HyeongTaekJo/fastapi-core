@@ -20,7 +20,6 @@ class AuthMiddleware(BaseHTTPMiddleware):
             # Bearer 토큰 처리
             token = auth_header.replace("Bearer ", "")
             user = decode_jwt_token(token) if token else None
-            request.state.user = user
             user_id_ctx_var.set(user.id if user else None)
 
             return await call_next(request)

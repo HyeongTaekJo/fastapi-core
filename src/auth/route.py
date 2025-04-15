@@ -10,11 +10,13 @@ from auth.tokens.access_token import access_token
 from auth.schemas.request import EmailLoginSchema
 from auth.schemas.request import LoginIdLoginSchema
 from auth.schemas.request import PhoneLoginSchema
+from common.dependencies.public import public
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 # 로그인
 @router.post("/login/email")
+@public
 async def post_login_email(
     # 특정 API에만 적용
     # BasicToken 함수를 수행하면 인증된 user  객체가 반환된다.
