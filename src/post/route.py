@@ -39,7 +39,7 @@ async def get_post_by_id(
     _1: None = Depends(access_token),                # 토큰이 있어야지 접근 가능
     _2: None = Depends(role_guard(RolesEnum.ADMIN)), # user 데이터가 ADMIN인 경우에만 접근 가능(없으면 그냥 다 접근 가능)
     _3: None = Depends(is_post_owner_or_admin),      # 작성자 또는 ADMIN만 접근 가능(모델별로 따로 작성 필요)
-    user: UserModel = Depends(get_current_user)      # user 필요시(accessToken이 선행되어야 한다.)
+    user: UserModel = Depends(get_current_user)      # user 필요시(accessToken이 선행되어야 한다.) 하지만 request.state.user에 이미 들어가 있어서 안써도되긴 함
 ):
     
     service = PostService()

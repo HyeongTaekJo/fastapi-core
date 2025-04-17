@@ -20,6 +20,9 @@ from post.model import PostModel
 from user.model import UserModel
 from common.image.model import ImageModel
 from common.file.file_model import FileModel
+from cart.model import CartModel, CartItemModel
+from order.model import OrderModel, OrderItemModel
+from product.model import ProductModel
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

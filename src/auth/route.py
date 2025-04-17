@@ -22,13 +22,14 @@ async def post_login_email(
     # 클라이언트에서 accessToken을 가지고 요청을 보내면 API들이 작동된다.
     # 단, Depends(AccessToken)를 통해서 로그인한 사용자만 접근 가능한 API로 설정한 경우 accessToken이 필요하다.
     # 참고 -> Depends(AccessToken)를 수행하면 요청(req)에 user를 들고 있는데 이것을 Depends(User)를 통해서 req.user을 빼와서 바로 user를 사용할 수 있다.
-    
+    request : Request,
     response: Response,
     # 로그인 API - Basic Token 인증
-    user: UserSchema  = Depends(basic_token),
+    _1: None = Depends(basic_token),
     auth_service: AuthService = Depends(),
     
 ):
+    user : UserSchema = request.state.user
      # EmailLoginSchema로 명시적 변환
     login_user = EmailLoginSchema.model_validate(user.model_dump())
 
@@ -115,10 +116,13 @@ async def new_refresh_token(
 # 로그인(id 방식)
 @router.post("/login/login_id")
 async def login_login_id(
+    request : Request,
     response: Response,
-    user: UserSchema  = Depends(basic_token),  # login_id 기반 BasicAuth
+    _1: None = Depends(basic_token),  # login_id 기반 BasicAuth
     auth_service: AuthService = Depends(),
 ):
+    user : UserSchema = request.state.user
+
     # LoginIdLoginSchema로 명시적 변환
     login_user = LoginIdLoginSchema.model_validate(user.model_dump())
 
@@ -129,10 +133,13 @@ async def login_login_id(
 # 로그인(핸드폰 방식)
 @router.post("/login/phone")
 async def login_phone(
+    request : Request,
     response: Response,
-    user: UserSchema  = Depends(basic_token),  # phone 기반 BasicAuth
+    _1: None = Depends(basic_token),  # phone 기반 BasicAuth
     auth_service: AuthService = Depends(),
 ):
+    user : UserSchema = request.state.user
+    
     # PhoneLoginSchema로 명시적 변환
     login_user = PhoneLoginSchema.model_validate(user.model_dump())
 

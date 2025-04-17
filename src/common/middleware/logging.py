@@ -15,10 +15,11 @@ class LogContextMiddleware(BaseHTTPMiddleware):
             request_id = request.headers.get("X-Request-ID") or str(uuid.uuid4())
             request_id_ctx_var.set(request_id)
 
-            user = getattr(request.state, "user", None)
-            user_id_ctx_var.set(getattr(user, "id", None) if user else None)
-
             response = await call_next(request)
+
+            # user = request.state.user
+            # user_id_ctx_var.set(user.id if user else None)
+
             response.headers["X-Request-ID"] = request_id
             return response
         except Exception as e:
@@ -32,6 +33,9 @@ class RequestLoggerMiddleware(BaseHTTPMiddleware):
             start = time.time()
             response = await call_next(request)
             duration = round(time.time() - start, 4)
+
+            user = getattr(request.state, "user", None)
+            user_id_ctx_var.set(user.id if user else None)
 
             logger.info(f"{request.method} {request.url.path} [{response.status_code}] {duration}s")
             return response

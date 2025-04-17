@@ -3,6 +3,7 @@ from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
 from auth.service import decode_jwt_token
 from common.utils.log_context import user_id_ctx_var
+from cache.redis_context import get_redis_from_context
 from common.middleware.error import middleware_error_handler
 
 logger = logging.getLogger(__name__)
@@ -20,6 +21,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
             # Bearer 토큰 처리
             token = auth_header.replace("Bearer ", "")
             user = decode_jwt_token(token) if token else None
+
             user_id_ctx_var.set(user.id if user else None)
 
             return await call_next(request)

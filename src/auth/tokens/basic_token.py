@@ -4,6 +4,7 @@ from auth.service import AuthService
 from user.schemas.response import UserSchema
 from cache.redis_context import get_redis_from_context
 from auth.const.fields import LOGIN_TYPE_FIELD_MAP
+from common.utils.log_context import user_id_ctx_var
 import json
 
 security = HTTPBasic()
@@ -50,8 +51,8 @@ async def basic_token(
     redis_key = f"user:{user.id}"
     user_dict = UserSchema.model_validate(user).model_dump()
     await redis.setex(redis_key, 3600, json.dumps(user_dict))
-    
-    return user
+
+    request.state.user = user
 
 
 """ 아래는 HTTPBasicCredentials을 사용하지 않고 내가 직접 만든 로직 """
