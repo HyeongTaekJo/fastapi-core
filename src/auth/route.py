@@ -33,7 +33,7 @@ async def post_login_email(
      # EmailLoginSchema로 명시적 변환
     login_user = EmailLoginSchema.model_validate(user.model_dump())
 
-    tokens = await auth_service.login_user(login_user)
+    tokens = await auth_service.login_user(request, login_user)
 
     # refresh_token을 쿠키에 저장
     set_refresh_token_cookie(response, tokens.refresh_token)
@@ -63,11 +63,12 @@ async def logout(
 # 회원가입(email 방식)
 @router.post("/register/email")
 async def register_user(
-    request: RegisterUserSchema,
+    request: Request,
+    user_data: RegisterUserSchema,
     response: Response,
     auth_service: AuthService = Depends()
 ):
-    tokens = await auth_service.register_user(request)
+    tokens = await auth_service.register_user(request, user_data)
 
     # refresh_token을 쿠키에 저장
     set_refresh_token_cookie(response, tokens.refresh_token)
@@ -126,7 +127,7 @@ async def login_login_id(
     # LoginIdLoginSchema로 명시적 변환
     login_user = LoginIdLoginSchema.model_validate(user.model_dump())
 
-    tokens = await auth_service.login_user(login_user)
+    tokens = await auth_service.login_user(request,login_user)
     set_refresh_token_cookie(response, tokens.refresh_token)
     return {"access_token": tokens.access_token}
 
@@ -143,7 +144,7 @@ async def login_phone(
     # PhoneLoginSchema로 명시적 변환
     login_user = PhoneLoginSchema.model_validate(user.model_dump())
 
-    tokens = await auth_service.login_user(login_user)
+    tokens = await auth_service.login_user(request,login_user)
     set_refresh_token_cookie(response, tokens.refresh_token)
     return {"access_token": tokens.access_token}
 
@@ -151,21 +152,23 @@ async def login_phone(
 # 회원가입(id 방식)
 @router.post("/register/login_id")
 async def register_user(
-    request: RegisterUserSchema,
+    request : Request,
+    user_data: RegisterUserSchema,
     response: Response,
     auth_service: AuthService = Depends()
 ):
-    tokens = await auth_service.register_user(request)
+    tokens = await auth_service.register_user(request,user_data)
     set_refresh_token_cookie(response, tokens.refresh_token)
     return {"access_token": tokens.access_token}
 
 # 회원가입(핸드폰 방식)
 @router.post("/register/phone")
 async def register_user(
-    request: RegisterUserSchema,
+    request : Request,
+    user_data: RegisterUserSchema,
     response: Response,
     auth_service: AuthService = Depends()
 ):
-    tokens = await auth_service.register_user(request)
+    tokens = await auth_service.register_user(request, user_data)
     set_refresh_token_cookie(response, tokens.refresh_token)
     return {"access_token": tokens.access_token}

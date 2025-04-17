@@ -180,7 +180,10 @@ class AuthService:
         return TokenSchema(access_token=access_token, refresh_token=refresh_token)
 
 
-    async def register_user(self, user_data: RegisterUserSchema) -> TokenSchema:
+    async def register_user(
+            self,
+            request: Request,
+            user_data: RegisterUserSchema) -> TokenSchema:
         """회원가입 비즈니스 로직"""
         
         for field in UNIQUE_USER_FIELDS:
@@ -207,7 +210,7 @@ class AuthService:
 
         # Pydantic DTO 변환
         user_schema = UserSchema.model_validate(new_user)
-        return await self.login_user(user_schema)  # 로그인 처리
+        return await self.login_user(request, user_schema)  # 로그인 처리
     
     async def logout(self, access_token: str):
         payload = self.verify_token(access_token)
