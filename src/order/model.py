@@ -1,12 +1,14 @@
 from __future__ import annotations
 from sqlalchemy import Enum as SqlEnum
-from sqlalchemy import Column, String, Integer, Numeric, Text
+from sqlalchemy import String, Integer, Numeric, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey
 from common.model.base_model import Base
-from typing import Optional, List
-from product.model import ProductModel
+from typing import Optional, List, TYPE_CHECKING
 import enum
+
+if TYPE_CHECKING:
+    from product.model import ProductModel
 
 class OrderStatus(str, enum.Enum):
     PENDING = "PENDING"
@@ -34,5 +36,5 @@ class OrderItemModel(Base):
     quantity: Mapped[int] = mapped_column(Integer, nullable=False)
     price_at_time: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
 
-    order = relationship("OrderModel", back_populates="items")
-    product = relationship("ProductModel", back_populates="order_items")
+    order: Mapped["OrderModel"] = relationship("OrderModel", back_populates="items")
+    product: Mapped["ProductModel"] = relationship("ProductModel", back_populates="order_items")

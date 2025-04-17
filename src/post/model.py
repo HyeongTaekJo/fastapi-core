@@ -21,7 +21,7 @@ class PostModel(Base):
     user: Mapped[UserModel] = relationship("UserModel", back_populates="posts", lazy="selectin")
 
     # image Model 관계 생성
-    images: Mapped[List[ImageModel]] = relationship(
+    images: Mapped[List["ImageModel"]] = relationship(
         "ImageModel",
         back_populates="post",
         cascade="all, delete-orphan",
@@ -29,7 +29,7 @@ class PostModel(Base):
     )
 
     # file Model 관계 생성성
-    files: Mapped[List[FileModel]] = relationship(
+    files: Mapped[List["FileModel"]] = relationship(
         "FileModel",
         back_populates="post",
         cascade="all, delete-orphan",

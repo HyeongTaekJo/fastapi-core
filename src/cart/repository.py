@@ -1,7 +1,8 @@
 from sqlalchemy import select, delete
 from sqlalchemy.orm import selectinload
 from database.session_context import get_db_from_context
-from cart.model import CartModel, CartItemModel
+from cart.model import CartModel
+from cart.model import CartItemModel
 
 class CartRepository:
     def __init__(self):
