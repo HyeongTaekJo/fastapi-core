@@ -3,7 +3,7 @@ import bcrypt
 # from jose import jwt, JWTError  
 import jwt  # python-jose 대신 pyjwt 사용
 from jwt import ExpiredSignatureError, InvalidTokenError
-from fastapi import HTTPException, Depends, status
+from fastapi import HTTPException, Depends, status, Request
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from user.schemas.response import UserSchema
@@ -20,11 +20,15 @@ from common.exceptions.base import UnauthorizedException
 from common.exceptions.base import NotFoundException  # 추가됨
 from auth.schemas.request import LoginUserSchema
 from cache.redis_context import get_redis_from_context
+from auth.repository import AuthRepository
+from cart.repository import CartRepository
+
 
 class AuthService:
     def __init__(self):
         self.user_repository = UserRepository()
         self.auth_repository = AuthRepository()
+        self.cart_repository = CartRepository()
 
     def extract_token(self, auth_header: str, is_bearer: bool) -> str:
         """Authorization 헤더에서 토큰을 추출"""
@@ -139,13 +143,38 @@ class AuthService:
 
         return UserSchema.model_validate(user)
     
-    async def login_user(self, user: UserSchema) -> TokenSchema:
+    async def login_user(
+                self,
+                request: Request,
+                user: UserSchema) -> TokenSchema:
         """사용자 로그인 후 토큰 발급 + Redis 저장"""
         access_token = self.sign_token(user, is_refresh=False)
         refresh_token = self.sign_token(user, is_refresh=True)
 
         # Redis 저장
         await self.auth_repository.save_refresh_token(user.id, refresh_token)
+
+        ###########################################################################
+
+        # 🧠 Redis 세션에 있는 장바구니와 DB 장바구니 병합
+        redis_cart = request.state.session.get("cart", {})
+        db_cart = await self.cart_repository.get_user_cart_dict(user.id)
+
+        merged_cart = db_cart.copy()
+        for pid, qty in redis_cart.items():
+            merged_cart[pid] = merged_cart.get(pid, 0) + qty
+
+        # 💾 병합 후 MySQL 저장
+        await self.cart_repository.save_user_cart(user.id, merged_cart)
+
+        ###########################################################################
+
+        # ✅ Redis 세션 갱신
+        session = request.state.session
+        session["user"] = { "id": user.id, "email": user.email }
+        session["cart"] = merged_cart
+
+        ###########################################################################
 
         # TokenSchema 객체로 반환
         return TokenSchema(access_token=access_token, refresh_token=refresh_token)

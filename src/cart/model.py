@@ -2,6 +2,7 @@ from __future__ import annotations
 from sqlalchemy import ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from common.model.base_model import Base
+from product.model import ProductModel
 from typing import List
 
 class CartModel(Base):
@@ -10,7 +11,7 @@ class CartModel(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id", ondelete="CASCADE"), nullable=False, unique=True)
     user = relationship("UserModel", backref="cart", lazy="selectin")
 
-    items: Mapped[List["CartItemModel"]] = relationship(back_populates="cart", cascade="all, delete-orphan")
+    items: Mapped[List[CartItemModel]] = relationship(back_populates="cart", cascade="all, delete-orphan")
 
 
 class CartItemModel(Base):

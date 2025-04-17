@@ -5,6 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey
 from common.model.base_model import Base
 from typing import Optional, List
+from product.model import ProductModel
 import enum
 
 class OrderStatus(str, enum.Enum):
@@ -22,7 +23,7 @@ class OrderModel(Base):
     total_amount: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
 
     user = relationship("UserModel", backref="orders", lazy="selectin")
-    items: Mapped[List["OrderItemModel"]] = relationship(back_populates="order", cascade="all, delete-orphan")
+    items: Mapped[List[OrderItemModel]] = relationship(back_populates="order", cascade="all, delete-orphan")
 
 
 class OrderItemModel(Base):
