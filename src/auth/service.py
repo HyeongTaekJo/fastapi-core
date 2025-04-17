@@ -24,6 +24,7 @@ from auth.repository import AuthRepository
 from cart.repository import CartRepository
 
 
+
 class AuthService:
     def __init__(self):
         self.user_repository = UserRepository()

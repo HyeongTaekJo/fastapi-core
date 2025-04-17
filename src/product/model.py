@@ -18,8 +18,8 @@ class ProductModel(Base):
     sku: Mapped[Optional[str]] = mapped_column(String(50), unique=True)
 
     cart_items: Mapped[List["CartItemModel"]] = relationship(
-        "CartItemModel", back_populates="product", cascade="all, delete-orphan"
+        "CartItemModel", back_populates="product", cascade="all, delete-orphan", lazy="selectin"
     )
     order_items: Mapped[List["OrderItemModel"]] = relationship(
-        "OrderItemModel", back_populates="product", cascade="all, delete-orphan"
+        "OrderItemModel", back_populates="product", cascade="all, delete-orphan", lazy="selectin"
     )

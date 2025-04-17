@@ -16,7 +16,7 @@ class CartModel(Base):
     user = relationship("UserModel", backref="cart", lazy="selectin")
 
     items: Mapped[List["CartItemModel"]] = relationship(
-        back_populates="cart", cascade="all, delete-orphan"
+        back_populates="cart", cascade="all, delete-orphan" , lazy="selectin"
     )
 
 
@@ -27,6 +27,6 @@ class CartItemModel(Base):
     product_id: Mapped[int] = mapped_column(ForeignKey("product.id"), nullable=False)
     quantity: Mapped[int] = mapped_column(Integer, default=1)
 
-    cart: Mapped["CartModel"] = relationship("CartModel", back_populates="items")       
-    product: Mapped["ProductModel"] = relationship("ProductModel", back_populates="cart_items")
+    cart: Mapped["CartModel"] = relationship("CartModel", back_populates="items", lazy="selectin")       
+    product: Mapped["ProductModel"] = relationship("ProductModel", back_populates="cart_items" , lazy="selectin")
 

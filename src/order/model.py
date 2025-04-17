@@ -25,7 +25,7 @@ class OrderModel(Base):
     total_amount: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
 
     user = relationship("UserModel", backref="orders", lazy="selectin")
-    items: Mapped[List["OrderItemModel"]] = relationship(back_populates="order", cascade="all, delete-orphan")
+    items: Mapped[List["OrderItemModel"]] = relationship(back_populates="order", cascade="all, delete-orphan", lazy="selectin")
 
 
 class OrderItemModel(Base):
@@ -36,5 +36,5 @@ class OrderItemModel(Base):
     quantity: Mapped[int] = mapped_column(Integer, nullable=False)
     price_at_time: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
 
-    order: Mapped["OrderModel"] = relationship("OrderModel", back_populates="items")
-    product: Mapped["ProductModel"] = relationship("ProductModel", back_populates="order_items")
+    order: Mapped["OrderModel"] = relationship("OrderModel", back_populates="items", lazy="selectin")
+    product: Mapped["ProductModel"] = relationship("ProductModel", back_populates="order_items", lazy="selectin")
