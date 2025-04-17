@@ -23,7 +23,7 @@ class OrderModel(Base):
     total_amount: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
 
     user = relationship("UserModel", backref="orders", lazy="selectin")
-    items: Mapped[List[OrderItemModel]] = relationship(back_populates="order", cascade="all, delete-orphan")
+    items: Mapped[List["OrderItemModel"]] = relationship(back_populates="order", cascade="all, delete-orphan")
 
 
 class OrderItemModel(Base):

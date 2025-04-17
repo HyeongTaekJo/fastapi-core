@@ -15,5 +15,5 @@ class ProductModel(Base):
     stock: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     sku: Mapped[Optional[str]] = mapped_column(String(50), unique=True)
 
-    cart_items: Mapped[List[CartItemModel]] = relationship(back_populates="product", cascade="all, delete-orphan")
-    order_items: Mapped[List[OrderItemModel]] = relationship(back_populates="product", cascade="all, delete-orphan")
+    cart_items: Mapped[List["CartItemModel"]] = relationship(back_populates="product", cascade="all, delete-orphan")
+    order_items: Mapped[List["OrderItemModel"]] = relationship(back_populates="product", cascade="all, delete-orphan")

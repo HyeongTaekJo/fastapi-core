@@ -2,11 +2,10 @@ from sqlalchemy import select, delete
 from sqlalchemy.orm import selectinload
 from database.session_context import get_db_from_context
 from cart.model import CartModel, CartItemModel
-from sqlalchemy.ext.asyncio import AsyncSession
 
 class CartRepository:
     def __init__(self):
-        self.session: AsyncSession = get_db_from_context()
+        self.session = get_db_from_context()
 
     async def get_or_create_cart(self, user_id: int) -> CartModel:
         cart = await self.session.scalar(
