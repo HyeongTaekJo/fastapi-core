@@ -6,7 +6,7 @@ from jwt import ExpiredSignatureError, InvalidTokenError
 from fastapi import HTTPException, Depends, status, Request
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
-from user.schemas.response import UserSchema
+from user.schemas.response import UserSchema, TokenPayloadSchema
 from common.const.settings import settings  # 환경 변수 설정
 from auth.schemas.response import TokenSchema
 from user.repository import UserRepository
@@ -155,8 +155,6 @@ class AuthService:
         # Redis 저장
         await self.auth_repository.save_refresh_token(user.id, refresh_token)
 
-        ###########################################################################
-
         # 🧠 Redis 세션에 있는 장바구니와 DB 장바구니 병합
         redis_cart = request.state.session.get("cart", {})
         db_cart = await self.cart_repository.get_user_cart_dict(user.id)
@@ -168,14 +166,10 @@ class AuthService:
         # 💾 병합 후 MySQL 저장
         await self.cart_repository.save_user_cart(user.id, merged_cart)
 
-        ###########################################################################
-
         # ✅ Redis 세션 갱신
         session = request.state.session
-        session["user"] = { "id": user.id, "email": user.email }
+        session["user"] = user.model_dump()
         session["cart"] = merged_cart
-
-        ###########################################################################
 
         # TokenSchema 객체로 반환
         return TokenSchema(access_token=access_token, refresh_token=refresh_token)
@@ -213,7 +207,7 @@ class AuthService:
         user_schema = UserSchema.model_validate(new_user)
         return await self.login_user(request, user_schema)  # 로그인 처리
     
-    async def logout(self, access_token: str):
+    async def logout(self, request: Request, access_token: str):
         payload = self.verify_token(access_token)
         user_id = payload["sub"]
         exp = payload["exp"]
@@ -229,17 +223,26 @@ class AuthService:
         redis_key = f"user:{user_id}"
         await redis.delete(redis_key)
 
+        # 3. Redis에 캐시된 session 정보 삭제
+        if request.state.session:
+            request.state.session.clear()
+
+        
+        
+
 @staticmethod
-def decode_jwt_token(token: str) -> LoginUserSchema:
+def decode_jwt_token(token: str) -> TokenPayloadSchema:
     """JWT 토큰을 검증하고, 사용자 정보(id, email)를 추출"""
     try:
         payload = jwt.decode(token, settings.JWT_SECRET, algorithms=[settings.ALGORITHM])
         
-        return LoginUserSchema(
-            id=int(payload["sub"]),
+        return TokenPayloadSchema(
+            id=int(payload["sub"]),                      
             email=payload.get("email"),
             login_id=payload.get("login_id"),
-            phone=payload.get("phone")
+            phone=payload.get("phone"),
+            type=payload.get("type", "access"),
+            exp=payload.get("exp")
         )
     except jwt.ExpiredSignatureError:
         raise UnauthorizedException("토큰이 만료되었습니다.")

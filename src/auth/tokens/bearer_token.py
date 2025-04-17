@@ -4,9 +4,7 @@ from auth.service import AuthService
 from user.repository import UserRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 from auth.repository import AuthRepository
-from cache.redis_context import get_redis_from_context
 from user.schemas.response import UserSchema
-import json
 import logging
 
 logger = logging.getLogger(__name__)
@@ -24,7 +22,7 @@ async def bearer_token(
     ✅ 공통 인증 처리 (Bearer 토큰 검증 + 사용자 정보 로딩 + request.state 주입)
     - 블랙리스트 확인
     - JWT 토큰 검증
-    - Redis 캐싱된 사용자 정보 복원 or DB에서 조회
+    - Redis 세션 기반 사용자 정보 복원 or DB 조회
     - request.state에 user, token, token_type 저장
     """
 
@@ -46,21 +44,18 @@ async def bearer_token(
     if not user_id:
         raise HTTPException(status_code=401, detail="토큰에 사용자 ID가 없습니다.")
 
-    # 5. Redis 캐시에서 사용자 정보 조회 시도
-    redis = get_redis_from_context()
-    redis_key = f"user:{user_id}"
+    # 5. 세션에서 사용자 정보 조회
+    session = request.state.session
+    user_dict = session.get("user")
 
     user_data = None
-    cached = await redis.get(redis_key)
-
-    if cached:
+    if user_dict:
         try:
-            user_dict = json.loads(cached)
             user_data = UserSchema(**user_dict)  # ✅ Pydantic 기반 객체 복원
         except Exception as e:
-            logger.warning(f"Redis 사용자 캐싱 복원 실패: {e}")
+            logger.warning(f"세션 사용자 정보 파싱 실패: {e}")
 
-    # 6. Redis에 없으면 DB에서 조회 후 캐싱
+    # 6. 세션에 없으면 DB에서 조회 후 세션에 저장
     if not user_data:
         user_model = await user_repository.get_user_by_id(user_id)
         if not user_model:
@@ -68,9 +63,9 @@ async def bearer_token(
 
         user_data = UserSchema.model_validate(user_model)  # SQLAlchemy → Pydantic 변환
         try:
-            await redis.setex(redis_key, 3600, user_data.model_dump_json())  # 캐시 1시간 저장
+            session["user"] = user_data.model_dump()  # ✅ Redis 세션 갱신
         except Exception as e:
-            logger.warning(f"Redis 저장 실패: {e}")
+            logger.warning(f"세션 사용자 정보 Redis 저장 실패: {e}")
 
     # 7. DB 트랜잭션을 명시적으로 종료 (쓰기 작업 없으므로 rollback 안전)
     db: AsyncSession = user_repository.session

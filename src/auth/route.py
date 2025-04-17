@@ -50,7 +50,7 @@ async def logout(
     auth_service: AuthService = Depends(),
 ):
     access_token = request.state.token  # access_token은 미리 검증된 상태
-    await auth_service.logout(access_token)
+    await auth_service.logout(request, access_token)
 
     response = JSONResponse(
         status_code=status.HTTP_200_OK,

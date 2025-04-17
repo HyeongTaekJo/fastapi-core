@@ -47,10 +47,10 @@ async def basic_token(
     if not user:
         raise HTTPException(status_code=401, detail="이메일 또는 비밀번호가 올바르지 않습니다.")
 
-    # Redis에 캐싱 (dict 형태로)
-    redis_key = f"user:{user.id}"
-    user_dict = UserSchema.model_validate(user).model_dump()
-    await redis.setex(redis_key, 3600, json.dumps(user_dict))
+    # # Redis에 캐싱 (dict 형태로)
+    # redis_key = f"user:{user.id}"
+    # user_dict = UserSchema.model_validate(user).model_dump()
+    # await redis.setex(redis_key, 3600, json.dumps(user_dict))
 
     request.state.user = user
 

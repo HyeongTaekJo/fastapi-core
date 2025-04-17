@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr, Field, model_validator, field_validator
 from typing import Optional
+from user.const.roles import RolesEnum 
 
 # 회원가입 요청 스키마
 class RegisterUserSchema(BaseModel):
@@ -44,6 +45,8 @@ class LoginUserSchema(BaseModel):
 # 공통 필드
 class BaseLoginSchema(BaseModel):
     id: int
+    nickname: Optional[str] = None
+    role: RolesEnum
 
 # 이메일 로그인용
 class EmailLoginSchema(BaseLoginSchema):

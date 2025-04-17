@@ -24,16 +24,14 @@ class RedisSessionMiddleware(BaseHTTPMiddleware):
             return response
         try:
             if session_id:
-                # redis에서 해당 session_id값으로 저장된 개별 session_data를 가져옴
                 session_data = await redis.hgetall(f"session:{session_id}")
-                # redis에 해당 session_id값으로 데이터가 없을 수도 있음. 만약 있다면
                 if session_data:
-                    # fastapi의 request.state 객체에 새롭게 session 객체를 만들고, 여기에 session data를 저장. 
-                    request.state.session = {k: json.loads(v) for k, v in session_data.items()} # session_data에는 id, name 등등 실제값이 json형태로 있는 것을 dict 형태로 바꿔서 redis에 넣는다.
-                    await redis.expire(f"session:{session_id}", self.max_age) # 기존에 expire가 설정되어 있으면 신규로 설정한다 즉, 접근할 때마다 신규로 업데이트된다.
+                    request.state.session = {
+                        k.decode("utf-8") if isinstance(k, bytes) else k: json.loads(v)
+                        for k, v in session_data.items()
+                    }
+                    await redis.expire(f"session:{session_id}", self.max_age)
                     initial_session_was_empty = False
-                # 만약 없다면, redis에서 여러 이유로 데이터가 삭제되었음. 
-                # request.state.session 객체도 초기화 시키고, 신규 session으로 간주
                 else:
                     request.state.session = {}
                     # session_id cookie를 가지고 있지 않다면, 이는 신규 session이고, 추후에 response에 set_cookie 호출. 
@@ -59,7 +57,7 @@ class RedisSessionMiddleware(BaseHTTPMiddleware):
                 # request.state.session값의 변경 여부와 관계없이 저장
                 # expiration time을 지속적으로 max_age로 갱신.
                 for field, value in request.state.session.items():
-                    await redis.hset(f"session:{session_id}", field, json.dumps(value))
+                    await redis.hset(f"session:{session_id}", str(field), json.dumps(value))
                 await redis.expire(f"session:{session_id}", self.max_age)
 
                 #########################################

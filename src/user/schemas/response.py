@@ -29,3 +29,16 @@ class UserListSchema(BaseModel):
 class DetailedUserSchema(UserSchema):
     nickname: str
     password: str  # 보통 응답엔 안 넣지만 예시로
+
+
+class TokenPayloadSchema(BaseModel):
+    id: int  # 사용자 ID, 문자열로 들어옴 (JWT 스펙에 맞춤)
+    email: Optional[EmailStr] = None
+    login_id: Optional[str] = None
+    phone: Optional[str] = None
+    nickname: Optional[str] = None
+    type: str  # "access" 또는 "refresh"
+    exp: int   # UNIX timestamp (만료시간)
+
+    class Config:
+        from_attributes = True  # Pydantic v2 기준

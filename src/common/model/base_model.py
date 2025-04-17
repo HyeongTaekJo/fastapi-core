@@ -8,6 +8,7 @@ from sqlalchemy.ext.declarative import as_declarative, declared_attr
 from sqlalchemy import Column, Integer, DateTime, func
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 
+
 #  모든 모델이 공유할 공통 Base 정의
 @as_declarative()
 class Base:

@@ -1,46 +1,23 @@
-from fastapi import Request, HTTPException, Depends
-from user.repository import UserRepository
+from fastapi import Request, HTTPException
 from user.schemas.response import UserSchema
-from user.model import UserModel
-from cache.redis_context import get_redis_from_context
-import json
-
 import logging
 
 logger = logging.getLogger(__name__)
 
+async def get_current_user(request: Request) -> UserSchema:
+    """
+    ✅ request.state.session에서 인증된 사용자 정보를 꺼내는 공통 의존성
+    - 세션이 없거나 손상되었을 경우 로깅 포함
+    """
+    session = getattr(request.state, "session", {})
+    user_data = session.get("user")
 
-async def get_current_user(
-    request: Request,
-    user_repository: UserRepository = Depends()
-) -> UserModel:
-    
-    redis = get_redis_from_context()  # 미들웨어에서 주입된 Redis 사용
-    user = getattr(request.state, "user", None)
-    if not user:
+    if not user_data:
+        logger.warning("❌ [AUTH] 세션에 사용자 정보 없음 (비로그인 상태)")
         raise HTTPException(status_code=401, detail="로그인이 필요합니다.")
 
-    user_id = user.id  # ✅ UserSchema 객체에서 id 추출
-    if not user_id:
-        raise HTTPException(status_code=401, detail="Not authenticated")
-
-    redis_key = f"user:{user_id}"
-    cached = await redis.get(redis_key)
-
-    if cached:
-        try:
-            user_data = json.loads(cached)
-            # ORM으로 쓰려면 Pydantic → SQLAlchemy 변환 필요 (아래는 간단히 Pydantic 반환)
-            return UserSchema(**user_data)
-        except Exception as e:
-            logger.warning(f"Redis 사용자 캐싱 복원 실패: {e}")  # 로깅 추천
-
-    # fallback: DB에서 조회
-    user = await user_repository.get_user_by_id(user_id)
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    # Redis에 캐싱 (dict 형태로)
-    user_dict = UserSchema.model_validate(user).model_dump()
-    await redis.setex(redis_key, 3600, json.dumps(user_dict))
-    return user
+    try:
+        return UserSchema(**user_data)  # ✅ Pydantic 객체로 변환
+    except Exception as e:
+        logger.warning(f"❌ [AUTH] 세션 사용자 파싱 실패: {e}")
+        raise HTTPException(status_code=401, detail="세션 사용자 정보가 손상되었습니다.")
