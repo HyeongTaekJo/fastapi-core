@@ -50,10 +50,20 @@ class RedisSessionMiddleware(BaseHTTPMiddleware):
             # response = await call_next(request) 이렇게하면 @router.post("/login") 함수로 넘어가서 
             # 함수를 실행하고 다시 돌아온다는 뜻이다.
             response = await call_next(request) 
+
+            # ✅ 무조건 session_id 쿠키 발급 (로그인 안 해도)
+            response.set_cookie(
+                self.session_cookie,
+                session_id,
+                max_age=self.max_age,
+                httponly=True,
+                secure=False,          # HTTPS면 True
+                samesite="lax"         # 필요 시 'strict' or 'none'
+            )
+
             if request.state.session:
                 # logging.info("##### request.state.session:" + str(request.state.session))
                 # 초기 접속은 물론, 지속적으로 접속하면 max_age를 계속 갱신. 
-                response.set_cookie(self.session_cookie, session_id, max_age=self.max_age, httponly=True)
                 # redis에서 해당 session_id를 가지는 값을 hash로 저장. 
                 # request.state.session값의 변경 여부와 관계없이 저장
                 # expiration time을 지속적으로 max_age로 갱신.

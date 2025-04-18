@@ -153,31 +153,41 @@ class AuthService:
         request: Request,
         user: UserSchema
     ) -> TokenSchema:
-
-        """사용자 로그인 후 토큰 발급 + Redis 저장"""
         session = get_db_from_context()
 
         # 토큰 발급
         access_token = self.sign_token(user, is_refresh=False)
         refresh_token = self.sign_token(user, is_refresh=True)
 
-        # 🔒 트랜잭션 시작
+        # 조건: 세션에 user가 없을 때만 병합 수행 (최초 로그인 시)
+        should_merge = request.state.session.get("user") is None
+
+        # 트랜잭션 시작
         async with session.begin():
-            # refresh_token DB 저장
+            # refresh_token Redis 저장
             await self.auth_repository.save_refresh_token(user.id, refresh_token)
 
-            # Redis 세션의 장바구니 + DB 장바구니 병합
             redis_cart = request.state.session.get("cart", {})
-            db_cart = await self.cart_repository.get_user_cart_dict(user.id)
-            merged_cart = self.session_service.merge_cart(redis_cart, db_cart)
 
-            # 병합된 장바구니를 DB에 저장
-            await self.cart_repository.save_user_cart(user.id, merged_cart)
+            if should_merge:
+                # 병합은 최초 로그인 시만 수행
+                db_cart = await self.cart_repository.get_user_cart_dict(user.id)
 
-        # 트랜잭션 외부 - Redis 세션 갱신
+                # 수량은 더 큰 쪽 기준으로 병합
+                merged_cart = self.session_service.merge_cart(redis_cart, db_cart)
+
+                # 병합된 결과를 DB에 저장
+                await self.cart_repository.save_user_cart(user.id, merged_cart)
+            else:
+                # 이미 로그인 중이면 Redis 기준 그대로 저장
+                merged_cart = redis_cart
+                await self.cart_repository.save_user_cart(user.id, merged_cart)
+
+        # ✅ Redis 세션 갱신 (유저 정보 + 장바구니)
         await self.session_service.update_session(request, user, merged_cart)
 
         return TokenSchema(access_token=access_token, refresh_token=refresh_token)
+
 
 
     async def register_user(
@@ -223,12 +233,12 @@ class AuthService:
         # 2. redis에 저장된 refresh token 제거
         await self.auth_repository.delete_refresh_token(user_id)
 
-        # 3. ✅ Redis에 캐시된 user 정보 삭제
-        redis = get_redis_from_context()
-        redis_key = f"user:{user_id}"
-        await redis.delete(redis_key)
+        # 3. 장바구니가 세션에 있으면 → DB에 반영
+        redis_cart = request.state.session.get("cart")
+        if redis_cart:
+            await self.cart_repository.save_user_cart(user_id, redis_cart)
 
-        # 3. Redis에 캐시된 session 정보 삭제
+        # 4. Redis 세션 제거
         if request.state.session:
             request.state.session.clear()
 

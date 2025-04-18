@@ -32,11 +32,6 @@ class CartRepository:
         cart = await self.get_or_create_cart(user_id)
         session = get_db_from_context()
 
-        if session.in_transaction():
-            print("🧾 레포지토리에서 세션 확인됨! 이미 트랜잭션 있음")
-        else:
-            print("🚨 레포지토리 진입 시 트랜잭션 없음 → 문제가 될 수 있음")
-
         # 기존 item 모두 제거
         cart.items.clear()
 
