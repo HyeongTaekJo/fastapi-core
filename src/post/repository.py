@@ -11,15 +11,16 @@ from post.schemas.request import UpdatePostSchema
 # 비동기 engine을 사용하므로 repository는 비동기로 실행 해야한다.
 class PostRepository:
     def __init__(self):
-        # 미들웨어에서 설정한 Context 기반 세션을 사용
-        self.session = get_db_from_context()
         self.common_service = CommonService()
 
     async def get_posts(self) -> List[PostModel]:
-        result = await self.session.scalars(select(PostModel))
+        session = get_db_from_context()
+        result = await session.scalars(select(PostModel))
         return list(result)
 
     async def get_posts_paginated(self, request: PaginatePostSchema):
+        session = get_db_from_context()
+
         # 조인이 필요한 경우
         # 단, 모델간의 관계가 lazy="selectin" 인 경우는 필요없음
         # 단, lazy="raise" 인 경우는 반드시 selectinload로 관계설정으로 select 해오는게 필요함
@@ -29,16 +30,19 @@ class PostRepository:
         return await self.common_service.paginate(
             request,
             PostModel,
-            self.session,
+            session,
             base_query=None,  # 또는 query,
             path="posts"
         )
 
     async def get_post_by_id(self, id: int) -> PostModel | None:
+        session = get_db_from_context()
         stmt = get_default_post_query().where(PostModel.id == id)
-        return await self.session.scalar(stmt)
+        return await session.scalar(stmt)
 
     async def create_post(self, author_id: int, request: CreatePostSchema) -> PostModel:
+        session = get_db_from_context()
+
         post = PostModel(
             title=request.title,
             content=request.content,
@@ -47,23 +51,25 @@ class PostRepository:
             commentCount=0  #  기본값 설정
         )
 
-        self.session.add(post)
-        await self.session.flush()
+        session.add(post)
+        await session.flush()
 
         # 관계 포함된 post를 다시 SELECT해서 리턴
         # 트랜잭션시, refresh 지양할 것(오류남)
         return await self.get_post_by_id(post.id)
 
     async def update_post(self, post: PostModel, data: UpdatePostSchema):
+        session = get_db_from_context()
+
         if data.title is not None:
             post.title = data.title
         if data.content is not None:
             post.content = data.content
-        await self.session.flush()
-
-
+        await session.flush()
 
     async def delete_post(self, id: int) -> None:
+        session = get_db_from_context()
+
         # 기존 post 찾기
         existing_post = await self.get_post_by_id(id)
 
@@ -71,10 +77,12 @@ class PostRepository:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail="존재하지 않는 post 입니다.")
 
-        await self.session.execute(delete(PostModel).where(PostModel.id == id))
-        # await self.session.commit() # ❌ commit()은 생략! (라우터에서 begin() 블록이 처리)
+        await session.execute(delete(PostModel).where(PostModel.id == id))
+        # await session.commit() # ❌ commit()은 생략! (라우터에서 begin() 블록이 처리)
 
     async def generate_posts(self):
+        session = get_db_from_context()
+
         """ 특정 유저의 더미 포스트 100개 생성 """
         posts = [
             {
@@ -88,5 +96,5 @@ class PostRepository:
         ]
 
         # SQLAlchemy의 `insert`를 사용하여 100개 일괄 삽입 (Batch Insert)
-        await self.session.execute(insert(PostModel).values(posts))
-        await self.session.commit()
+        await session.execute(insert(PostModel).values(posts))
+        await session.commit()

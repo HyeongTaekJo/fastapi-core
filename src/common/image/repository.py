@@ -3,23 +3,23 @@ from common.image.model import ImageModel
 from database.session_context import get_db_from_context
 
 class ImageRepository:
-    def __init__(self):
-        self.session = get_db_from_context()
-
     async def create_image(self, **kwargs) -> ImageModel:
+        session = get_db_from_context()
         image = ImageModel(**kwargs)
-        self.session.add(image)
-        await self.session.flush()
-        await self.session.refresh(image)
+        session.add(image)
+        await session.flush()
+        await session.refresh(image)
         return image
 
     async def delete_images_by_target_id(self, target_id: int) -> list[str]:
-        result = await self.session.execute(
+        session = get_db_from_context()
+
+        result = await session.execute(
             select(ImageModel.path).where(ImageModel.post_id == target_id)
         )
         paths_to_delete = result.scalars().all()
 
-        await self.session.execute(
+        await session.execute(
             delete(ImageModel).where(ImageModel.post_id == target_id)
         )
 

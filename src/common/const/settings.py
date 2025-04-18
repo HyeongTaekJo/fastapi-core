@@ -42,6 +42,12 @@ class Settings(BaseSettings):
     # CORS (Cross-Origin Resource Sharing)
     ALLOWED_ORIGINS: list[str] = []
 
+    # Redis 세션 만료시간 (단위: 초)
+    REDIS_SESSION_MAX_AGE: int = Field(
+        default=3600,
+        description="Redis 세션 유지 시간 (초). 운영 환경에서는 30일로 자동 설정됨"
+    )
+
     # 환경 구분
     ENV: str = Field(
         default="development",
@@ -70,6 +76,11 @@ class Settings(BaseSettings):
     @property
     def COOKIE_SAMESITE(self) -> str:
         return "Strict" if self.IS_PROD else "Lax"  # 운영은 Strict, 개발은 Lax
+    
+    # Redis 세션 만료시간 - 운영 환경이면 자동으로 30일로 덮어쓰기
+    @property
+    def SESSION_MAX_AGE(self) -> int:
+        return 60 * 60 * 24 * 30 if self.IS_PROD else self.REDIS_SESSION_MAX_AGE
 
 
 #  전역적으로 설정을 불러올 수 있도록 인스턴스 생성

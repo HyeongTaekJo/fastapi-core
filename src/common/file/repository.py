@@ -9,29 +9,33 @@ import logging
 logger = logging.getLogger(__name__)
 
 class FileRepository:
-    def __init__(self, session: AsyncSession = None):
-        self.session = session or get_db_from_context()  # ✅ 인자가 없으면 Context에서 자동으로 가져옴
+    def __init__(self, session: Optional[AsyncSession] = None):
+        self.session = session  # 외부에서 세션 주입 시 사용
 
     async def create_file_record(self, **kwargs) -> FileModel:
-
         logger.debug(f"✅ create_file_record() with kwargs={...}")
+        session = self.session or get_db_from_context()
 
         file = FileModel(**kwargs)
-        self.session.add(file)
-        await self.session.flush()
-        await self.session.refresh(file)
+        session.add(file)
+        await session.flush()
+        await session.refresh(file)
         return file
     
     async def get_files_by_owner(self, owner_type: str, owner_id: int):
+        session = self.session or get_db_from_context()
+
         stmt = select(FileModel).where(
             FileModel.owner_type == owner_type,
             FileModel.owner_id == owner_id
         )
-        result = await self.session.execute(stmt)
+        result = await session.execute(stmt)
         return result.scalars().all()
 
     async def delete_files_by_owner(self, owner_type: str, owner_id: int):
-        await self.session.execute(
+        session = self.session or get_db_from_context()
+
+        await session.execute(
             delete(FileModel).where(
                 FileModel.owner_type == owner_type,
                 FileModel.owner_id == owner_id
@@ -41,36 +45,45 @@ class FileRepository:
     async def delete_files_by_ids(self, ids: set[int]):
         if not ids:
             return
-        await self.session.execute(
+        session = self.session or get_db_from_context()
+
+        await session.execute(
             delete(FileModel).where(FileModel.id.in_(ids))
         )
-        await self.session.flush()
+        await session.flush()
 
     async def get_file_by_uuid(self, uuid: str) -> Optional[FileModel]:
+        session = self.session or get_db_from_context()
+
         stmt = select(FileModel).where(FileModel.original_name.like(f"%{uuid}%"))
-        result = await self.session.execute(stmt)
+        result = await session.execute(stmt)
         return result.scalar_one_or_none()
 
     # 전체 파일 경로만 가져오는 메서드
     async def get_all_file_paths(self) -> list[str]:
+        session = self.session or get_db_from_context()
+
         stmt = select(FileModel.path)
-        result = await self.session.execute(stmt)
+        result = await session.execute(stmt)
         return [row[0] for row in result.all()]
     
     async def update_file_order(self, file_id: int, order: int):
+        session = self.session or get_db_from_context()
+
         stmt = select(FileModel).where(FileModel.id == file_id)
-        result = await self.session.execute(stmt)
+        result = await session.execute(stmt)
         file = result.scalar_one_or_none()
         if file:
             file.order = order
-            await self.session.flush()
+            await session.flush()
 
     async def get_file_by_id(self, file_id: int) -> FileModel:
+        session = self.session or get_db_from_context()
+
         stmt = select(FileModel).where(FileModel.id == file_id)
-        result = await self.session.execute(stmt)
+        result = await session.execute(stmt)
         return result.scalar_one_or_none()
 
-    
 
 #     ✅ 마무리 체크리스트
 # 항목	상태

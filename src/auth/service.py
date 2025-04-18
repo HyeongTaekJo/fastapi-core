@@ -22,6 +22,8 @@ from auth.schemas.request import LoginUserSchema
 from cache.redis_context import get_redis_from_context
 from auth.repository import AuthRepository
 from cart.repository import CartRepository
+from cache.session_service import SessionService
+from database.session_context import get_db_from_context
 
 
 
@@ -30,6 +32,7 @@ class AuthService:
         self.user_repository = UserRepository()
         self.auth_repository = AuthRepository()
         self.cart_repository = CartRepository()
+        self.session_service = SessionService()
 
     def extract_token(self, auth_header: str, is_bearer: bool) -> str:
         """Authorization 헤더에서 토큰을 추출"""
@@ -145,33 +148,33 @@ class AuthService:
         return UserSchema.model_validate(user)
     
     async def login_user(
-                self,
-                request: Request,
-                user: UserSchema) -> TokenSchema:
+        self,
+        request: Request,
+        user: UserSchema
+    ) -> TokenSchema:
         """사용자 로그인 후 토큰 발급 + Redis 저장"""
+        session = get_db_from_context()
+
+        # 토큰 발급
         access_token = self.sign_token(user, is_refresh=False)
         refresh_token = self.sign_token(user, is_refresh=True)
 
-        # Redis 저장
-        await self.auth_repository.save_refresh_token(user.id, refresh_token)
+        # 🔒 트랜잭션 시작
+        async with session.begin():
+            # refresh_token DB 저장
+            await self.auth_repository.save_refresh_token(user.id, refresh_token)
 
-        # 🧠 Redis 세션에 있는 장바구니와 DB 장바구니 병합
-        redis_cart = request.state.session.get("cart", {})
-        db_cart = await self.cart_repository.get_user_cart_dict(user.id)
+            # Redis 세션의 장바구니 + DB 장바구니 병합
+            redis_cart = request.state.session.get("cart", {})
+            db_cart = await self.cart_repository.get_user_cart_dict(user.id)
+            merged_cart = self.session_service.merge_cart(redis_cart, db_cart)
 
-        merged_cart = db_cart.copy()
-        for pid, qty in redis_cart.items():
-            merged_cart[pid] = merged_cart.get(pid, 0) + qty
+            # 병합된 장바구니를 DB에 저장
+            await self.cart_repository.save_user_cart(user.id, merged_cart)
 
-        # 💾 병합 후 MySQL 저장
-        await self.cart_repository.save_user_cart(user.id, merged_cart)
+        # 트랜잭션 외부 - Redis 세션 갱신
+        await self.session_service.update_session(request, user, merged_cart)
 
-        # ✅ Redis 세션 갱신
-        session = request.state.session
-        session["user"] = user.model_dump()
-        session["cart"] = merged_cart
-
-        # TokenSchema 객체로 반환
         return TokenSchema(access_token=access_token, refresh_token=refresh_token)
 
 

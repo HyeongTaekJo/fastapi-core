@@ -2,12 +2,13 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi import Request, Response, FastAPI
 import uuid, json, logging
 from cache.redis_context import get_redis_from_context
+from common.const.settings import settings
 
 class RedisSessionMiddleware(BaseHTTPMiddleware):
-    def __init__(self, app: FastAPI, session_cookie: str = "session_redis_id", max_age: int = 3600):
+    def __init__(self, app: FastAPI, session_cookie: str = "session_redis_id"):
         super().__init__(app)
         self.session_cookie = session_cookie
-        self.max_age = max_age
+        self.max_age = settings.SESSION_MAX_AGE
 
     # 상세정보는 redis에 들어가는 것을 여기서 구현하는 것
     async def dispatch(self, request: Request, call_next):

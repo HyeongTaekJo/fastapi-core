@@ -5,11 +5,9 @@ from cart.model import CartModel
 from cart.model import CartItemModel
 
 class CartRepository:
-    def __init__(self):
-        self.session = get_db_from_context()
-
     async def get_or_create_cart(self, user_id: int) -> CartModel:
-        cart = await self.session.scalar(
+        session = get_db_from_context()
+        cart = await session.scalar(
             select(CartModel)
             .options(selectinload(CartModel.items))
             .where(CartModel.user_id == user_id)
@@ -18,11 +16,12 @@ class CartRepository:
             return cart
 
         cart = CartModel(user_id=user_id)
-        self.session.add(cart)
-        await self.session.flush()  # id 생성
+        session.add(cart)
+        await session.flush()  # id 생성
         return cart
 
     async def get_user_cart_dict(self, user_id: int) -> dict:
+        session = get_db_from_context()
         cart = await self.get_or_create_cart(user_id)
         return {
             str(item.product_id): item.quantity
@@ -30,6 +29,7 @@ class CartRepository:
         }
 
     async def save_user_cart(self, user_id: int, cart_dict: dict):
+        session = get_db_from_context()
         cart = await self.get_or_create_cart(user_id)
 
         # 기존 item 모두 제거
@@ -39,4 +39,4 @@ class CartRepository:
         for pid, qty in cart_dict.items():
             cart.items.append(CartItemModel(product_id=int(pid), quantity=qty))
 
-        await self.session.flush()
+        await session.flush()
