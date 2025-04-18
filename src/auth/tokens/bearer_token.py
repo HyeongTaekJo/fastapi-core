@@ -5,6 +5,7 @@ from user.repository import UserRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 from auth.repository import AuthRepository
 from user.schemas.response import UserSchema
+from database.session_context import get_db_from_context
 import logging
 
 logger = logging.getLogger(__name__)
@@ -68,7 +69,7 @@ async def bearer_token(
             logger.warning(f"세션 사용자 정보 Redis 저장 실패: {e}")
 
     # 7. DB 트랜잭션을 명시적으로 종료 (쓰기 작업 없으므로 rollback 안전)
-    db: AsyncSession = user_repository.session
+    db = get_db_from_context()
     await db.rollback()
 
     # 8. request.state에 인증된 유저 및 토큰 정보 저장 (모든 API에서 공유 가능)

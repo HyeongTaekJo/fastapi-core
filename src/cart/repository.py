@@ -21,7 +21,7 @@ class CartRepository:
         return cart
 
     async def get_user_cart_dict(self, user_id: int) -> dict:
-        session = get_db_from_context()
+        # session = get_db_from_context()
         cart = await self.get_or_create_cart(user_id)
         return {
             str(item.product_id): item.quantity
@@ -29,8 +29,13 @@ class CartRepository:
         }
 
     async def save_user_cart(self, user_id: int, cart_dict: dict):
-        session = get_db_from_context()
         cart = await self.get_or_create_cart(user_id)
+        session = get_db_from_context()
+
+        if session.in_transaction():
+            print("🧾 레포지토리에서 세션 확인됨! 이미 트랜잭션 있음")
+        else:
+            print("🚨 레포지토리 진입 시 트랜잭션 없음 → 문제가 될 수 있음")
 
         # 기존 item 모두 제거
         cart.items.clear()

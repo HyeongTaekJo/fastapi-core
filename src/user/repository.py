@@ -3,6 +3,7 @@ from sqlalchemy import select, delete
 from user.model import UserModel
 from database.session_context import get_db_from_context  # Context 기반으로 변경
 from typing import Any
+from common.utils.tx_debugger import log_tx_state
 
 class UserRepository:
     async def get_users(self) -> List[UserModel]:
@@ -18,7 +19,9 @@ class UserRepository:
         session = get_db_from_context()
         if not hasattr(UserModel, field):
             raise ValueError(f"UserModel에 존재하지 않는 필드입니다: {field}")
+        
         column = getattr(UserModel, field)
+
         return await session.scalar(select(UserModel).where(column == value))
 
     async def get_user_by_id(self, id: int) -> UserModel | None:

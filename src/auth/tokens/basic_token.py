@@ -6,6 +6,8 @@ from cache.redis_context import get_redis_from_context
 from auth.const.fields import LOGIN_TYPE_FIELD_MAP
 from common.utils.log_context import user_id_ctx_var
 import json
+from common.utils.tx_debugger import log_tx_state
+from database.session_context import get_db_from_context  # Context 기반으로 변경
 
 security = HTTPBasic()
 # ★ HTTPBasic이 자동으로 검증해주는 것들 ★
@@ -22,6 +24,7 @@ async def basic_token(
 )-> UserSchema:
     
     redis = get_redis_from_context()  # 미들웨어에서 주입된 Redis 사용
+
 
     """ Basic Auth를 사용한 인증 """
      # credentials가 None인지 확인
@@ -40,9 +43,11 @@ async def basic_token(
 
     if not field:
         raise HTTPException(status_code=400, detail="지원하지 않는 로그인 경로입니다.")
+    
 
     # 인증 처리
     user = await auth_service.authenticate_with_field(field, identifier, password)
+
 
     if not user:
         raise HTTPException(status_code=401, detail="이메일 또는 비밀번호가 올바르지 않습니다.")
@@ -52,6 +57,8 @@ async def basic_token(
     # user_dict = UserSchema.model_validate(user).model_dump()
     # await redis.setex(redis_key, 3600, json.dumps(user_dict))
 
+    session = get_db_from_context()
+    await session.rollback()
     request.state.user = user
 
 

@@ -13,6 +13,9 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+
+    import database.event_hooks
+    
     logger.info("🚀 Starting up...")
 
     try:

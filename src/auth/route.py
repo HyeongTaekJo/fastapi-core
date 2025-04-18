@@ -10,6 +10,7 @@ from auth.tokens.access_token import access_token
 from auth.schemas.request import EmailLoginSchema
 from auth.schemas.request import LoginIdLoginSchema
 from auth.schemas.request import PhoneLoginSchema
+from common.utils.tx_debugger import log_tx_state
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -30,6 +31,7 @@ async def post_login_email(
     
 ):
     user : UserSchema = request.state.user
+
      # EmailLoginSchema로 명시적 변환
     login_user = EmailLoginSchema.model_validate(user.model_dump())
 
@@ -41,6 +43,7 @@ async def post_login_email(
     # refresh 토큰은 보안상 쿠키 security에 보관하고 따로 보내주지 않는다.
     # 단, frontend 담당자가 refresh_token을 쿠키에서 꺼내서 사용하면 된다고 알려줘야 한다.
     return {"access_token": tokens.access_token}
+
 
 # 로그아웃
 @router.post("/logout")

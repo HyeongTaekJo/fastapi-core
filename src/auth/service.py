@@ -24,6 +24,7 @@ from auth.repository import AuthRepository
 from cart.repository import CartRepository
 from cache.session_service import SessionService
 from database.session_context import get_db_from_context
+from common.utils.tx_debugger import log_tx_state
 
 
 
@@ -144,7 +145,7 @@ class AuthService:
 
         if not bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")):
             raise UnauthorizedException("비밀번호가 일치하지 않습니다.")
-
+        
         return UserSchema.model_validate(user)
     
     async def login_user(
@@ -152,6 +153,7 @@ class AuthService:
         request: Request,
         user: UserSchema
     ) -> TokenSchema:
+
         """사용자 로그인 후 토큰 발급 + Redis 저장"""
         session = get_db_from_context()
 
