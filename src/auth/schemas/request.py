@@ -28,9 +28,9 @@ class RegisterUserSchema(BaseModel):
 #  로그인 요청 스키마
 class LoginUserSchema(BaseModel):
     id: int
-    # email: Optional[EmailStr] = None
-    # login_id: Optional[str] = None
-    # phone: Optional[str] = None
+    email: Optional[EmailStr] = None
+    login_id: Optional[str] = None
+    phone: Optional[str] = None
 
     @model_validator(mode="after")
     def exactly_one_identifier(cls, values):
