@@ -1,0 +1,263 @@
+2025-07-05 12:23:20,486 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 12:23:24,559 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'localhost'")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 12:23:24,559 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:02:51,859 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:02:51,874 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 15:02:51,874 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorG2YnNpzHpYhYnBiIcO
+q5lGYQjjmOpGmNnmOZKmv7mSAmt1ePVnxdz20rZnhAplXsMFGyC8mt6gmRJdJqNe
+O+I+ew/8rPcJiDN7mD1xea9t+YQMelcTmYuiTJYsdqwgl+PeyOHbv+Ec7sOpMigc
+j6G3DERwKrm3HxbZrq/hSxN0QRgiVF+fe3sbZiAfB5zert8hOEWKpd4fOnibC6UT
+8JXV/IGSpBr82TpPUwLKL+lzeln27gq3rRZujuJqLFKQ5bebW0YTTH5JZlVxNjbt
+A7itl58XPo1N9lgNJBGUhCaE/ZpSCRrPQOACS00Vkdm0ihPOWy6W/vZw3m7DZIt4
+KwIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 15:02:51,875 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: 'cryptography' package is required for sha256_password or caching_sha2_password auth methods
+2025-07-05 15:02:51,876 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:03:40,026 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:03:40,038 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 15:03:40,039 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorG2YnNpzHpYhYnBiIcO
+q5lGYQjjmOpGmNnmOZKmv7mSAmt1ePVnxdz20rZnhAplXsMFGyC8mt6gmRJdJqNe
+O+I+ew/8rPcJiDN7mD1xea9t+YQMelcTmYuiTJYsdqwgl+PeyOHbv+Ec7sOpMigc
+j6G3DERwKrm3HxbZrq/hSxN0QRgiVF+fe3sbZiAfB5zert8hOEWKpd4fOnibC6UT
+8JXV/IGSpBr82TpPUwLKL+lzeln27gq3rRZujuJqLFKQ5bebW0YTTH5JZlVxNjbt
+A7itl58XPo1N9lgNJBGUhCaE/ZpSCRrPQOACS00Vkdm0ihPOWy6W/vZw3m7DZIt4
+KwIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 15:03:40,058 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 15:03:40,058 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:04:59,727 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:04:59,739 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 15:04:59,740 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorG2YnNpzHpYhYnBiIcO
+q5lGYQjjmOpGmNnmOZKmv7mSAmt1ePVnxdz20rZnhAplXsMFGyC8mt6gmRJdJqNe
+O+I+ew/8rPcJiDN7mD1xea9t+YQMelcTmYuiTJYsdqwgl+PeyOHbv+Ec7sOpMigc
+j6G3DERwKrm3HxbZrq/hSxN0QRgiVF+fe3sbZiAfB5zert8hOEWKpd4fOnibC6UT
+8JXV/IGSpBr82TpPUwLKL+lzeln27gq3rRZujuJqLFKQ5bebW0YTTH5JZlVxNjbt
+A7itl58XPo1N9lgNJBGUhCaE/ZpSCRrPQOACS00Vkdm0ihPOWy6W/vZw3m7DZIt4
+KwIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 15:04:59,760 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 15:04:59,760 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:05:42,091 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:05:42,105 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 15:05:42,105 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorG2YnNpzHpYhYnBiIcO
+q5lGYQjjmOpGmNnmOZKmv7mSAmt1ePVnxdz20rZnhAplXsMFGyC8mt6gmRJdJqNe
+O+I+ew/8rPcJiDN7mD1xea9t+YQMelcTmYuiTJYsdqwgl+PeyOHbv+Ec7sOpMigc
+j6G3DERwKrm3HxbZrq/hSxN0QRgiVF+fe3sbZiAfB5zert8hOEWKpd4fOnibC6UT
+8JXV/IGSpBr82TpPUwLKL+lzeln27gq3rRZujuJqLFKQ5bebW0YTTH5JZlVxNjbt
+A7itl58XPo1N9lgNJBGUhCaE/ZpSCRrPQOACS00Vkdm0ihPOWy6W/vZw3m7DZIt4
+KwIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 15:05:42,123 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 15:05:42,123 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:06:49,473 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:06:49,486 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 15:06:49,486 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorG2YnNpzHpYhYnBiIcO
+q5lGYQjjmOpGmNnmOZKmv7mSAmt1ePVnxdz20rZnhAplXsMFGyC8mt6gmRJdJqNe
+O+I+ew/8rPcJiDN7mD1xea9t+YQMelcTmYuiTJYsdqwgl+PeyOHbv+Ec7sOpMigc
+j6G3DERwKrm3HxbZrq/hSxN0QRgiVF+fe3sbZiAfB5zert8hOEWKpd4fOnibC6UT
+8JXV/IGSpBr82TpPUwLKL+lzeln27gq3rRZujuJqLFKQ5bebW0YTTH5JZlVxNjbt
+A7itl58XPo1N9lgNJBGUhCaE/ZpSCRrPQOACS00Vkdm0ihPOWy6W/vZw3m7DZIt4
+KwIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 15:06:49,501 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 15:06:49,502 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:07:19,020 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:07:19,035 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 15:07:19,036 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorG2YnNpzHpYhYnBiIcO
+q5lGYQjjmOpGmNnmOZKmv7mSAmt1ePVnxdz20rZnhAplXsMFGyC8mt6gmRJdJqNe
+O+I+ew/8rPcJiDN7mD1xea9t+YQMelcTmYuiTJYsdqwgl+PeyOHbv+Ec7sOpMigc
+j6G3DERwKrm3HxbZrq/hSxN0QRgiVF+fe3sbZiAfB5zert8hOEWKpd4fOnibC6UT
+8JXV/IGSpBr82TpPUwLKL+lzeln27gq3rRZujuJqLFKQ5bebW0YTTH5JZlVxNjbt
+A7itl58XPo1N9lgNJBGUhCaE/ZpSCRrPQOACS00Vkdm0ihPOWy6W/vZw3m7DZIt4
+KwIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 15:07:19,053 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 15:07:19,053 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:47:07,370 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:47:11,448 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'localhost'")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 15:47:11,449 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:48:36,962 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:48:41,042 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'localhost'")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 15:48:41,042 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:48:50,667 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:48:54,764 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'localhost'")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 15:48:54,765 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:49:24,256 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:49:28,330 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'localhost'")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 15:49:28,331 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:50:31,590 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:50:35,673 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'localhost'")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 15:50:35,674 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:52:12,516 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:52:12,535 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 15:52:12,537 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtxxy3mwnGVUjYEDcT1wy
+HBCfHhAO7lhQA8f613OZCpo+KF6v0tcHThWs4sdF/Z6CBBsSAB8r++HV6eezrMDA
+hBMGcWATtVdwl2XgTd7BHzuW+6Ff8AqTfY+cdKZ5kJJ3DpnMwTiWknhWlMJ3H6T7
+podp4fMVHBQLRQ9pXdTzyDuD+dsNFXq0vie8nQbMfgmFDm1hOb+L9+450/8tGtHb
+UXmZW0gXpkC5aS8UNN5zFE/Albwm6LQ5BhbfdfshrdJ8f+HUeLaMDIT47PcM0uYM
+oGV3PcqNaO0Nutq1Ea9ksipdfdaxkTq+tAFYLA+yGpyF4JKvgGCev7ht2pokEyU2
+pQIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 15:52:12,552 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 15:52:12,553 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:53:41,369 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:53:41,386 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 15:53:41,388 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtxxy3mwnGVUjYEDcT1wy
+HBCfHhAO7lhQA8f613OZCpo+KF6v0tcHThWs4sdF/Z6CBBsSAB8r++HV6eezrMDA
+hBMGcWATtVdwl2XgTd7BHzuW+6Ff8AqTfY+cdKZ5kJJ3DpnMwTiWknhWlMJ3H6T7
+podp4fMVHBQLRQ9pXdTzyDuD+dsNFXq0vie8nQbMfgmFDm1hOb+L9+450/8tGtHb
+UXmZW0gXpkC5aS8UNN5zFE/Albwm6LQ5BhbfdfshrdJ8f+HUeLaMDIT47PcM0uYM
+oGV3PcqNaO0Nutq1Ea9ksipdfdaxkTq+tAFYLA+yGpyF4JKvgGCev7ht2pokEyU2
+pQIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 15:53:41,404 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 15:53:41,405 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:54:24,084 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:54:24,102 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 15:54:24,103 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtxxy3mwnGVUjYEDcT1wy
+HBCfHhAO7lhQA8f613OZCpo+KF6v0tcHThWs4sdF/Z6CBBsSAB8r++HV6eezrMDA
+hBMGcWATtVdwl2XgTd7BHzuW+6Ff8AqTfY+cdKZ5kJJ3DpnMwTiWknhWlMJ3H6T7
+podp4fMVHBQLRQ9pXdTzyDuD+dsNFXq0vie8nQbMfgmFDm1hOb+L9+450/8tGtHb
+UXmZW0gXpkC5aS8UNN5zFE/Albwm6LQ5BhbfdfshrdJ8f+HUeLaMDIT47PcM0uYM
+oGV3PcqNaO0Nutq1Ea9ksipdfdaxkTq+tAFYLA+yGpyF4JKvgGCev7ht2pokEyU2
+pQIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 15:54:24,119 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 15:54:24,119 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:54:34,102 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:54:34,141 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 15:54:34,143 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtxxy3mwnGVUjYEDcT1wy
+HBCfHhAO7lhQA8f613OZCpo+KF6v0tcHThWs4sdF/Z6CBBsSAB8r++HV6eezrMDA
+hBMGcWATtVdwl2XgTd7BHzuW+6Ff8AqTfY+cdKZ5kJJ3DpnMwTiWknhWlMJ3H6T7
+podp4fMVHBQLRQ9pXdTzyDuD+dsNFXq0vie8nQbMfgmFDm1hOb+L9+450/8tGtHb
+UXmZW0gXpkC5aS8UNN5zFE/Albwm6LQ5BhbfdfshrdJ8f+HUeLaMDIT47PcM0uYM
+oGV3PcqNaO0Nutq1Ea9ksipdfdaxkTq+tAFYLA+yGpyF4JKvgGCev7ht2pokEyU2
+pQIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 15:54:34,161 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 15:54:34,161 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 15:54:47,753 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 15:54:47,782 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 15:54:47,783 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtxxy3mwnGVUjYEDcT1wy
+HBCfHhAO7lhQA8f613OZCpo+KF6v0tcHThWs4sdF/Z6CBBsSAB8r++HV6eezrMDA
+hBMGcWATtVdwl2XgTd7BHzuW+6Ff8AqTfY+cdKZ5kJJ3DpnMwTiWknhWlMJ3H6T7
+podp4fMVHBQLRQ9pXdTzyDuD+dsNFXq0vie8nQbMfgmFDm1hOb+L9+450/8tGtHb
+UXmZW0gXpkC5aS8UNN5zFE/Albwm6LQ5BhbfdfshrdJ8f+HUeLaMDIT47PcM0uYM
+oGV3PcqNaO0Nutq1Ea9ksipdfdaxkTq+tAFYLA+yGpyF4JKvgGCev7ht2pokEyU2
+pQIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 15:54:47,798 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 15:54:47,799 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 16:10:50,382 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 16:10:50,416 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 16:10:50,417 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2xCnOWWT2/LwYhmm5+tZ
+wkvNHsyZ7LzFFmsnjN9PBY1N7Xh1/FUcJK+Mso9l/B/vTtkfNgzsoyl6u1Mn/ZDQ
+Nxvi9BZUyGX6A8wzjx8AD2dOn/2ZcjphNX03GKluY9SfWLC5LvxKbF04h+ZeBg2t
+BZtg7VK2QaZfVAuNV81VjGuq0HHFyN1E0qC5FnMR5Pz+IvoIen29VgOUZJw9tggQ
+66IVhK8zErI6WtXyw+2MLTdhni+vgzEdOzqEpgSvbtvrOGz2isG7EsxXOWs8DZQn
+Ijv2mfORsXGL6rv381X0DE1NGeyhQn8F9jFl4Gg3ok9hPM7mrVxjRLo18nDSGeCy
+OwIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 16:10:50,434 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 16:10:50,435 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 16:11:08,241 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 16:11:08,260 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 16:11:08,261 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2xCnOWWT2/LwYhmm5+tZ
+wkvNHsyZ7LzFFmsnjN9PBY1N7Xh1/FUcJK+Mso9l/B/vTtkfNgzsoyl6u1Mn/ZDQ
+Nxvi9BZUyGX6A8wzjx8AD2dOn/2ZcjphNX03GKluY9SfWLC5LvxKbF04h+ZeBg2t
+BZtg7VK2QaZfVAuNV81VjGuq0HHFyN1E0qC5FnMR5Pz+IvoIen29VgOUZJw9tggQ
+66IVhK8zErI6WtXyw+2MLTdhni+vgzEdOzqEpgSvbtvrOGz2isG7EsxXOWs8DZQn
+Ijv2mfORsXGL6rv381X0DE1NGeyhQn8F9jFl4Gg3ok9hPM7mrVxjRLo18nDSGeCy
+OwIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 16:11:08,276 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 16:11:08,276 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 16:15:09,871 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 16:15:09,908 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 16:15:09,911 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2xCnOWWT2/LwYhmm5+tZ
+wkvNHsyZ7LzFFmsnjN9PBY1N7Xh1/FUcJK+Mso9l/B/vTtkfNgzsoyl6u1Mn/ZDQ
+Nxvi9BZUyGX6A8wzjx8AD2dOn/2ZcjphNX03GKluY9SfWLC5LvxKbF04h+ZeBg2t
+BZtg7VK2QaZfVAuNV81VjGuq0HHFyN1E0qC5FnMR5Pz+IvoIen29VgOUZJw9tggQ
+66IVhK8zErI6WtXyw+2MLTdhni+vgzEdOzqEpgSvbtvrOGz2isG7EsxXOWs8DZQn
+Ijv2mfORsXGL6rv381X0DE1NGeyhQn8F9jFl4Gg3ok9hPM7mrVxjRLo18nDSGeCy
+OwIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 16:15:09,926 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 16:15:09,927 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 16:15:30,466 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 16:15:30,484 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 16:15:30,486 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2xCnOWWT2/LwYhmm5+tZ
+wkvNHsyZ7LzFFmsnjN9PBY1N7Xh1/FUcJK+Mso9l/B/vTtkfNgzsoyl6u1Mn/ZDQ
+Nxvi9BZUyGX6A8wzjx8AD2dOn/2ZcjphNX03GKluY9SfWLC5LvxKbF04h+ZeBg2t
+BZtg7VK2QaZfVAuNV81VjGuq0HHFyN1E0qC5FnMR5Pz+IvoIen29VgOUZJw9tggQ
+66IVhK8zErI6WtXyw+2MLTdhni+vgzEdOzqEpgSvbtvrOGz2isG7EsxXOWs8DZQn
+Ijv2mfORsXGL6rv381X0DE1NGeyhQn8F9jFl4Gg3ok9hPM7mrVxjRLo18nDSGeCy
+OwIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 16:15:30,501 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 16:15:30,502 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-07-05 16:21:04,123 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-07-05 16:21:04,142 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-07-05 16:21:04,144 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmG0vLlkgVU1oSDm6Mq+a
+WWc0hO21SjY1MF6y7Ls8nq9irzdPQvu2NH337u+q23eS97JKzKFDKtdB+9dE3gww
+dBBsfvsVctALx+v/C4t4SRP7k//mgzj4HomFCFEgtCjA96A103bhJKVgYtZwBMWd
+5TO5Su1p1CNL1gxqjxVQsaWwvTLbZuHobXRcFe9r6h6KG9+S7OU2JSTWPNudnT5Q
+cpVkQrgbW5SrEyv/w/GmpZ1WJOx3c/OBQJ3EeNfg/4aYRHiboRwaXShlMSUsdN2P
+bcuRty4ul5BnRYa//yKm2+ZSn5e4mPymMeUqRHop6IMB2BSUgG05GYb/z/eN5KTw
+5wIDAQAB
+-----END PUBLIC KEY-----
+
+2025-07-05 16:21:04,162 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-05 16:21:04,163 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error

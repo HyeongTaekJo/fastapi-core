@@ -46,3 +46,6 @@ watchfiles==1.0.4
 websockets==15.0.1
 redis==5.0.4
 apscheduler==3.10.4
+
+alembic==1.13.1
+asyncmy==0.2.9

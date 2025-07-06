@@ -8,12 +8,12 @@ services:
     volumes:
       - ./mysql-data:/var/lib/mysql
     ports:
-      - "3308:3306"
+      - "3306:3306"
     environment:
-      MYSQL_DATABASE: mysql-server
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_USER: mysql
-      MYSQL_PASSWORD: mysql
+      MYSQL_DATABASE: mysql_server
+      MYSQL_ROOT_PASSWORD: rpdla123
+      MYSQL_USER: diajd1
+      MYSQL_PASSWORD: rpdla123
     command: --wait_timeout=28800 --interactive_timeout=28800
 
   redis:
