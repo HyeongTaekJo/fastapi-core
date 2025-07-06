@@ -16,6 +16,7 @@ async_engine = create_async_engine(
     echo=False,
     pool_size=10,
     max_overflow=20,
+     pool_timeout=3,  
     pool_recycle=1800,
     pool_pre_ping=True,
     # poolclass 생략! 기본값으로 AsyncAdaptedQueuePool 사용
@@ -24,7 +25,7 @@ async_engine = create_async_engine(
 # 비동기 세션 팩토리 생성
 async_session_maker  = sessionmaker(
     bind=async_engine,
-    expire_on_commit=True,  # commit() 후에도 세션이 만료되지 않도록 설정
+    expire_on_commit= False,  # commit 후 세션 내 ORM 객체가 만료되도록 설정(즉, API 요청마다 로직 과정에서 데이터가 변경될 수 있으므로 마지막에 다시 최종 데이터를 한번 더 가져옴)
     autoflush=False,  # 자동 flush 비활성화 (flush()를 직접 호출)
     autocommit=False,  # commit()을 자동으로 수행하지 않음 (수동 처리)
     class_=AsyncSession  # 비동기 세션 사용

@@ -148,45 +148,46 @@ class AuthService:
         
         return UserSchema.model_validate(user)
     
-    async def login_user(
-        self,
-        request: Request,
-        user: UserSchema
-    ) -> TokenSchema:
+    async def login_user(self, request: Request, user: UserSchema) -> TokenSchema:
         session = get_db_from_context()
 
         # 토큰 발급
         access_token = self.sign_token(user, is_refresh=False)
         refresh_token = self.sign_token(user, is_refresh=True)
 
-        # 조건: 세션에 user가 없을 때만 병합 수행 (최초 로그인 시)
         should_merge = request.state.session.get("user") is None
 
-        # 트랜잭션 시작
         async with session.begin():
-            # refresh_token Redis 저장
+            # Redis에 RefreshToken 저장
             await self.auth_repository.save_refresh_token(user.id, refresh_token)
 
             redis_cart = request.state.session.get("cart", {})
 
             if should_merge:
-                # 병합은 최초 로그인 시만 수행
-                db_cart = await self.cart_repository.get_user_cart_dict(user.id)
+                # 1️ 장바구니 조회
+                cart = await self.cart_repository.get_cart_by_user_id(user.id)
+                if not cart:
+                    # 2️ 없으면 생성
+                    cart = await self.cart_repository.create_cart(user.id)
 
-                # 수량은 더 큰 쪽 기준으로 병합
+                # 3️ 병합
+                db_cart = await self.cart_repository.get_user_cart_dict(cart)
                 merged_cart = self.session_service.merge_cart(redis_cart, db_cart)
 
-                # 병합된 결과를 DB에 저장
-                await self.cart_repository.save_user_cart(user.id, merged_cart)
+                # 4️ 저장
+                await self.cart_repository.save_user_cart(cart, merged_cart)
             else:
-                # 이미 로그인 중이면 Redis 기준 그대로 저장
-                merged_cart = redis_cart
-                await self.cart_repository.save_user_cart(user.id, merged_cart)
+                # 이미 로그인 중이면 Redis 기준으로 덮어쓰기
+                cart = await self.cart_repository.get_cart_by_user_id(user.id)
+                if not cart:
+                    cart = await self.cart_repository.create_cart(user.id)
+                await self.cart_repository.save_user_cart(cart, redis_cart)
 
-        # ✅ Redis 세션 갱신 (유저 정보 + 장바구니)
+        # Redis 세션 갱신
         await self.session_service.update_session(request, user, merged_cart)
 
         return TokenSchema(access_token=access_token, refresh_token=refresh_token)
+
 
 
 

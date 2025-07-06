@@ -14,8 +14,6 @@ from user.dependencies.role_guard import role_guard
 from user.const.roles import RolesEnum
 from post.dependencies.owner_or_admin import is_post_owner_or_admin
 
-# test
-
 # router 생성
 router = APIRouter(prefix="/posts", tags=["posts"])
 
