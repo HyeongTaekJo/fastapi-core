@@ -11,6 +11,7 @@ from auth.schemas.request import EmailLoginSchema
 from auth.schemas.request import LoginIdLoginSchema
 from auth.schemas.request import PhoneLoginSchema
 from common.utils.tx_debugger import log_tx_state
+from database.session_context import get_db_from_context
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -71,11 +72,17 @@ async def register_user(
     response: Response,
     auth_service: AuthService = Depends()
 ):
-    tokens = await auth_service.register_user(request, user_data)
+    session = get_db_from_context()
 
-    # refresh_token을 쿠키에 저장
+    # 회원가입만 트랜잭션으로 처리
+    async with session.begin():
+        new_user = await auth_service.register_user(request, user_data)  # 회원가입만 수행
+
+    # 별도의 트랜잭션으로 login_user 호출
+    tokens = await auth_service.login_user(request, new_user)
+
+    # 쿠키 설정 및 반환
     set_refresh_token_cookie(response, tokens.refresh_token)
-
     return {"access_token": tokens.access_token}
 
 # access_token 재발급
@@ -154,24 +161,40 @@ async def login_phone(
 
 # 회원가입(id 방식)
 @router.post("/register/login_id")
-async def register_user(
-    request : Request,
+async def register_user_login_id(
+    request: Request,
     user_data: RegisterUserSchema,
     response: Response,
     auth_service: AuthService = Depends()
 ):
-    tokens = await auth_service.register_user(request,user_data)
+    session = get_db_from_context()
+
+    # 회원가입만 트랜잭션으로 수행
+    async with session.begin():
+        user_schema = await auth_service.register_user(request, user_data)
+
+    # 로그인 수행 (별도 트랜잭션으로)
+    tokens = await auth_service.login_user(request, user_schema)
+
     set_refresh_token_cookie(response, tokens.refresh_token)
     return {"access_token": tokens.access_token}
 
 # 회원가입(핸드폰 방식)
 @router.post("/register/phone")
-async def register_user(
-    request : Request,
+async def register_user_phone(
+    request: Request,
     user_data: RegisterUserSchema,
     response: Response,
     auth_service: AuthService = Depends()
 ):
-    tokens = await auth_service.register_user(request, user_data)
+    session = get_db_from_context()
+
+    # 회원가입만 트랜잭션으로 수행
+    async with session.begin():
+        user_schema = await auth_service.register_user(request, user_data)
+
+    # 로그인 수행 (별도 트랜잭션으로)
+    tokens = await auth_service.login_user(request, user_schema)
+
     set_refresh_token_cookie(response, tokens.refresh_token)
     return {"access_token": tokens.access_token}

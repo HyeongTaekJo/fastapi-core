@@ -221,7 +221,7 @@ class AuthService:
 
         # Pydantic DTO 변환
         user_schema = UserSchema.model_validate(new_user)
-        return await self.login_user(request, user_schema)  # 로그인 처리
+        return user_schema  # 로그인 처리
     
     async def logout(self, request: Request, access_token: str):
         payload = self.verify_token(access_token)
