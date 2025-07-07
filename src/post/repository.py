@@ -55,7 +55,7 @@ class PostRepository:
         await session.flush()
 
         # 관계 포함된 post를 다시 SELECT해서 리턴
-        # 트랜잭션시, refresh 지양할 것(오류남)
+        # 트랜잭션시, flush, refresh 지양할 것(오류남)
         return await self.get_post_by_id(post.id)
 
     async def update_post(self, post: PostModel, data: UpdatePostSchema):

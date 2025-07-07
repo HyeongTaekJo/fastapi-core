@@ -10,4 +10,4 @@ def role_guard(required_role: RolesEnum):
         # 여기서 user는 access_token에서 미리 세팅된 상태여야 함
         if not user or user.role != required_role:
             raise HTTPException(status_code=403, detail="권한이 없습니다.")
-    return guard  # ✅ 그냥 guard 함수 자체를 리턴
+    return guard  #  그냥 guard 함수 자체를 리턴

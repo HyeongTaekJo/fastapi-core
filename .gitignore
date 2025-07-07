@@ -14,7 +14,7 @@ ENV/
 # *.env
 
 # VSCode 설정
-.vscode/
+# .vscode/
 
 # 운영체제 파일
 .DS_Store
