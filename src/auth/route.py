@@ -1,17 +1,24 @@
 from fastapi import APIRouter, Depends, Request, Response, status
+from fastapi.responses import JSONResponse
 from auth.service import AuthService
 from user.schemas.response import UserSchema
 from auth.tokens.basic_token import basic_token
-from auth.schemas.request import RegisterUserSchema
 from auth.tokens.refresh_token import refresh_token
-from auth.utils.cookies import set_refresh_token_cookie
-from fastapi.responses import JSONResponse
 from auth.tokens.access_token import access_token
-from auth.schemas.request import EmailLoginSchema
-from auth.schemas.request import LoginIdLoginSchema
-from auth.schemas.request import PhoneLoginSchema
-from common.utils.tx_debugger import log_tx_state
-from database.session_context import get_db_from_context
+from auth.utils.cookies import set_refresh_token_cookie
+
+from auth.schemas.request import (
+    RegisterUserSchema,
+    EmailLoginSchema,
+    LoginIdLoginSchema,
+    PhoneLoginSchema,
+)
+
+from database.dependencies import get_db
+from cache.dependencies import get_redis
+
+from sqlalchemy.ext.asyncio import AsyncSession
+from redis.asyncio import Redis
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -28,9 +35,12 @@ async def post_login_email(
     response: Response,
     # 로그인 API - Basic Token 인증
     _1: None = Depends(basic_token),
-    auth_service: AuthService = Depends(),
+    db: AsyncSession = Depends(get_db),
+    redis: Redis = Depends(get_redis),
     
 ):
+    auth_service = AuthService(db, redis)
+
     user : UserSchema = request.state.user
 
      # EmailLoginSchema로 명시적 변환
@@ -51,8 +61,11 @@ async def post_login_email(
 async def logout(
     request: Request,
     _: None = Depends(access_token),
-    auth_service: AuthService = Depends(),
+    db: AsyncSession = Depends(get_db),
+    redis: Redis = Depends(get_redis),
 ):
+    auth_service = AuthService(db, redis)
+
     access_token = request.state.token  # access_token은 미리 검증된 상태
     await auth_service.logout(request, access_token)
 
@@ -70,12 +83,13 @@ async def register_user(
     request: Request,
     user_data: RegisterUserSchema,
     response: Response,
-    auth_service: AuthService = Depends()
+    db: AsyncSession = Depends(get_db),
+    redis: Redis = Depends(get_redis),
 ):
-    session = get_db_from_context()
+    auth_service = AuthService(db, redis)
 
     # 회원가입만 트랜잭션으로 처리
-    async with session.begin():
+    async with db.begin():
         new_user = await auth_service.register_user(request, user_data)  # 회원가입만 수행
 
     # 별도의 트랜잭션으로 login_user 호출
@@ -88,10 +102,13 @@ async def register_user(
 # access_token 재발급
 @router.post("/token/access")
 async def new_access_token(
-        request: Request,
-        _: refresh_token = Depends(),  # Refresh Token 검증
-        auth_service: AuthService = Depends(AuthService)
-    ):
+    request: Request,
+    _: refresh_token = Depends(),  # Refresh Token 검증
+    db: AsyncSession = Depends(get_db),
+    redis: Redis = Depends(get_redis), 
+):
+    auth_service = AuthService(db, redis)
+
     # Refresh Token 추출
     raw_token = request.state.token
 
@@ -103,11 +120,14 @@ async def new_access_token(
 # refresh_token 재발급
 @router.post("/token/refresh")
 async def new_refresh_token(
-        request: Request,
-        response: Response,
-        _: refresh_token = Depends(),  # Refresh Token 검증
-        auth_service: AuthService = Depends(AuthService)
-    ):
+    request: Request,
+    response: Response,
+    _: refresh_token = Depends(),  # Refresh Token 검증
+    db: AsyncSession = Depends(get_db),
+    redis: Redis = Depends(get_redis),
+):
+    auth_service = AuthService(db, redis)
+
     # Refresh Token 추출
     raw_token = request.state.token
 
@@ -130,14 +150,17 @@ async def login_login_id(
     request : Request,
     response: Response,
     _1: None = Depends(basic_token),  # login_id 기반 BasicAuth
-    auth_service: AuthService = Depends(),
+    db: AsyncSession = Depends(get_db),
+    redis: Redis = Depends(get_redis),
 ):
+    auth_service = AuthService(db, redis)
+    
     user : UserSchema = request.state.user
 
     # LoginIdLoginSchema로 명시적 변환
     login_user = LoginIdLoginSchema.model_validate(user.model_dump())
 
-    tokens = await auth_service.login_user(request,login_user)
+    tokens = await auth_service.login_user(request, login_user)
     set_refresh_token_cookie(response, tokens.refresh_token)
     return {"access_token": tokens.access_token}
 
@@ -147,14 +170,17 @@ async def login_phone(
     request : Request,
     response: Response,
     _1: None = Depends(basic_token),  # phone 기반 BasicAuth
-    auth_service: AuthService = Depends(),
+    db: AsyncSession = Depends(get_db),
+    redis: Redis = Depends(get_redis),
 ):
+    auth_service = AuthService(db, redis)
+
     user : UserSchema = request.state.user
     
     # PhoneLoginSchema로 명시적 변환
     login_user = PhoneLoginSchema.model_validate(user.model_dump())
 
-    tokens = await auth_service.login_user(request,login_user)
+    tokens = await auth_service.login_user(request, login_user)
     set_refresh_token_cookie(response, tokens.refresh_token)
     return {"access_token": tokens.access_token}
 
@@ -165,16 +191,17 @@ async def register_user_login_id(
     request: Request,
     user_data: RegisterUserSchema,
     response: Response,
-    auth_service: AuthService = Depends()
+    db: AsyncSession = Depends(get_db),
+    redis: Redis = Depends(get_redis),
 ):
-    session = get_db_from_context()
+    auth_service = AuthService(db, redis)
 
     # 회원가입만 트랜잭션으로 수행
-    async with session.begin():
-        user_schema = await auth_service.register_user(request, user_data)
+    async with db.begin():
+        new_user = await auth_service.register_user(request, user_data)
 
     # 로그인 수행 (별도 트랜잭션으로)
-    tokens = await auth_service.login_user(request, user_schema)
+    tokens = await auth_service.login_user(request, new_user)
 
     set_refresh_token_cookie(response, tokens.refresh_token)
     return {"access_token": tokens.access_token}
@@ -185,16 +212,17 @@ async def register_user_phone(
     request: Request,
     user_data: RegisterUserSchema,
     response: Response,
-    auth_service: AuthService = Depends()
+    db: AsyncSession = Depends(get_db),
+    redis: Redis = Depends(get_redis),
 ):
-    session = get_db_from_context()
+    auth_service = AuthService(db, redis)
 
     # 회원가입만 트랜잭션으로 수행
-    async with session.begin():
-        user_schema = await auth_service.register_user(request, user_data)
+    async with db.begin():
+        new_user = await auth_service.register_user(request, user_data)
 
     # 로그인 수행 (별도 트랜잭션으로)
-    tokens = await auth_service.login_user(request, user_schema)
+    tokens = await auth_service.login_user(request, new_user)
 
     set_refresh_token_cookie(response, tokens.refresh_token)
     return {"access_token": tokens.access_token}

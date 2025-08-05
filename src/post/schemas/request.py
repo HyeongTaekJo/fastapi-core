@@ -18,7 +18,7 @@ class CreatePostSchema(BaseModel):
     title: str
     content: str
     images: Optional[List[str]] = Field(default_factory=list, description="temp 폴더에 저장된 이미지 파일명 리스트")
-    temp_files: Optional[List[str]] = None  # ✅ 파일명만 받음
+    temp_files: Optional[List[str]] = None  #  파일명만 받음
 
 class FileUpdateItem(BaseModel):
     id: Optional[int] = None

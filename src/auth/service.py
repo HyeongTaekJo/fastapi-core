@@ -6,6 +6,8 @@ from jwt import ExpiredSignatureError, InvalidTokenError
 from fastapi import HTTPException, Depends, status, Request
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
+from redis.asyncio import Redis
 from user.schemas.response import UserSchema, TokenPayloadSchema
 from common.const.settings import settings  # 환경 변수 설정
 from auth.schemas.response import TokenSchema
@@ -13,29 +15,24 @@ from user.repository import UserRepository
 from auth.schemas.request import RegisterUserSchema
 from user.model import UserModel
 from auth.repository import AuthRepository
-from cache.redis_connection import redis
 from auth.const.fields import UNIQUE_USER_FIELDS
 from common.exceptions.base import ConflictException
 from common.exceptions.base import UnauthorizedException
 from common.exceptions.base import NotFoundException  # 추가됨
 from auth.schemas.request import LoginUserSchema
-from cache.redis_context import get_redis_from_context
 from auth.repository import AuthRepository
 from cart.repository import CartRepository
 from cache.session_service import SessionService
-from database.session_context import get_db_from_context
-from common.utils.tx_debugger import log_tx_state
-
-
 
 class AuthService:
-    def __init__(self):
-        self.user_repository = UserRepository()
-        self.auth_repository = AuthRepository()
-        self.cart_repository = CartRepository()
+    def __init__(self, db: AsyncSession, redis: Redis):
+        self.db = db
+        self.user_repository = UserRepository(db)
+        self.auth_repository = AuthRepository(redis)
+        self.cart_repository = CartRepository(db)
         self.session_service = SessionService()
 
-    def extract_token(self, auth_header: str, is_bearer: bool) -> str:
+    async def extract_token(self, auth_header: str, is_bearer: bool) -> str:
         """Authorization 헤더에서 토큰을 추출"""
         if not auth_header:
             raise UnauthorizedException("Authorization header에 토큰이 없습니다.")
@@ -149,7 +146,6 @@ class AuthService:
         return UserSchema.model_validate(user)
     
     async def login_user(self, request: Request, user: UserSchema) -> TokenSchema:
-        session = get_db_from_context()
 
         # 토큰 발급
         access_token = self.sign_token(user, is_refresh=False)
@@ -157,7 +153,7 @@ class AuthService:
 
         should_merge = request.state.session.get("user") is None
 
-        async with session.begin():
+        async with self.db.begin():
             # Redis에 RefreshToken 저장
             await self.auth_repository.save_refresh_token(user.id, refresh_token)
 
@@ -192,9 +188,10 @@ class AuthService:
 
 
     async def register_user(
-            self,
-            request: Request,
-            user_data: RegisterUserSchema) -> TokenSchema:
+        self,
+        request: Request,
+        user_data: RegisterUserSchema
+    ) -> TokenSchema:
         """회원가입 비즈니스 로직"""
         
         for field in UNIQUE_USER_FIELDS:

@@ -4,7 +4,7 @@ from cart.repository import CartRepository
 from cart.schemas.request import AddCartSchema, UpdateCartSchema, RemoveCartSchema
 from cache.session_service import SessionService
 from user.model import UserModel
-from cache.redis_context import get_redis_from_context
+from sqlalchemy.ext.asyncio import AsyncSession
 
 class CartService:
     def __init__(self):
@@ -16,7 +16,12 @@ class CartService:
         return request.state.session.get("cart", {})
 
     # 장바구니 추가
-    async def add_item(self, request: Request, user: Optional[UserModel], data: AddCartSchema):
+    async def add_item(
+        self, 
+        request: Request, 
+        user: Optional[UserModel], 
+        data: AddCartSchema,
+    ):
         cart = request.state.session.get("cart", {})
         cart[str(data.product_id)] = cart.get(str(data.product_id), 0) + data.quantity
 
@@ -25,7 +30,12 @@ class CartService:
         return {"detail": "장바구니에 추가되었습니다.", "cart": cart}
 
     # 장바구니 수정
-    async def update_item(self, request: Request, user: Optional[UserModel], data: UpdateCartSchema):
+    async def update_item(
+        self, 
+        request: Request, 
+        user: Optional[UserModel], 
+        data: UpdateCartSchema
+    ):
         cart = request.state.session.get("cart", {})
 
         if str(data.product_id) not in cart:
@@ -41,7 +51,12 @@ class CartService:
         return {"detail": "장바구니가 수정되었습니다.", "cart": cart}
 
     # 장바구니 삭제
-    async def remove_item(self, request: Request, user: Optional[UserModel], data: RemoveCartSchema):
+    async def remove_item(
+        self, 
+        request: Request, 
+        user: Optional[UserModel], 
+        data: RemoveCartSchema
+    ):
         cart = request.state.session.get("cart", {})
 
         if str(data.product_id) not in cart:

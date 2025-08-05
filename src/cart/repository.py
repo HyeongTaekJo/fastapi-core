@@ -1,13 +1,16 @@
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
-from database.session_context import get_db_from_context
 from cart.model import CartModel, CartItemModel
+from sqlalchemy.ext.asyncio import AsyncSession
+
 
 class CartRepository:
+    def __init__(self, db: AsyncSession):
+        self.db = db
+
     async def get_cart_by_user_id(self, user_id: int) -> CartModel | None:
         """카트 조회 (없으면 None 반환)"""
-        session = get_db_from_context()
-        cart = await session.scalar(
+        cart = await self.db.scalar(
             select(CartModel)
             .options(selectinload(CartModel.items))
             .where(CartModel.user_id == user_id)
@@ -16,9 +19,8 @@ class CartRepository:
 
     async def create_cart(self, user_id: int) -> CartModel:
         """카트 생성"""
-        session = get_db_from_context()
         cart = CartModel(user_id=user_id)
-        session.add(cart)
+        self.db.add(cart)
         # flush() 불필요, 커밋 시 반영
         return cart
 

@@ -13,7 +13,7 @@ async def test_db_connection():
     try:
         async with async_session_maker() as session:
             await session.execute(text("SELECT 1"))
-        logger.info("✅ Database connected successfully")
+        logger.info(" Database connected successfully")
     except Exception as e:
         logger.critical(f"❌ Database connection failed: {e}")
         raise e
@@ -24,7 +24,7 @@ async def test_redis_connection():
         result = await redis.get("__ping__")
         if result != b"pong":
             raise RedisError("Invalid Redis response")
-        logger.info("✅ Redis connected successfully")
+        logger.info(" Redis connected successfully")
     except Exception as e:
         logger.critical(f"❌ Redis connection failed: {e}")
         raise e

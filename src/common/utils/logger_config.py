@@ -10,13 +10,13 @@ load_dotenv()
 level = os.getenv("LOG_LEVEL", "INFO").upper()
 LOG_LEVEL = getattr(logging, level, logging.INFO)
 
-# ✅ logs 폴더를 프로젝트 루트 기준으로 만들기
+#  logs 폴더를 프로젝트 루트 기준으로 만들기
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent  # ex) src/common/utils/logger_config.py → Backend/
 LOGS_DIR = BASE_DIR / "logs"
 LOGS_DIR.mkdir(parents=True, exist_ok=True)  # logs 폴더 없으면 생성
 LOG_FILE_PATH = LOGS_DIR / "app.log"
 
-# ✅ 요청 단위 request_id, user_id 추적용 필터 클래스
+#  요청 단위 request_id, user_id 추적용 필터 클래스
 class RequestContextFilter(logging.Filter):
     def filter(self, record):
         record.request_id = request_id_ctx_var.get(None)

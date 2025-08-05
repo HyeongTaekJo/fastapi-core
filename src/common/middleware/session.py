@@ -1,18 +1,19 @@
 from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi import Request, Response, FastAPI
 import uuid, json, logging
-from cache.redis_context import get_redis_from_context
+from redis.asyncio import Redis 
 from common.const.settings import settings
 
 class RedisSessionMiddleware(BaseHTTPMiddleware):
-    def __init__(self, app: FastAPI, session_cookie: str = "session_redis_id"):
+    def __init__(self, app: FastAPI, redis: Redis, session_cookie: str = "session_redis_id"):
         super().__init__(app)
+        self.redis = redis
         self.session_cookie = session_cookie
         self.max_age = settings.SESSION_MAX_AGE
 
     # 상세정보는 redis에 들어가는 것을 여기서 구현하는 것
     async def dispatch(self, request: Request, call_next):
-        redis = get_redis_from_context()
+        redis = self.redis
 
         response = None
         # session_id cookie key로 session_id(redis의 key)값을 가져옴. 
@@ -51,7 +52,7 @@ class RedisSessionMiddleware(BaseHTTPMiddleware):
             # 함수를 실행하고 다시 돌아온다는 뜻이다.
             response = await call_next(request) 
 
-            # ✅ 무조건 session_id 쿠키 발급 (로그인 안 해도)
+            # 무조건 session_id 쿠키 발급 (로그인 안 해도)
             response.set_cookie(
                 self.session_cookie,
                 session_id,
@@ -95,6 +96,6 @@ class RedisSessionMiddleware(BaseHTTPMiddleware):
                     response.delete_cookie(self.session_cookie)
 
         except Exception as e:
-            logging.critical("error in redis session middleware:" + str(e))
+            logging.critical("error in redis session middleware:" + str(e) , exc_info=True)
         
         return response

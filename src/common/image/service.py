@@ -4,13 +4,14 @@ from common.image.utils import backup_files, restore_backups, delete_backups, mo
 from common.const.path_consts import TEMP_FOLDER_PATH, TEMP_BACKUP_PATH
 from post.image.schemas.request import CreatePostImageSchema
 from common.image.model import ImageModelType
+from sqlalchemy.ext.asyncio import AsyncSession
 from os.path import join, exists
 from shutil import move
 
 
 class ImageService:
-    def __init__(self, image_type: ImageModelType, image_path_root: str):
-        self.repo = ImageRepository()
+    def __init__(self, image_type: ImageModelType, image_path_root: str, db: AsyncSession):
+        self.repo = ImageRepository(db)
         self.image_type = image_type
         self.image_path_root = image_path_root
 

@@ -2,12 +2,14 @@ from fastapi import Depends, HTTPException, Request
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from auth.service import AuthService
 from user.schemas.response import UserSchema
-from cache.redis_context import get_redis_from_context
 from auth.const.fields import LOGIN_TYPE_FIELD_MAP
 from common.utils.log_context import user_id_ctx_var
 import json
-from common.utils.tx_debugger import log_tx_state
-from database.session_context import get_db_from_context  # Context 기반으로 변경
+from database.dependencies import get_db
+from cache.dependencies import get_redis
+from sqlalchemy.ext.asyncio import AsyncSession
+from redis.asyncio import Redis
+import inspect
 
 security = HTTPBasic()
 # ★ HTTPBasic이 자동으로 검증해주는 것들 ★
@@ -20,11 +22,11 @@ security = HTTPBasic()
 async def basic_token(
     request: Request,
     credentials: HTTPBasicCredentials = Depends(security), 
-    auth_service: AuthService = Depends()
+    db: AsyncSession = Depends(get_db),
+    redis: Redis = Depends(get_redis),
 )-> UserSchema:
     
-    redis = get_redis_from_context()  # 미들웨어에서 주입된 Redis 사용
-
+    auth_service = AuthService(db, redis)
 
     """ Basic Auth를 사용한 인증 """
      # credentials가 None인지 확인
@@ -44,6 +46,9 @@ async def basic_token(
     if not field:
         raise HTTPException(status_code=400, detail="지원하지 않는 로그인 경로입니다.")
     
+    print("db is:", db)
+    print("db type is:", type(db))
+    print("is coroutine?", inspect.iscoroutinefunction(db.scalar))
 
     # 인증 처리
     user = await auth_service.authenticate_with_field(field, identifier, password)
@@ -57,8 +62,7 @@ async def basic_token(
     # user_dict = UserSchema.model_validate(user).model_dump()
     # await redis.setex(redis_key, 3600, json.dumps(user_dict))
 
-    session = get_db_from_context()
-    await session.rollback()
+    await db.rollback()
     request.state.user = user
 
 

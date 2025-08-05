@@ -1,4 +1,4 @@
-# ✅ FileService 리팩토링 + 파일 교체 (기존 row 유지하며 path 수정)
+# FileService 리팩토링 + 파일 교체 (기존 row 유지하며 path 수정)
 
 from typing import Literal, Optional
 
@@ -14,14 +14,15 @@ from common.file.file_utils import (
     _extract_file_id_from_path
 )
 from common.file.repository import FileRepository
+from sqlalchemy.ext.asyncio import AsyncSession
 import os
 import logging
 
 logger = logging.getLogger(__name__)
 
 class FileService:
-    def __init__(self, target_folder_path: str):
-        self.repo = FileRepository()
+    def __init__(self, db: AsyncSession, target_folder_path: str):
+        self.repo = FileRepository(db)
         self.target_folder_path = target_folder_path
 
     async def save_files(self, owner_type: str, owner_id: int, temp_filenames: list[str]):
@@ -38,21 +39,21 @@ class FileService:
         # 기존 파일 정보 가져오기
         existing_files = await self.repo.get_files_by_owner(owner_type, owner_id)
         existing_ids = {f.id for f in existing_files}
-        logger.debug(f"📂 기존 연결된 파일 ID들: {existing_ids}")
+        logger.debug(f" 기존 연결된 파일 ID들: {existing_ids}")
 
         try:
             # 빈 배열이면 모든 파일 삭제
             if not file_payload:
-                logger.debug("🔄 빈 파일 배열 - 모든 파일 삭제")
+                logger.debug(" 빈 파일 배열 - 모든 파일 삭제")
                 # 실제 파일 삭제
                 for file in existing_files:
                     file_path = os.path.join(self.target_folder_path, file.path)
                     try:
                         if os.path.exists(file_path):
                             os.remove(file_path)
-                            logger.info(f"🗑️ 파일 삭제 완료: {file_path}")
+                            logger.info(f" 파일 삭제 완료: {file_path}")
                     except Exception as e:
-                        logger.warning(f"⚠️ 파일 삭제 실패: {file_path} - {e}")
+                        logger.warning(f" 파일 삭제 실패: {file_path} - {e}")
                 
                 # DB에서 파일 삭제
                 await self.repo.delete_files_by_ids(existing_ids)
@@ -64,10 +65,10 @@ class FileService:
             for item in file_payload:
                 order = item.order
 
-                # ✅ 기존 파일인데 새 파일로 교체
+                #  기존 파일인데 새 파일로 교체
                 if item.id and item.temp_file:
                     if item.id in existing_ids:
-                        logger.debug(f"✅ 교체 처리 중: {item.id}")
+                        logger.debug(f" 교체 처리 중: {item.id}")
                         received_ids.add(item.id)
                         await self.update_existing_file_with_new_temp(
                             file_id=item.id,
@@ -77,18 +78,18 @@ class FileService:
                             order=order
                         )
                     else:
-                        logger.warning(f"⚠️ 무시됨: item.id={item.id}는 연결된 파일이 아닙니다.")
+                        logger.warning(f" 무시됨: item.id={item.id}는 연결된 파일이 아닙니다.")
 
-                # ✅ 기존 파일 → 순서만 변경
+                #  기존 파일 → 순서만 변경
                 elif item.id:
                     if item.id in existing_ids:
-                        logger.debug(f"✅ 순서만 변경: {item.id}")
+                        logger.debug(f" 순서만 변경: {item.id}")
                         received_ids.add(item.id)
                         await self.repo.update_file_order(item.id, order)
                     else:
-                        logger.warning(f"⚠️ 무시됨: item.id={item.id}는 연결된 파일이 아닙니다.")
+                        logger.warning(f" 무시됨: item.id={item.id}는 연결된 파일이 아닙니다.")
 
-                # ✅ 새 파일 추가
+                #  새 파일 추가
                 elif item.temp_file:
                     await self.move_from_temp_and_link(
                         temp_filename=item.temp_file,
@@ -100,7 +101,7 @@ class FileService:
 
             # 삭제할 파일 ID 계산
             to_delete_ids = existing_ids - received_ids
-            logger.debug(f"🧹 삭제 대상 file ids: {to_delete_ids}")
+            logger.debug(f" 삭제 대상 file ids: {to_delete_ids}")
 
             if to_delete_ids:
                 # 삭제할 파일들의 실제 파일 삭제
@@ -110,16 +111,16 @@ class FileService:
                         try:
                             if os.path.exists(file_path):
                                 os.remove(file_path)
-                                logger.info(f"🗑️ 파일 삭제 완료: {file_path}")
+                                logger.info(f" 파일 삭제 완료: {file_path}")
                         except Exception as e:
-                            logger.warning(f"⚠️ 파일 삭제 실패: {file_path} - {e}")
+                            logger.warning(f" 파일 삭제 실패: {file_path} - {e}")
 
                 # DB에서 파일 삭제
                 await self.repo.delete_files_by_ids(to_delete_ids)
                 await self.repo.session.flush()  # 변경사항을 DB에 즉시 적용
 
         except Exception as e:
-            logger.error(f"❌ 파일 업데이트 중 오류 발생: {str(e)}")
+            logger.error(f" 파일 업데이트 중 오류 발생: {str(e)}")
             raise e
 
     async def update_existing_file_with_new_temp(self, file_id: int, temp_file: str, owner_type: str, owner_id: int, order: int):
@@ -127,7 +128,7 @@ class FileService:
         if not file:
             raise HTTPException(status_code=404, detail="파일이 존재하지 않습니다.")
 
-        # ✅ 기존 파일 경로
+        #  기존 파일 경로
         old_full_path = os.path.join(self.target_folder_path, file.path)
 
         # 신규 경로 설정
@@ -138,17 +139,17 @@ class FileService:
         if not os.path.exists(temp_path):
             raise FileNotFoundError("임시 파일이 존재하지 않습니다.")
 
-        # ✅ temp → target으로 복사
+        #  temp → target으로 복사
         move_temp_file_to_target(temp_path, target_path)
         self.record_moved_file(temp_path, target_path)
 
-        # ✅ 기존 파일 삭제
+        #  기존 파일 삭제
         if os.path.exists(old_full_path):
             try:
                 os.remove(old_full_path)
-                logger.info(f"🗑️ 기존 파일 삭제 완료: {old_full_path}")
+                logger.info(f" 기존 파일 삭제 완료: {old_full_path}")
             except Exception as e:
-                logger.warning(f"⚠️ 기존 파일 삭제 실패: {old_full_path} - {e}")
+                logger.warning(f" 기존 파일 삭제 실패: {old_full_path} - {e}")
 
         # DB 업데이트
         file.path = target_rel_path
@@ -212,7 +213,7 @@ class FileService:
         self._old_files = existing_files
         self._old_file_ids = {f.id for f in existing_files}
 
-        logger.debug(f"📦 old_files: {[f.id for f in existing_files]}")
+        logger.debug(f" old_files: {[f.id for f in existing_files]}")
 
     async def rollback(self):
         if hasattr(self, "_moved_files"):

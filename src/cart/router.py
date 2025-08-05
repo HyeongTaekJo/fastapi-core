@@ -14,8 +14,9 @@ router = APIRouter(prefix="/cart", tags=["cart"])
 async def get_cart(
     request: Request,
     user: Optional[UserModel] = Depends(get_optional_user),
-    cart_service: CartService = Depends()
 ):
+    cart_service = CartService()
+
     return await cart_service.get_cart(request, user)
 
 # 장바구니 항목 추가
@@ -24,8 +25,9 @@ async def add_to_cart(
     request: Request,
     data: AddCartSchema,
     user: Optional[UserModel] = Depends(get_optional_user),
-    cart_service: CartService = Depends()
 ):
+    cart_service = CartService()
+
     return await cart_service.add_item(request, user, data)
 
 # 장바구니 항목 수정
@@ -34,8 +36,9 @@ async def update_cart_item(
     request: Request,
     data: UpdateCartSchema,
     user: Optional[UserModel] = Depends(get_optional_user),
-    cart_service: CartService = Depends()
 ):
+    cart_service = CartService()
+    
     return await cart_service.update_item(request, user, data)
 
 # 장바구니 항목 제거
@@ -44,6 +47,7 @@ async def remove_cart_item(
     request: Request,
     data: RemoveCartSchema,
     user: Optional[UserModel] = Depends(get_optional_user),
-    cart_service: CartService = Depends()
 ):
+    cart_service = CartService()
+    
     return await cart_service.remove_item(request, user, data)

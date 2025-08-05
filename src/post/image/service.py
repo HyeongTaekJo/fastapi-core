@@ -3,12 +3,14 @@
 from common.image.service import ImageService
 from common.image.enums.image_type_enum import ImageModelType
 from common.const.path_consts import POST_IMAGE_PATH
+from sqlalchemy.ext.asyncio import AsyncSession
 
 class PostImageService:
-    def __init__(self):
+    def __init__(self, db: AsyncSession):
         self.image_service = ImageService(
             image_type=ImageModelType.POST_IMAGE,
-            image_path_root=POST_IMAGE_PATH  # 이름 정확하게
+            image_path_root=POST_IMAGE_PATH,  # 이름 정확하게
+            db=db
         )
 
     async def save_images(self, post_id: int, image_paths: list[str]):

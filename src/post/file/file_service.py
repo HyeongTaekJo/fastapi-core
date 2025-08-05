@@ -1,11 +1,11 @@
 from common.file.file_service import FileService
 from common.const.path_consts import FILE_UPLOAD_PATH, TEMP_FOLDER_PATH
 import os
-
+from sqlalchemy.ext.asyncio import AsyncSession
 
 class PostFileService:
-    def __init__(self):
-        self.file_service = FileService(target_folder_path=FILE_UPLOAD_PATH)
+    def __init__(self, db: AsyncSession):
+        self.file_service = FileService(db, target_folder_path=FILE_UPLOAD_PATH)
 
     async def save_files(self, post_id: int, temp_filenames: list[str]):
         await self.file_service.save_files("post", post_id, temp_filenames)

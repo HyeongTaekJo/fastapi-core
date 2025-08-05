@@ -9,10 +9,9 @@ from common.middleware.logging import (
     RequestLoggerMiddleware,
     LogContextMiddleware
 )
-from common.middleware.database import DBSessionMiddleware
 from common.middleware.auth import AuthMiddleware
-from common.middleware.redis import RedisMiddleware
 from common.middleware.session import RedisSessionMiddleware
+from cache.redis_connection import redis
 
 
 # 로깅 설정 적용 (.env 기반 + TimedRotatingFileHandler)
@@ -51,12 +50,9 @@ app.add_middleware(
 )
 
 # 미들웨어 등록
-
 app.add_middleware(RequestLoggerMiddleware)  # 가장 바깥
 app.add_middleware(LogContextMiddleware)     # 로그 ID 설정
-app.add_middleware(DBSessionMiddleware)      # DB 세션 설정
-app.add_middleware(RedisSessionMiddleware)   # Redis 세션 사용
-app.add_middleware(RedisMiddleware)          # Redis 인스턴스 설정
+app.add_middleware(RedisSessionMiddleware, redis=redis)   # Redis 세션 사용
 app.add_middleware(AuthMiddleware)           # 토큰 검증
 
 
