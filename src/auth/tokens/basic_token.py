@@ -46,10 +46,6 @@ async def basic_token(
     if not field:
         raise HTTPException(status_code=400, detail="지원하지 않는 로그인 경로입니다.")
     
-    print("db is:", db)
-    print("db type is:", type(db))
-    print("is coroutine?", inspect.iscoroutinefunction(db.scalar))
-
     # 인증 처리
     user = await auth_service.authenticate_with_field(field, identifier, password)
 

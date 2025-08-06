@@ -146,6 +146,9 @@ class AuthService:
         return UserSchema.model_validate(user)
     
     async def login_user(self, request: Request, user: UserSchema) -> TokenSchema:
+        # 이미 로그인된 상태라면 로그인 중복 차단
+        if request.state.session.get("user"):
+            raise UnauthorizedException("이미 로그인된 상태입니다.")
 
         # 토큰 발급
         access_token = self.sign_token(user, is_refresh=False)
