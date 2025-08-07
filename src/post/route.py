@@ -29,7 +29,7 @@ async def generate_dummy_posts(
 async def get_paginated_posts(
     request: PaginatePostSchema = Depends(),
     db: AsyncSession = Depends(get_db),
-    # _: None = Depends(AccessTokenDependency),
+    _: None = Depends(access_token), # 토큰이 있는 사람만 접근 가능
 ):
     service = PostService(db)
     return await service.get_paginated_posts(request)

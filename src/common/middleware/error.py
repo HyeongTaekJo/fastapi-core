@@ -9,9 +9,9 @@ def middleware_error_handler(e: Exception):
     return JSONResponse(
         status_code=500,
         content={
-            "error": {
-                "code": "INTERNAL_ERROR",
-                "message": "미들웨어 처리 중 서버 오류가 발생했습니다.",
+                "error": {
+                "code": e.__class__.__name__,
+                "message": str(e),
                 "status_code": 500,
             }
         },

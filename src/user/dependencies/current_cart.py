@@ -19,5 +19,5 @@ async def get_current_cart(request: Request) -> dict[int, int]:
     try:
         return {int(k): int(v) for k, v in cart_data.items()}  #  타입 안정성 보장
     except Exception as e:
-        logger.warning(f"❌ [CART] 장바구니 파싱 실패: {e}")
+        logger.warning(f" [CART] 장바구니 파싱 실패: {e}")
         raise HTTPException(status_code=400, detail="장바구니 정보가 손상되었습니다.")
