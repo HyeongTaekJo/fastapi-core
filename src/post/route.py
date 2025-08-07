@@ -18,11 +18,11 @@ router = APIRouter(prefix="/posts", tags=["posts"])
 
 @router.post("/random")
 async def generate_dummy_posts(
-    _: None = Depends(access_token), # 토큰이 있는 사람만 접근 가능
+    # _: None = Depends(access_token), # 토큰이 있는 사람만 접근 가능
     db: AsyncSession = Depends(get_db),
 ):
     service = PostService(db)
-    return await service.generate_dummy_posts(db)
+    return await service.generate_dummy_posts()
 
 
 @router.get("")

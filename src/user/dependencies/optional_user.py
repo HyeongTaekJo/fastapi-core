@@ -8,9 +8,9 @@ async def get_optional_user(request: Request) -> Optional[UserSchema]:
     user_data = session.get("user")
 
     if not user_data:
-        return None  # ❗️로그인 안 돼도 그냥 None 반환
+        return None  # 로그인 안 돼도 그냥 None 반환
 
     try:
         return UserSchema(**user_data)
     except Exception:
-        return None  # ❗️파싱 실패해도 None 처리
+        return None  # 파싱 실패해도 None 처리

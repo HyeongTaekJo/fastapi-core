@@ -5,7 +5,7 @@ logger = logging.getLogger(__name__)
 
 async def get_current_cart(request: Request) -> dict[int, int]:
     """
-    ✅ Redis 세션에서 현재 사용자의 장바구니(cart)를 꺼내는 의존성 함수
+     Redis 세션에서 현재 사용자의 장바구니(cart)를 꺼내는 의존성 함수
     - 세션에 'cart'가 없으면 빈 dict 반환
     - 구조: {product_id: quantity}
     """

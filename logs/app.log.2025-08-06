@@ -1,0 +1,453 @@
+2025-08-06 11:00:00,054 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-08-06 11:00:04,098 [CRITICAL] [req_id:None user:None] startup_check.py:18 - ❌ Database connection failed: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'localhost'")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-08-06 11:00:04,099 [CRITICAL] [req_id:None user:None] lifespan.py:31 - ❌ Startup failed due to service connection error
+2025-08-06 13:19:10,412 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-08-06 13:19:10,453 [DEBUG] [req_id:None user:None] connection.py:960 - caching sha2: Trying full auth...
+2025-08-06 13:19:10,454 [DEBUG] [req_id:None user:None] connection.py:982 - -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApVb9yWAVPykHuXCZLCYc
+xkukESQg9HkIFshT9YfGhfel71QsjTGW3xd0D4N4a7x7m7+Jy92BWKiHG77EIeI+
+6QWLmA+hT8sNIRldmZEH3c6p+yXX0VrnqQSBSCJNm4OtsvbjH0obOX/WrgN88+fp
+lJgSd8r++WAS+R1Z0INWhmB4cGZ9JzgTgcCTbJZRysHf7HvO15AyYPnGDsL4DUwf
+Lvwm+94xoPCB60BktHeht80Xn9fZVm2Qt5qW2m6R2EJKghM/zn7z8bLUSJ8lGqx3
+BZ/jOXNzsHX2O0DlILC25/DWj0qUoPOMiNydIBNzOGJ45kBAgCfJWoYQM/5OFT8P
+yQIDAQAB
+-----END PUBLIC KEY-----
+
+2025-08-06 13:19:10,522 [INFO] [req_id:None user:None] startup_check.py:16 -  Database connected successfully
+2025-08-06 13:19:10,536 [INFO] [req_id:None user:None] startup_check.py:27 -  Redis connected successfully
+2025-08-06 13:19:10,607 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 13:19:10,608 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 13:19:10,612 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 13:19:10,615 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_temp_files" to job store "default"
+2025-08-06 13:19:10,615 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_backups" to job store "default"
+2025-08-06 13:19:10,616 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_orphan_files" to job store "default"
+2025-08-06 13:19:10,616 [INFO] [req_id:None user:None] base.py:181 - Scheduler started
+2025-08-06 13:19:10,616 [INFO] [req_id:None user:None] lifespan.py:29 - 🔗 All services connected.
+2025-08-06 13:19:10,616 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 13:19:10,616 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 13:24:10.607930+09:00 (in 299.991232 seconds)
+2025-08-06 13:19:12,808 [INFO] [req_id:f7329b04-1181-49ec-b74e-6c27bd01e0a9 user:1] logging.py:40 - POST /auth/login/email [200] 0.185s
+2025-08-06 13:19:44,020 [WARNING] [req_id:83e6b2a9-6367-4c0c-acaa-f5599a178c92 user:None] logging.py:43 - [REQUEST_LOGGER] 처리 실패: local variable 'merged_cart' referenced before assignment
+2025-08-06 13:19:53,873 [WARNING] [req_id:da809cae-3fa3-43ef-a170-263ad8d029aa user:None] logging.py:43 - [REQUEST_LOGGER] 처리 실패: local variable 'merged_cart' referenced before assignment
+2025-08-06 13:21:52,453 [INFO] [req_id:None user:None] lifespan.py:36 - 📴 Shutting down...
+2025-08-06 13:21:52,455 [INFO] [req_id:None user:None] graceful_shutdown.py:7 - 🧹 Performing graceful shutdown tasks
+2025-08-06 13:21:52,455 [INFO] [req_id:None user:None] graceful_shutdown.py:11 - 🛑 APScheduler stopped
+2025-08-06 13:21:52,456 [INFO] [req_id:None user:None] graceful_shutdown.py:33 - 🧼 Graceful shutdown completed
+2025-08-06 13:21:52,456 [INFO] [req_id:None user:None] lifespan.py:40 - ✅ Cleanup done. Bye 👋
+2025-08-06 13:21:52,457 [INFO] [req_id:None user:None] base.py:212 - Scheduler has been shut down
+2025-08-06 13:22:01,210 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-08-06 13:22:01,236 [DEBUG] [req_id:None user:None] connection.py:951 - caching sha2: succeeded by fast path.
+2025-08-06 13:22:01,259 [INFO] [req_id:None user:None] startup_check.py:16 -  Database connected successfully
+2025-08-06 13:22:01,265 [INFO] [req_id:None user:None] startup_check.py:27 -  Redis connected successfully
+2025-08-06 13:22:01,313 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 13:22:01,313 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 13:22:01,322 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 13:22:01,325 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_temp_files" to job store "default"
+2025-08-06 13:22:01,326 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_backups" to job store "default"
+2025-08-06 13:22:01,327 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_orphan_files" to job store "default"
+2025-08-06 13:22:01,327 [INFO] [req_id:None user:None] base.py:181 - Scheduler started
+2025-08-06 13:22:01,328 [INFO] [req_id:None user:None] lifespan.py:29 - 🔗 All services connected.
+2025-08-06 13:22:01,328 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 13:22:01,329 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 13:27:01.313144+09:00 (in 299.983635 seconds)
+2025-08-06 13:22:11,198 [WARNING] [req_id:918a8c98-7d9c-4873-b34b-8166d05e5423 user:None] logging.py:43 - [REQUEST_LOGGER] 처리 실패: local variable 'merged_cart' referenced before assignment
+2025-08-06 13:25:59,433 [WARNING] [req_id:9c21bca1-86c6-4319-bfea-b7468fa194ba user:None] logging.py:43 - [REQUEST_LOGGER] 처리 실패: local variable 'merged_cart' referenced before assignment
+2025-08-06 13:28:54,141 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 13:28:54,142 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 13:32:01.313144+09:00 (in 187.170512 seconds)
+2025-08-06 13:28:54,145 [WARNING] [req_id:None user:None] base_py3.py:25 - Run time of job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 13:32:01 KST)" was missed by 0:01:52.831488
+2025-08-06 13:28:54,147 [WARNING] [req_id:d6562a6a-385b-441d-aecd-191f2ad59931 user:None] logging.py:43 - [REQUEST_LOGGER] 처리 실패: local variable 'merged_cart' referenced before assignment
+2025-08-06 13:28:57,692 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 13:29:08,533 [WARNING] [req_id:455781f6-a582-4573-80e4-cea0d3422182 user:None] logging.py:43 - [REQUEST_LOGGER] 처리 실패: local variable 'merged_cart' referenced before assignment
+2025-08-06 13:29:11,726 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 13:29:16,376 [INFO] [req_id:None user:None] lifespan.py:36 - 📴 Shutting down...
+2025-08-06 13:29:16,379 [INFO] [req_id:None user:None] graceful_shutdown.py:7 - 🧹 Performing graceful shutdown tasks
+2025-08-06 13:29:16,380 [INFO] [req_id:None user:None] graceful_shutdown.py:11 - 🛑 APScheduler stopped
+2025-08-06 13:29:16,381 [INFO] [req_id:None user:None] graceful_shutdown.py:33 - 🧼 Graceful shutdown completed
+2025-08-06 13:29:16,381 [INFO] [req_id:None user:None] lifespan.py:40 - ✅ Cleanup done. Bye 👋
+2025-08-06 13:29:16,383 [INFO] [req_id:None user:None] base.py:212 - Scheduler has been shut down
+2025-08-06 13:30:34,124 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-08-06 13:30:34,150 [DEBUG] [req_id:None user:None] connection.py:951 - caching sha2: succeeded by fast path.
+2025-08-06 13:30:34,173 [INFO] [req_id:None user:None] startup_check.py:16 -  Database connected successfully
+2025-08-06 13:30:34,180 [INFO] [req_id:None user:None] startup_check.py:27 -  Redis connected successfully
+2025-08-06 13:30:34,218 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 13:30:34,219 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 13:30:34,227 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 13:30:34,230 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_temp_files" to job store "default"
+2025-08-06 13:30:34,231 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_backups" to job store "default"
+2025-08-06 13:30:34,232 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_orphan_files" to job store "default"
+2025-08-06 13:30:34,233 [INFO] [req_id:None user:None] base.py:181 - Scheduler started
+2025-08-06 13:30:34,234 [INFO] [req_id:None user:None] lifespan.py:29 - 🔗 All services connected.
+2025-08-06 13:30:34,235 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 13:30:34,235 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 13:35:34.218243+09:00 (in 299.982699 seconds)
+2025-08-06 13:32:05,172 [INFO] [req_id:c1978e82-788d-4430-8b5c-358c7534c18d user:1] logging.py:40 - POST /auth/login/email [200] 83.8095s
+2025-08-06 13:32:17,421 [INFO] [req_id:b23e77e4-dce8-4d58-90ae-946c4c7aefe0 user:1] logging.py:40 - POST /auth/logout [200] 0.004s
+2025-08-06 13:32:32,607 [INFO] [req_id:ce5215d3-f40d-41e8-9033-d3249201d815 user:1] logging.py:40 - POST /auth/login/email [200] 5.5776s
+2025-08-06 13:35:34,214 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 13:35:34,216 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 13:35:34.218243+09:00 (in 0.002420 seconds)
+2025-08-06 13:35:34,220 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 13:35:34,221 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 13:40:34.218243+09:00 (in 299.996858 seconds)
+2025-08-06 13:35:34,221 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 13:40:34 KST)" (scheduled at 2025-08-06 13:35:34.218243+09:00)
+2025-08-06 13:35:34,225 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 13:35:34,225 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 13:40:34 KST)" executed successfully
+2025-08-06 13:35:51,552 [WARNING] [req_id:a3c262c1-cd2b-4ffa-9dc3-391c1fbeb432 user:None] logging.py:43 - [REQUEST_LOGGER] 처리 실패: local variable 'merged_cart' referenced before assignment
+2025-08-06 13:35:51,628 [INFO] [req_id:None user:None] lifespan.py:36 - 📴 Shutting down...
+2025-08-06 13:35:51,630 [INFO] [req_id:None user:None] graceful_shutdown.py:7 - 🧹 Performing graceful shutdown tasks
+2025-08-06 13:35:51,630 [INFO] [req_id:None user:None] graceful_shutdown.py:11 - 🛑 APScheduler stopped
+2025-08-06 13:35:51,631 [INFO] [req_id:None user:None] graceful_shutdown.py:33 - 🧼 Graceful shutdown completed
+2025-08-06 13:35:51,631 [INFO] [req_id:None user:None] lifespan.py:40 - ✅ Cleanup done. Bye 👋
+2025-08-06 13:35:51,633 [INFO] [req_id:None user:None] base.py:212 - Scheduler has been shut down
+2025-08-06 13:35:55,847 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-08-06 13:35:55,874 [DEBUG] [req_id:None user:None] connection.py:951 - caching sha2: succeeded by fast path.
+2025-08-06 13:35:55,902 [INFO] [req_id:None user:None] startup_check.py:16 -  Database connected successfully
+2025-08-06 13:35:55,908 [INFO] [req_id:None user:None] startup_check.py:27 -  Redis connected successfully
+2025-08-06 13:35:55,943 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 13:35:55,943 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 13:35:55,951 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 13:35:55,957 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_temp_files" to job store "default"
+2025-08-06 13:35:55,957 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_backups" to job store "default"
+2025-08-06 13:35:55,958 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_orphan_files" to job store "default"
+2025-08-06 13:35:55,959 [INFO] [req_id:None user:None] base.py:181 - Scheduler started
+2025-08-06 13:35:55,959 [INFO] [req_id:None user:None] lifespan.py:29 - 🔗 All services connected.
+2025-08-06 13:35:55,960 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 13:35:55,960 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 13:40:55.942382+09:00 (in 299.982326 seconds)
+2025-08-06 13:35:56,149 [WARNING] [req_id:180a485a-1656-4ec6-896e-22121e024765 user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 13:35:56,150 [INFO] [req_id:180a485a-1656-4ec6-896e-22121e024765 user:1] logging.py:40 - POST /auth/login/email [401] 0.1747s
+2025-08-06 13:35:59,472 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 13:36:03,650 [WARNING] [req_id:a118e6e5-e99c-4910-a718-3f96becee5fa user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 13:36:03,652 [INFO] [req_id:a118e6e5-e99c-4910-a718-3f96becee5fa user:1] logging.py:40 - POST /auth/login/email [401] 0.0904s
+2025-08-06 13:36:23,004 [INFO] [req_id:8d4f47fe-2469-4353-9a22-059553423282 user:1] logging.py:40 - POST /auth/login/email [200] 0.1064s
+2025-08-06 13:37:01,443 [WARNING] [req_id:280440df-e9a2-4759-a205-8a19e8df27d4 user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 13:37:01,444 [INFO] [req_id:280440df-e9a2-4759-a205-8a19e8df27d4 user:1] logging.py:40 - POST /auth/login/email [401] 0.0843s
+2025-08-06 13:37:11,406 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 13:39:58,833 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 13:39:59,040 [INFO] [req_id:None user:None] lifespan.py:36 - 📴 Shutting down...
+2025-08-06 13:39:59,043 [INFO] [req_id:None user:None] graceful_shutdown.py:7 - 🧹 Performing graceful shutdown tasks
+2025-08-06 13:39:59,043 [INFO] [req_id:None user:None] graceful_shutdown.py:11 - 🛑 APScheduler stopped
+2025-08-06 13:39:59,044 [INFO] [req_id:None user:None] graceful_shutdown.py:33 - 🧼 Graceful shutdown completed
+2025-08-06 13:39:59,045 [INFO] [req_id:None user:None] lifespan.py:40 - ✅ Cleanup done. Bye 👋
+2025-08-06 13:39:59,046 [INFO] [req_id:None user:None] base.py:212 - Scheduler has been shut down
+2025-08-06 13:40:02,738 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-08-06 13:40:02,767 [DEBUG] [req_id:None user:None] connection.py:951 - caching sha2: succeeded by fast path.
+2025-08-06 13:40:02,791 [INFO] [req_id:None user:None] startup_check.py:16 -  Database connected successfully
+2025-08-06 13:40:02,796 [INFO] [req_id:None user:None] startup_check.py:27 -  Redis connected successfully
+2025-08-06 13:40:02,842 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 13:40:02,842 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 13:40:02,852 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 13:40:02,856 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_temp_files" to job store "default"
+2025-08-06 13:40:02,856 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_backups" to job store "default"
+2025-08-06 13:40:02,857 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_orphan_files" to job store "default"
+2025-08-06 13:40:02,858 [INFO] [req_id:None user:None] base.py:181 - Scheduler started
+2025-08-06 13:40:02,858 [INFO] [req_id:None user:None] lifespan.py:29 - 🔗 All services connected.
+2025-08-06 13:40:02,859 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 13:40:02,860 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 13:45:02.841289+09:00 (in 299.980420 seconds)
+2025-08-06 13:40:02,871 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 13:40:17,269 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 13:40:19,232 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 13:40:28,655 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 13:41:53,174 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 13:42:08,503 [INFO] [req_id:628d4df8-b22b-4fd4-a581-ec19d8d44e8a user:1] logging.py:40 - POST /auth/login/email [200] 0.2807s
+2025-08-06 13:42:26,440 [INFO] [req_id:e6523a40-38be-427b-ac15-30da08925622 user:1] logging.py:40 - POST /auth/logout [200] 13.253s
+2025-08-06 13:42:32,158 [INFO] [req_id:b401d197-5554-4385-be5c-5a59550ec138 user:1] logging.py:40 - POST /auth/login/email [200] 0.108s
+2025-08-06 13:42:39,576 [INFO] [req_id:d190344e-11a8-4b58-8886-8ac1e000f437 user:1] logging.py:40 - POST /auth/logout [200] 2.3955s
+2025-08-06 13:42:50,211 [INFO] [req_id:e0103716-072b-40da-b20e-be2bc426f947 user:1] logging.py:40 - POST /auth/login/email [200] 0.1247s
+2025-08-06 13:43:14,017 [INFO] [req_id:5614064c-1cb7-40f8-92c0-c8b04fce7b94 user:1] logging.py:40 - POST /auth/logout [200] 3.9797s
+2025-08-06 13:43:19,023 [INFO] [req_id:5fa0b0c0-ce77-484b-be09-b3265ef7b3f4 user:1] logging.py:40 - POST /auth/login/email [200] 0.1046s
+2025-08-06 13:43:32,316 [INFO] [req_id:1d7a4a68-8170-4831-8b1a-aeb8cb7c7ae6 user:1] logging.py:40 - POST /auth/logout [200] 2.9578s
+2025-08-06 13:43:52,426 [INFO] [req_id:bd4e2a06-8aca-4da2-b979-281b48d57bbb user:1] logging.py:40 - POST /auth/login/email [200] 0.1045s
+2025-08-06 13:45:00,519 [WARNING] [req_id:3c2db3ad-8f9b-4705-945e-b014997e94f2 user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 13:45:00,520 [INFO] [req_id:3c2db3ad-8f9b-4705-945e-b014997e94f2 user:1] logging.py:40 - POST /auth/login/email [401] 0.0794s
+2025-08-06 13:45:12,744 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 13:45:12,745 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 13:50:02.841289+09:00 (in 290.095721 seconds)
+2025-08-06 13:45:12,747 [WARNING] [req_id:None user:None] base_py3.py:25 - Run time of job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 13:50:02 KST)" was missed by 0:00:09.905349
+2025-08-06 13:46:28,560 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 13:46:35,161 [WARNING] [req_id:0dce9772-8b10-4beb-98ef-51db51be30bd user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 13:46:35,162 [INFO] [req_id:0dce9772-8b10-4beb-98ef-51db51be30bd user:1] logging.py:40 - POST /auth/login/email [401] 0.0957s
+2025-08-06 13:49:00,956 [INFO] [req_id:36bf2441-8e32-48fb-a580-e425bc757559 user:1] logging.py:40 - POST /auth/login/email [200] 0.1117s
+2025-08-06 13:50:02,844 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 13:50:02,845 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 13:55:02.841289+09:00 (in 299.995308 seconds)
+2025-08-06 13:50:02,847 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 13:55:02 KST)" (scheduled at 2025-08-06 13:50:02.841289+09:00)
+2025-08-06 13:50:02,849 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 13:50:02,850 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 13:55:02 KST)" executed successfully
+2025-08-06 13:54:59,599 [INFO] [req_id:333d8a40-a521-4d98-9793-eb27a975c584 user:1] logging.py:40 - POST /auth/logout [200] 3.9682s
+2025-08-06 13:54:59,604 [WARNING] [req_id:None user:1] auth.py:29 - [AUTH] 인증 실패: No response returned.
+2025-08-06 13:55:02,849 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 13:55:02,850 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 14:00:02.841289+09:00 (in 299.991121 seconds)
+2025-08-06 13:55:02,851 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:00:02 KST)" (scheduled at 2025-08-06 13:55:02.841289+09:00)
+2025-08-06 13:55:02,852 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 13:55:02,853 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:00:02 KST)" executed successfully
+2025-08-06 13:55:07,417 [WARNING] [req_id:d46ac2ce-62a0-47f9-a764-830cc579d6d8 user:1] handlers.py:76 - Unhandled HTTPException: 401 - 로그아웃된 토큰입니다. | POST /auth/logout
+2025-08-06 13:55:07,418 [INFO] [req_id:d46ac2ce-62a0-47f9-a764-830cc579d6d8 user:None] logging.py:40 - POST /auth/logout [401] 1.0255s
+2025-08-06 13:55:14,394 [WARNING] [req_id:1379f4c7-d3d8-4774-9865-c33d6c6bdb38 user:1] handlers.py:76 - Unhandled HTTPException: 401 - 로그아웃된 토큰입니다. | POST /auth/logout
+2025-08-06 13:55:14,395 [INFO] [req_id:1379f4c7-d3d8-4774-9865-c33d6c6bdb38 user:None] logging.py:40 - POST /auth/logout [401] 0.8268s
+2025-08-06 13:55:20,024 [INFO] [req_id:c59203db-90ef-4330-9c90-6a4b27ec1090 user:1] logging.py:40 - POST /auth/login/email [200] 0.124s
+2025-08-06 13:55:28,154 [INFO] [req_id:eda0d163-dad3-4de9-8a76-768db908add1 user:1] logging.py:40 - POST /auth/logout [200] 3.6062s
+2025-08-06 13:55:34,389 [INFO] [req_id:a0b2bb72-454c-4550-accd-8a13da7169b5 user:1] logging.py:40 - POST /auth/login/email [200] 0.1092s
+2025-08-06 13:57:50,535 [WARNING] [req_id:27fcf9cc-3d19-43db-a3cc-77749ba93025 user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 13:57:50,535 [INFO] [req_id:27fcf9cc-3d19-43db-a3cc-77749ba93025 user:1] logging.py:40 - POST /auth/login/email [401] 0.0861s
+2025-08-06 13:58:22,048 [WARNING] [req_id:4b5583b8-20e2-4b3c-9a22-60a51aa8da06 user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 13:58:22,049 [INFO] [req_id:4b5583b8-20e2-4b3c-9a22-60a51aa8da06 user:1] logging.py:40 - POST /auth/login/email [401] 0.0751s
+2025-08-06 13:59:08,718 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 13:59:19,407 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 13:59:24,331 [WARNING] [req_id:2ba8260a-6ddd-4131-befe-3e80c600b518 user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 13:59:24,332 [INFO] [req_id:2ba8260a-6ddd-4131-befe-3e80c600b518 user:1] logging.py:40 - POST /auth/login/email [401] 0.0828s
+2025-08-06 14:00:47,281 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 14:00:47,291 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 14:00:47,293 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 14:05:02.841289+09:00 (in 255.548209 seconds)
+2025-08-06 14:00:47,295 [WARNING] [req_id:None user:None] base_py3.py:25 - Run time of job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:05:02 KST)" was missed by 0:00:44.453792
+2025-08-06 14:00:58,282 [DEBUG] [req_id:b04c206b-11e9-4c37-ad24-fbe591c15bec user:None] connection.py:951 - caching sha2: succeeded by fast path.
+2025-08-06 14:00:58,372 [INFO] [req_id:568ea4f4-05a0-4a81-9265-5f5de92fe578 user:1] logging.py:40 - POST /auth/login/email [200] 0.176s
+2025-08-06 14:00:58,385 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: No response returned.
+2025-08-06 14:00:58,390 [INFO] [req_id:b04c206b-11e9-4c37-ad24-fbe591c15bec user:1] logging.py:40 - POST /auth/login/email [200] 0.1881s
+2025-08-06 14:00:58,395 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: No response returned.
+2025-08-06 14:00:58,480 [INFO] [req_id:None user:None] lifespan.py:36 - 📴 Shutting down...
+2025-08-06 14:00:58,484 [INFO] [req_id:None user:None] graceful_shutdown.py:7 - 🧹 Performing graceful shutdown tasks
+2025-08-06 14:00:58,484 [INFO] [req_id:None user:None] graceful_shutdown.py:11 - 🛑 APScheduler stopped
+2025-08-06 14:00:58,485 [INFO] [req_id:None user:None] graceful_shutdown.py:33 - 🧼 Graceful shutdown completed
+2025-08-06 14:00:58,486 [INFO] [req_id:None user:None] lifespan.py:40 - ✅ Cleanup done. Bye 👋
+2025-08-06 14:00:58,487 [INFO] [req_id:None user:None] base.py:212 - Scheduler has been shut down
+2025-08-06 14:01:10,100 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-08-06 14:01:10,121 [DEBUG] [req_id:None user:None] connection.py:951 - caching sha2: succeeded by fast path.
+2025-08-06 14:01:10,143 [INFO] [req_id:None user:None] startup_check.py:16 -  Database connected successfully
+2025-08-06 14:01:10,147 [INFO] [req_id:None user:None] startup_check.py:27 -  Redis connected successfully
+2025-08-06 14:01:10,187 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 14:01:10,187 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 14:01:10,197 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 14:01:10,201 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_temp_files" to job store "default"
+2025-08-06 14:01:10,202 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_backups" to job store "default"
+2025-08-06 14:01:10,203 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_orphan_files" to job store "default"
+2025-08-06 14:01:10,204 [INFO] [req_id:None user:None] base.py:181 - Scheduler started
+2025-08-06 14:01:10,204 [INFO] [req_id:None user:None] lifespan.py:29 - 🔗 All services connected.
+2025-08-06 14:01:10,206 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 14:01:10,206 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 14:06:10.185482+09:00 (in 299.979102 seconds)
+2025-08-06 14:01:28,568 [INFO] [req_id:ab6baa83-7610-4538-9979-a42a5cd28bd1 user:1] logging.py:40 - POST /auth/login/email [200] 0.2314s
+2025-08-06 14:05:46,037 [WARNING] [req_id:c3de5384-77ef-4ddc-b1b3-847ebc74f92d user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 14:05:46,038 [INFO] [req_id:c3de5384-77ef-4ddc-b1b3-847ebc74f92d user:1] logging.py:40 - POST /auth/login/email [401] 0.0834s
+2025-08-06 14:06:23,995 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 14:06:23,997 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 14:06:23,999 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 14:11:10.185482+09:00 (in 286.186041 seconds)
+2025-08-06 14:06:24,000 [WARNING] [req_id:None user:None] base_py3.py:25 - Run time of job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:11:10 KST)" was missed by 0:00:13.814968
+2025-08-06 14:06:38,077 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 14:06:45,454 [INFO] [req_id:e4b85e26-910f-4390-9799-24067941e00a user:1] logging.py:40 - POST /auth/login/email [200] 0.1349s
+2025-08-06 14:07:59,686 [INFO] [req_id:de99d7b1-00a8-4bff-a005-d2217a8bcb2a user:1] logging.py:40 - POST /auth/logout [200] 4.4223s
+2025-08-06 14:08:20,682 [INFO] [req_id:d8023ccc-4a4d-4830-9ca8-3cbd8bd09297 user:1] logging.py:40 - POST /auth/login/email [200] 0.1148s
+2025-08-06 14:08:47,967 [WARNING] [req_id:a6329bc8-c203-43a7-a3e7-12ee246d8838 user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 14:08:47,968 [INFO] [req_id:a6329bc8-c203-43a7-a3e7-12ee246d8838 user:1] logging.py:40 - POST /auth/login/email [401] 0.0844s
+2025-08-06 14:11:10,197 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 14:11:10,199 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 14:16:10.185482+09:00 (in 299.985881 seconds)
+2025-08-06 14:11:10,199 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:16:10 KST)" (scheduled at 2025-08-06 14:11:10.185482+09:00)
+2025-08-06 14:11:10,202 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 14:11:10,203 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:16:10 KST)" executed successfully
+2025-08-06 14:11:25,513 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 14:11:25,608 [WARNING] [req_id:6c2ee9ed-7e04-49bb-a481-fdcc02fed73f user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 14:11:25,610 [INFO] [req_id:6c2ee9ed-7e04-49bb-a481-fdcc02fed73f user:1] logging.py:40 - POST /auth/login/email [401] 0.0901s
+2025-08-06 14:11:30,302 [WARNING] [req_id:37459ebd-9117-483a-b4f0-b7092c7f48e2 user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 14:11:30,303 [INFO] [req_id:37459ebd-9117-483a-b4f0-b7092c7f48e2 user:1] logging.py:40 - POST /auth/login/email [401] 0.0848s
+2025-08-06 14:12:19,458 [INFO] [req_id:ee3a8bd0-d2ca-41f9-95f4-c841bbabfa37 user:1] logging.py:40 - POST /auth/login/email [200] 0.0987s
+2025-08-06 14:12:56,938 [INFO] [req_id:fee24ef6-c751-4c58-9e14-1e2906d1527c user:1] logging.py:40 - POST /auth/logout [200] 6.2316s
+2025-08-06 14:13:14,087 [INFO] [req_id:d3f6c01a-9689-43fa-9d40-cbef6edcf4ed user:1] logging.py:40 - POST /auth/login/email [200] 0.1112s
+2025-08-06 14:13:23,420 [WARNING] [req_id:1ab5eb7d-7ffc-4728-b5ed-6170785bdab3 user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 14:13:23,421 [INFO] [req_id:1ab5eb7d-7ffc-4728-b5ed-6170785bdab3 user:1] logging.py:40 - POST /auth/login/email [401] 0.078s
+2025-08-06 14:13:33,798 [WARNING] [req_id:e914448c-6c83-43f5-a047-89a3427fdd99 user:1] handlers.py:76 - Unhandled HTTPException: 401 - 로그아웃된 토큰입니다. | POST /auth/logout
+2025-08-06 14:13:33,799 [INFO] [req_id:e914448c-6c83-43f5-a047-89a3427fdd99 user:None] logging.py:40 - POST /auth/logout [401] 0.003s
+2025-08-06 14:13:42,257 [WARNING] [req_id:07f6a904-cd46-42c2-9db7-27a0210efa1c user:1] handlers.py:76 - Unhandled HTTPException: 401 - 로그아웃된 토큰입니다. | POST /auth/logout
+2025-08-06 14:13:42,258 [INFO] [req_id:07f6a904-cd46-42c2-9db7-27a0210efa1c user:None] logging.py:40 - POST /auth/logout [401] 0.003s
+2025-08-06 14:14:03,317 [WARNING] [req_id:bd8daf90-0b91-4422-9dee-19550ff8580f user:1] handlers.py:76 - Unhandled HTTPException: 401 - 로그아웃된 토큰입니다. | POST /auth/logout
+2025-08-06 14:14:03,318 [INFO] [req_id:bd8daf90-0b91-4422-9dee-19550ff8580f user:None] logging.py:40 - POST /auth/logout [401] 0.0041s
+2025-08-06 14:14:16,743 [INFO] [req_id:65c22aea-85fd-4acf-8a9b-3881a3508362 user:1] logging.py:40 - POST /auth/login/email [200] 0.0987s
+2025-08-06 14:14:20,853 [WARNING] [req_id:d0e6b15c-8190-4ce9-9a34-bcd5b81b53b6 user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 14:14:20,854 [INFO] [req_id:d0e6b15c-8190-4ce9-9a34-bcd5b81b53b6 user:1] logging.py:40 - POST /auth/login/email [401] 0.0775s
+2025-08-06 14:14:25,996 [WARNING] [req_id:None user:None] auth.py:29 - [AUTH] 인증 실패: 401: 유효하지 않은 토큰입니다.
+2025-08-06 14:14:51,917 [WARNING] [req_id:73e7fd27-2258-4dc3-9db5-e2bf21c53829 user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 14:14:51,918 [INFO] [req_id:73e7fd27-2258-4dc3-9db5-e2bf21c53829 user:1] logging.py:40 - POST /auth/login/email [401] 0.0734s
+2025-08-06 14:15:11,183 [INFO] [req_id:ebdc1f8b-f03a-42cb-ab46-248fb08a9002 user:1] logging.py:40 - POST /auth/login/email [200] 0.0943s
+2025-08-06 14:15:28,245 [WARNING] [req_id:33ae1a3d-4546-48e8-b71d-424ceaa8585d user:None] handlers.py:15 - Handled AppException: UNAUTHORIZED - 이미 로그인된 상태입니다.
+2025-08-06 14:15:28,246 [INFO] [req_id:33ae1a3d-4546-48e8-b71d-424ceaa8585d user:1] logging.py:40 - POST /auth/login/email [401] 0.0789s
+2025-08-06 14:15:39,998 [INFO] [req_id:2f22b419-b115-408f-ba59-8e830c8133f9 user:1] logging.py:40 - POST /auth/logout [200] 0.0046s
+2025-08-06 14:16:08,785 [INFO] [req_id:None user:None] lifespan.py:36 - 📴 Shutting down...
+2025-08-06 14:16:08,789 [INFO] [req_id:None user:None] graceful_shutdown.py:7 - 🧹 Performing graceful shutdown tasks
+2025-08-06 14:16:08,791 [INFO] [req_id:None user:None] graceful_shutdown.py:11 - 🛑 APScheduler stopped
+2025-08-06 14:16:08,792 [INFO] [req_id:None user:None] graceful_shutdown.py:33 - 🧼 Graceful shutdown completed
+2025-08-06 14:16:08,793 [INFO] [req_id:None user:None] lifespan.py:40 - ✅ Cleanup done. Bye 👋
+2025-08-06 14:16:08,793 [INFO] [req_id:None user:None] base.py:212 - Scheduler has been shut down
+2025-08-06 14:16:13,038 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-08-06 14:16:13,062 [DEBUG] [req_id:None user:None] connection.py:951 - caching sha2: succeeded by fast path.
+2025-08-06 14:16:13,086 [INFO] [req_id:None user:None] startup_check.py:16 -  Database connected successfully
+2025-08-06 14:16:13,090 [INFO] [req_id:None user:None] startup_check.py:27 -  Redis connected successfully
+2025-08-06 14:16:13,127 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 14:16:13,127 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 14:16:13,135 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 14:16:13,139 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_temp_files" to job store "default"
+2025-08-06 14:16:13,139 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_backups" to job store "default"
+2025-08-06 14:16:13,139 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_orphan_files" to job store "default"
+2025-08-06 14:16:13,141 [INFO] [req_id:None user:None] base.py:181 - Scheduler started
+2025-08-06 14:16:13,141 [INFO] [req_id:None user:None] lifespan.py:29 - 🔗 All services connected.
+2025-08-06 14:16:13,142 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 14:16:13,142 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 14:21:13.127791+09:00 (in 299.985693 seconds)
+2025-08-06 14:21:13,136 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 14:21:13,137 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 14:26:13.127791+09:00 (in 299.990331 seconds)
+2025-08-06 14:21:13,138 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:26:13 KST)" (scheduled at 2025-08-06 14:21:13.127791+09:00)
+2025-08-06 14:21:13,140 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 14:21:13,140 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:26:13 KST)" executed successfully
+2025-08-06 14:26:13,124 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 14:26:13,125 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 14:26:13.127791+09:00 (in 0.002422 seconds)
+2025-08-06 14:26:13,129 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 14:26:13,130 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 14:31:13.127791+09:00 (in 299.997411 seconds)
+2025-08-06 14:26:13,130 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:31:13 KST)" (scheduled at 2025-08-06 14:26:13.127791+09:00)
+2025-08-06 14:26:13,131 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 14:26:13,131 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:31:13 KST)" executed successfully
+2025-08-06 14:31:13,138 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 14:31:13,139 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 14:36:13.127791+09:00 (in 299.988143 seconds)
+2025-08-06 14:31:13,140 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:36:13 KST)" (scheduled at 2025-08-06 14:31:13.127791+09:00)
+2025-08-06 14:31:13,142 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 14:31:13,142 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:36:13 KST)" executed successfully
+2025-08-06 14:36:13,144 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 14:36:13,145 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 14:41:13.127791+09:00 (in 299.982547 seconds)
+2025-08-06 14:36:13,145 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:41:13 KST)" (scheduled at 2025-08-06 14:36:13.127791+09:00)
+2025-08-06 14:36:13,146 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 14:36:13,147 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:41:13 KST)" executed successfully
+2025-08-06 14:41:13,139 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 14:41:13,140 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 14:46:13.127791+09:00 (in 299.987273 seconds)
+2025-08-06 14:41:13,140 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:46:13 KST)" (scheduled at 2025-08-06 14:41:13.127791+09:00)
+2025-08-06 14:41:13,142 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 14:41:13,143 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 14:46:13 KST)" executed successfully
+2025-08-06 15:13:45,678 [INFO] [req_id:None user:None] lifespan.py:19 - 🚀 Starting up...
+2025-08-06 15:13:45,710 [DEBUG] [req_id:None user:None] connection.py:951 - caching sha2: succeeded by fast path.
+2025-08-06 15:13:45,735 [INFO] [req_id:None user:None] startup_check.py:16 -  Database connected successfully
+2025-08-06 15:13:45,738 [INFO] [req_id:None user:None] startup_check.py:27 -  Redis connected successfully
+2025-08-06 15:13:45,793 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 15:13:45,794 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 15:13:45,801 [INFO] [req_id:None user:None] base.py:454 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-08-06 15:13:45,803 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_temp_files" to job store "default"
+2025-08-06 15:13:45,804 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_backups" to job store "default"
+2025-08-06 15:13:45,804 [INFO] [req_id:None user:None] base.py:895 - Added job "cleanup_orphan_files" to job store "default"
+2025-08-06 15:13:45,804 [INFO] [req_id:None user:None] base.py:181 - Scheduler started
+2025-08-06 15:13:45,805 [INFO] [req_id:None user:None] lifespan.py:29 - 🔗 All services connected.
+2025-08-06 15:13:45,805 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 15:13:45,805 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 15:18:45.793925+09:00 (in 299.987953 seconds)
+2025-08-06 15:18:45,786 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 15:18:45,787 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 15:18:45.793925+09:00 (in 0.007638 seconds)
+2025-08-06 15:18:45,795 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 15:18:45,795 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 15:23:45.793925+09:00 (in 299.998321 seconds)
+2025-08-06 15:18:45,795 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:23:45 KST)" (scheduled at 2025-08-06 15:18:45.793925+09:00)
+2025-08-06 15:18:45,797 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 15:18:45,798 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:23:45 KST)" executed successfully
+2025-08-06 15:23:45,794 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 15:23:45,795 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 15:28:45.793925+09:00 (in 299.998744 seconds)
+2025-08-06 15:23:45,795 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:28:45 KST)" (scheduled at 2025-08-06 15:23:45.793925+09:00)
+2025-08-06 15:23:45,795 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 15:23:45,795 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:28:45 KST)" executed successfully
+2025-08-06 15:28:45,797 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 15:28:45,798 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 15:33:45.793925+09:00 (in 299.995716 seconds)
+2025-08-06 15:28:45,798 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:33:45 KST)" (scheduled at 2025-08-06 15:28:45.793925+09:00)
+2025-08-06 15:28:45,799 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 15:28:45,799 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:33:45 KST)" executed successfully
+2025-08-06 15:33:45,794 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 15:33:45,795 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 15:38:45.793925+09:00 (in 299.998472 seconds)
+2025-08-06 15:33:45,795 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:38:45 KST)" (scheduled at 2025-08-06 15:33:45.793925+09:00)
+2025-08-06 15:33:45,797 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 15:33:45,797 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:38:45 KST)" executed successfully
+2025-08-06 15:38:45,795 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 15:38:45,795 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 15:43:45.793925+09:00 (in 299.998336 seconds)
+2025-08-06 15:38:45,797 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:43:45 KST)" (scheduled at 2025-08-06 15:38:45.793925+09:00)
+2025-08-06 15:38:45,797 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 15:38:45,798 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:43:45 KST)" executed successfully
+2025-08-06 15:43:45,802 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 15:43:45,803 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 15:48:45.793925+09:00 (in 299.989954 seconds)
+2025-08-06 15:43:45,803 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:48:45 KST)" (scheduled at 2025-08-06 15:43:45.793925+09:00)
+2025-08-06 15:43:45,803 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 15:43:45,803 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:48:45 KST)" executed successfully
+2025-08-06 15:48:45,797 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 15:48:45,798 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 15:53:45.793925+09:00 (in 299.995578 seconds)
+2025-08-06 15:48:45,798 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:53:45 KST)" (scheduled at 2025-08-06 15:48:45.793925+09:00)
+2025-08-06 15:48:45,799 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 15:48:45,799 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:53:45 KST)" executed successfully
+2025-08-06 15:53:45,799 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 15:53:45,800 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 15:58:45.793925+09:00 (in 299.993353 seconds)
+2025-08-06 15:53:45,801 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:58:45 KST)" (scheduled at 2025-08-06 15:53:45.793925+09:00)
+2025-08-06 15:53:45,801 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 15:53:45,802 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 15:58:45 KST)" executed successfully
+2025-08-06 15:58:45,799 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 15:58:45,801 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:03:45.793925+09:00 (in 299.992466 seconds)
+2025-08-06 15:58:45,801 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:03:45 KST)" (scheduled at 2025-08-06 15:58:45.793925+09:00)
+2025-08-06 15:58:45,801 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 15:58:45,803 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:03:45 KST)" executed successfully
+2025-08-06 16:03:45,794 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:03:45,794 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:08:45.793925+09:00 (in 299.999267 seconds)
+2025-08-06 16:03:45,795 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:08:45 KST)" (scheduled at 2025-08-06 16:03:45.793925+09:00)
+2025-08-06 16:03:45,795 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 16:03:45,796 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:08:45 KST)" executed successfully
+2025-08-06 16:08:45,790 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:08:45,791 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:08:45.793925+09:00 (in 0.002614 seconds)
+2025-08-06 16:08:45,794 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:08:45,794 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:13:45.793925+09:00 (in 299.999683 seconds)
+2025-08-06 16:08:45,795 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:13:45 KST)" (scheduled at 2025-08-06 16:08:45.793925+09:00)
+2025-08-06 16:08:45,796 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 16:08:45,796 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:13:45 KST)" executed successfully
+2025-08-06 16:13:45,780 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:13:45,780 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:13:45.793925+09:00 (in 0.013723 seconds)
+2025-08-06 16:13:45,795 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:13:45,796 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:18:45.793925+09:00 (in 299.997053 seconds)
+2025-08-06 16:13:45,797 [INFO] [req_id:None user:None] base.py:123 - Running job "cleanup_backups (trigger: interval[1:00:00], next run at: 2025-08-06 17:13:45 KST)" (scheduled at 2025-08-06 16:13:45.793925+09:00)
+2025-08-06 16:13:45,797 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:18:45 KST)" (scheduled at 2025-08-06 16:13:45.793925+09:00)
+2025-08-06 16:13:45,800 [INFO] [req_id:None user:None] cleanup.py:72 - 백업 폴더 정리 완료: 0개 삭제됨
+2025-08-06 16:13:45,800 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 16:13:45,800 [INFO] [req_id:None user:None] base.py:144 - Job "cleanup_backups (trigger: interval[1:00:00], next run at: 2025-08-06 17:13:45 KST)" executed successfully
+2025-08-06 16:13:45,801 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:18:45 KST)" executed successfully
+2025-08-06 16:18:45,804 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:18:45,805 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:23:45.793925+09:00 (in 299.988468 seconds)
+2025-08-06 16:18:45,805 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:23:45 KST)" (scheduled at 2025-08-06 16:18:45.793925+09:00)
+2025-08-06 16:18:45,806 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 16:18:45,806 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:23:45 KST)" executed successfully
+2025-08-06 16:23:45,799 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:23:45,800 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:28:45.793925+09:00 (in 299.993872 seconds)
+2025-08-06 16:23:45,800 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:28:45 KST)" (scheduled at 2025-08-06 16:23:45.793925+09:00)
+2025-08-06 16:23:45,801 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 16:23:45,802 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:28:45 KST)" executed successfully
+2025-08-06 16:28:45,784 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:28:45,785 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:28:45.793925+09:00 (in 0.008472 seconds)
+2025-08-06 16:28:45,794 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:28:45,795 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:33:45.793925+09:00 (in 299.998513 seconds)
+2025-08-06 16:28:45,795 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:33:45 KST)" (scheduled at 2025-08-06 16:28:45.793925+09:00)
+2025-08-06 16:28:45,796 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 16:28:45,796 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:33:45 KST)" executed successfully
+2025-08-06 16:33:45,772 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:33:45,773 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:33:45.793925+09:00 (in 0.020596 seconds)
+2025-08-06 16:33:45,794 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:33:45,794 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:38:45.793925+09:00 (in 299.999386 seconds)
+2025-08-06 16:33:45,795 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:38:45 KST)" (scheduled at 2025-08-06 16:33:45.793925+09:00)
+2025-08-06 16:33:45,796 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 16:33:45,796 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:38:45 KST)" executed successfully
+2025-08-06 16:38:45,781 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:38:45,781 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:38:45.793925+09:00 (in 0.012650 seconds)
+2025-08-06 16:38:45,795 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:38:45,796 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:43:45.793925+09:00 (in 299.997847 seconds)
+2025-08-06 16:38:45,797 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:43:45 KST)" (scheduled at 2025-08-06 16:38:45.793925+09:00)
+2025-08-06 16:38:45,798 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 16:38:45,798 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:43:45 KST)" executed successfully
+2025-08-06 16:43:45,773 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:43:45,773 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:43:45.793925+09:00 (in 0.020012 seconds)
+2025-08-06 16:43:45,794 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:43:45,795 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:48:45.793925+09:00 (in 299.998027 seconds)
+2025-08-06 16:43:45,796 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:48:45 KST)" (scheduled at 2025-08-06 16:43:45.793925+09:00)
+2025-08-06 16:43:45,796 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 16:43:45,796 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:48:45 KST)" executed successfully
+2025-08-06 16:48:45,779 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:48:45,780 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:48:45.793925+09:00 (in 0.013720 seconds)
+2025-08-06 16:48:45,794 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:48:45,795 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:53:45.793925+09:00 (in 299.998638 seconds)
+2025-08-06 16:48:45,795 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:53:45 KST)" (scheduled at 2025-08-06 16:48:45.793925+09:00)
+2025-08-06 16:48:45,796 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 16:48:45,797 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:53:45 KST)" executed successfully
+2025-08-06 16:53:45,789 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:53:45,790 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:53:45.793925+09:00 (in 0.003435 seconds)
+2025-08-06 16:53:45,794 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:53:45,795 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:58:45.793925+09:00 (in 299.998679 seconds)
+2025-08-06 16:53:45,796 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:58:45 KST)" (scheduled at 2025-08-06 16:53:45.793925+09:00)
+2025-08-06 16:53:45,796 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 16:53:45,797 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 16:58:45 KST)" executed successfully
+2025-08-06 16:58:45,775 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:58:45,776 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 16:58:45.793925+09:00 (in 0.016995 seconds)
+2025-08-06 16:58:45,794 [DEBUG] [req_id:None user:None] base.py:954 - Looking for jobs to run
+2025-08-06 16:58:45,795 [DEBUG] [req_id:None user:None] base.py:1034 - Next wakeup is due at 2025-08-06 17:03:45.793925+09:00 (in 299.998588 seconds)
+2025-08-06 16:58:45,795 [INFO] [req_id:None user:None] base_py3.py:28 - Running job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 17:03:45 KST)" (scheduled at 2025-08-06 16:58:45.793925+09:00)
+2025-08-06 16:58:45,796 [INFO] [req_id:None user:None] cleanup.py:36 -  이번 실행에서 삭제된 파일 수: 0
+2025-08-06 16:58:45,796 [INFO] [req_id:None user:None] base_py3.py:41 - Job "cleanup_temp_files (trigger: interval[0:05:00], next run at: 2025-08-06 17:03:45 KST)" executed successfully
